@@ -19,6 +19,11 @@ const config = {
     },
     extend: {
       colors: {
+        main: "#1E285D",
+        icon: "#699BF7",
+        button: "#C0D0E7",
+        cardBg: "#F8F8F8",
+        inputBg: "#D6E2E2",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
