@@ -20,13 +20,13 @@ const Footer = () => {
               <h5 className="text-lg font-bold mb-4">Help</h5>
               <ul className="space-y-1">
                 <li>
-                  <Link href="/account">Account</Link>
+                  <Link href="/profile">Account</Link>
                 </li>
                 <li>
-                  <Link href="/events">Events Listing</Link>
+                  <Link href="/events">Events Lists</Link>
                 </li>
                 <li>
-                  <Link href="/events/create">Modify Event</Link>
+                  <Link href="/events/create">Create Event</Link>
                 </li>
               </ul>
             </div>
@@ -74,19 +74,19 @@ const Footer = () => {
 
           {/* sm */}
           <div className="sm:hidden">
-            <Accordion type="single" collapsible className="w-[110px]">
+            <Accordion type="single" collapsible className="flex justify-between space-x-2">
               <AccordionItem value="help">
                 <AccordionTrigger>Help</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
                     <li>
-                      <Link href="/account">Account</Link>
+                      <Link href="/profile">Account</Link>
                     </li>
                     <li>
-                      <Link href="/events">Events Listing</Link>
+                      <Link href="/events">Events Lists</Link>
                     </li>
                     <li>
-                      <Link href="/events/create">Modify Event</Link>
+                      <Link href="/events/create">Create Event</Link>
                     </li>
                   </ul>
                 </AccordionContent>
