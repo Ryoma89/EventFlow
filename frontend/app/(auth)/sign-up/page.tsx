@@ -6,6 +6,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
+  CardFooter,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -23,7 +24,7 @@ const SignUpPage = () => {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <form className="grid gap-4">
-            <div className="grid gap-2">
+            <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -33,10 +34,8 @@ const SignUpPage = () => {
                 required
               />
             </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
-              </div>
+            <div className="grid gap-3">
+              <Label htmlFor="password">Password</Label>
               <Input
                 minLength={6}
                 name="password"
@@ -45,7 +44,7 @@ const SignUpPage = () => {
                 required
               />
             </div>
-            <Button className="w-full bg-main">Login</Button>
+            <Button className="w-full bg-main mt-2">Login</Button>
           </form>
           <div className="flex justify-center items-center space-x-2 mt-2 text-sm">
             <div className="text-center">

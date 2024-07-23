@@ -23,7 +23,7 @@ const SignInPage = () => {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <form className="grid gap-4">
-              <div className="grid gap-2">
+              <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -33,10 +33,8 @@ const SignInPage = () => {
                   required
                 />
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
+              <div className="grid gap-3">
                   <Label htmlFor="password">Password</Label>
-                </div>
                 <Input
                   minLength={6}
                   name="password"
@@ -45,8 +43,7 @@ const SignInPage = () => {
                   required
                 />
               </div>
-
-              <Button className="w-full bg-main">Sign In</Button>
+              <Button className="w-full bg-main mt-2">Sign In</Button>
             </form>
             <div className="flex justify-center items-center space-x-2 mt-2 text-sm">
               <div className="text-center">
