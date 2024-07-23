@@ -2,6 +2,7 @@ import React from "react";
 import Title from "./Title";
 import EventCard from "./EventCard";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const TrendingEvents = () => {
   return (
@@ -16,9 +17,11 @@ const TrendingEvents = () => {
         <EventCard />
       </div>
       <div className="mt-12 w-[250px] mx-auto sm:w-[320px]">
-        <Button className="bg-main w-[250px] mx-auto sm:w-[320px]">
-          View All
-        </Button>
+        <Link href={`/events`}>
+          <Button className="bg-main w-[250px] mx-auto sm:w-[320px]">
+            View All
+          </Button>
+        </Link>
       </div>
     </section>
   );

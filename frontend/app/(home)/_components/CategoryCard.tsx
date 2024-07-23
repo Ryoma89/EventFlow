@@ -9,7 +9,7 @@ const CategoryCard = () => {
   return (
     <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mt-12 md:grid-cols-3">
       {categories.map((category) => (
-        <Link href={`/sign-up`} key={category.name}>
+        <Link href={`/events`} key={category.name}>
           <Card key={category.name} className="relative hover:opacity-90">
           <div 
             className="w-full h-32 rounded-lg overflow-hidden bg-cover bg-center md:h-40"

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const Promotion = () => {
@@ -16,16 +17,20 @@ const Promotion = () => {
         </p>
         <div className="sm:grid sm:grid-cols-2">
           <div className="w-3/5 mx-auto sm:w-4/5">
-          <Button className="bg-main w-full">
-            Explore Events
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+            <Link href="/events">
+              <Button className="bg-main w-full">
+                Explore Events
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
           <div className="w-3/5 mx-auto sm:w-4/5">
-          <Button className="bg-main w-full mt-5 sm:mt-0">
-            Create Event
-            <Plus className="ml-2 h-5 w-5" />
-          </Button>
+            <Link href="/events/create">
+              <Button className="bg-main w-full mt-5 sm:mt-0">
+                Create Event
+                <Plus className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

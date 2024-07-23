@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const EventCard = () => {
   return (
@@ -39,7 +40,14 @@ const EventCard = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button variant={"custom"} className="w-full bg-button text-black shadow-md">View Details</Button>
+          <Link href={`/events/1`} className="w-full">
+            <Button
+              variant={"custom"}
+              className="w-full bg-button text-black shadow-md"
+            >
+              View Details
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </>
