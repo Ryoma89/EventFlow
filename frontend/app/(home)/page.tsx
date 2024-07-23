@@ -7,13 +7,13 @@ import UpcomingEvents from './_components/UpcomingEvents';
 
 const HomePage = () => {
   return (
-    <div>
+    <main>
       <Hero />
       <Promotion />
       <Categories />
       <TrendingEvents />
       <UpcomingEvents />
-    </div>
+    </main>
   );
 };
 
