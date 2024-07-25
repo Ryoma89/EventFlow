@@ -83,7 +83,7 @@ const SignInPage = () => {
               <Link href='/sign-up' className='underline text-blue-600'>
                 <span className='hover:opacity-80'> click here </span>
               </Link>
-              to sign up.
+              to sign in.
             </div>
           </div>
         </CardContent>

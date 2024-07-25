@@ -86,16 +86,16 @@ const SignUpPage = () => {
               />
             </div>
             <Button className='w-full bg-main mt-2' type='submit'>
-              Login
+              Sign Up
             </Button>
           </form>
           <div className='flex justify-center items-center space-x-2 mt-2 text-sm'>
             <div className='text-center'>
-              Already have an account? Then please <span> </span>
+              Already have an account? Then please{' '}
               <Link href='/sign-in' className='underline text-blue-600'>
                 <span className='hover:opacity-80'>click here </span>
               </Link>
-              to sign in.
+              to sign up.
             </div>
           </div>
         </CardContent>
