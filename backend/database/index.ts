@@ -14,10 +14,15 @@ export const connectDB = async () => {
 
   cached.promise =
     cached.promise ||
-    mongoose.connect(MONGODB_URI, {
-      dbName: 'eventflow',
-      bufferCommands: false,
-    });
+    mongoose
+      .connect(MONGODB_URI, {
+        dbName: 'eventflow',
+        bufferCommands: false,
+      })
+      .catch((error) => {
+        console.error('MongoDB connection error:', error);
+        throw error;
+      });
 
   cached.conn = await cached.promise;
   return cached.conn;

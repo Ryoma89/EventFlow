@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -15,12 +16,15 @@ if (!process.env.JWT_SECRET) {
 app.use(
   cors({
     origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
