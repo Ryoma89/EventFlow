@@ -11,9 +11,11 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignUpPage = () => {
-  const onSubmit = async (formData: FormData) => {
+  const router = useRouter();
+    const onSubmit = async (formData: FormData) => {
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -35,6 +37,7 @@ const SignUpPage = () => {
       );
       if (response.ok) {
         alert('Sign up successful!');
+        router.push('/sign-in');
       } else {
         const errorData = await response.json();
         console.log(errorData);
