@@ -1,9 +1,11 @@
 import Header from '@/components/shared/Header';
+import { getUser } from '@/lib/getUser';
 
-const authLayout = ({ children }: { children: React.ReactNode }) => {
+const authLayout = async ({ children }: { children: React.ReactNode }) => {
+  const user = await getUser();
   return (
     <div>
-      <Header />
+      <Header user={user}/>
       {children}
     </div>
   );

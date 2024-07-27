@@ -3,10 +3,20 @@ import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from '../ui/use-toast';
 
-const Header = ({user}: {user: any}) => {
+const Header = ({user: initialUser}: {user: any}) => {
   const router = useRouter();
-  const handleSignOut = async () => {
+  const [user, setUser] = useState(initialUser);
+  const [ isAuthenticated, setIsAuthenticated ] = useState(!!initialUser);
+
+  useEffect(() => {
+    // console.log("user",user);
+    setIsAuthenticated(!!user);
+  }, [user])
+
+  const SignOut = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/sign-out`,
@@ -19,12 +29,21 @@ const Header = ({user}: {user: any}) => {
         }
       );
       if (response.ok) {
-        alert('Sign out successful!');
+        toast({
+          title: "👋 See you soon!",
+          description: "You have been signed out. Looking forward to seeing you again!",
+        });
+        setUser(null);
+        setIsAuthenticated(false);
         router.push('/');
       } else {
         const errorData = await response.json();
         console.log(errorData);
-        alert(`Sign out failed: ${errorData.message}`);
+        toast({
+          title: "Sign out failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error:', error);
@@ -41,7 +60,7 @@ const Header = ({user}: {user: any}) => {
         <nav className='flex items-center justify-end space-x-2'>
           {user ? (
             <div className='flex items-center space-x-2'>
-            <Button onClick={handleSignOut} variant={'custom'}>Sign out</Button>
+            <Button onClick={SignOut} variant={'custom'}>Sign out</Button>
             <Link href='/profile'>
               <Avatar>
                 <AvatarImage

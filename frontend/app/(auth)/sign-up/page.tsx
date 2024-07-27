@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -36,15 +37,27 @@ const SignUpPage = () => {
         }
       );
       if (response.ok) {
-        alert('Sign up successful!');
+        toast({
+          title: "🎉 Sign up successful!",
+          description: "You can now sign in with your new account.",
+        });
         router.push('/sign-in');
       } else {
         const errorData = await response.json();
         console.log(errorData);
-        alert(`Sign up failed: ${errorData.message}`);
+        toast({
+          title: "Sign up failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again later.",
+        variant: "destructive",
+      });
     }
   };
   return (
