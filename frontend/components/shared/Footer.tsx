@@ -19,13 +19,13 @@ const Footer = () => {
             <div className="w-3/5 mx-auto">
               <h5 className="text-lg font-bold mb-4">Help</h5>
               <ul className="space-y-1">
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/profile">Account</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Events Lists</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events/create">Create Event</Link>
                 </li>
               </ul>
@@ -33,22 +33,22 @@ const Footer = () => {
             <div className="w-3/5 mx-auto">
               <h5 className="text-lg font-bold mb-4">Categories</h5>
               <ul className="space-y-1">
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Music</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Art</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Food</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Tech</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Sports</Link>
                 </li>
-                <li>
+                <li className="hover:opacity-70">
                   <Link href="/events">Wellness</Link>
                 </li>
               </ul>
@@ -56,15 +56,15 @@ const Footer = () => {
             <div className="w-3/5 mx-auto">
               <h5 className="text-lg font-bold mb-4">Contact Us</h5>
               <ul className="space-y-1">
-                <li className="flex items-center space-x-2">
+                <li className="flex items-center space-x-2 hover:opacity-70">
                   <FacebookIcon className="w-5 h-5" />
                   <Link href="https://facebook.com">Facebook</Link>
                 </li>
-                <li className="flex items-center space-x-2">
+                <li className="flex items-center space-x-2 hover:opacity-70">
                   <InstagramIcon className="w-5 h-5" />
                   <Link href="https://instagram.com">Instagram</Link>
                 </li>
-                <li className="flex items-center space-x-2">
+                <li className="flex items-center space-x-2 hover:opacity-70">
                   <TwitterIcon className="w-5 h-5" />
                   <Link href="https://twitter.com">Twitter</Link>
                 </li>
@@ -79,13 +79,13 @@ const Footer = () => {
                 <AccordionTrigger>Help</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/profile">Account</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Events Lists</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events/create">Create Event</Link>
                     </li>
                   </ul>
@@ -95,22 +95,22 @@ const Footer = () => {
                 <AccordionTrigger>Categories</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Music</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Art</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Food</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Tech</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Sports</Link>
                     </li>
-                    <li>
+                    <li className="hover:opacity-70">
                       <Link href="/events">Wellness</Link>
                     </li>
                   </ul>
@@ -120,15 +120,15 @@ const Footer = () => {
                 <AccordionTrigger>Contact Us</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
-                    <li className="flex items-center space-x-2">
+                    <li className="flex items-center space-x-2 hover:opacity-70">
                       <FacebookIcon className="w-5 h-5" />
                       <Link href="https://facebook.com">Facebook</Link>
                     </li>
-                    <li className="flex items-center space-x-2">
+                    <li className="flex items-center space-x-2 hover:opacity-70">
                       <InstagramIcon className="w-5 h-5" />
                       <Link href="https://instagram.com">Instagram</Link>
                     </li>
-                    <li className="flex items-center space-x-2">
+                    <li className="flex items-center space-x-2 hover:opacity-70">
                       <TwitterIcon className="w-5 h-5" />
                       <Link href="https://twitter.com">Twitter</Link>
                     </li>
