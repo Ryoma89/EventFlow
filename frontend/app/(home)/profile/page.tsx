@@ -7,7 +7,6 @@ import MyAttendingEvents from '../_components/MyAttendingEvents';
 
 const ProfilePage = async () => {
   const user = await getUser();
-  // console.log("user", user);
   return (
     <section className="my-14 mx-auto w-4/5 sm:my-20">
       <Title title="Profile" />

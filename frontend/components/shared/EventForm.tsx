@@ -26,7 +26,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { IEvent } from "@/types";
-import { eventDefaultValues } from "@/constants/categories";
+import { eventDefaultValues } from "../../../constants/categories";
 
 type EventFormProps = {
   userId: string;
@@ -57,7 +57,7 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
-    defaultValues: initialValues,
+    defaultValues: initialValues as z.infer<typeof eventFormSchema>,
   });
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
@@ -77,7 +77,7 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     const payload = {
       ...values,
       imageUrl: uploadedImageUrl,
-      userId,
+      organizer: userId,
     };
 
     try {
@@ -140,7 +140,7 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
             />
             <FormField
               control={form.control}
-              name="categoryId"
+              name="category"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>

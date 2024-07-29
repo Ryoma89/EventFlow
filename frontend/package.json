@@ -28,6 +28,7 @@
     "date-fns": "^3.6.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.408.0",
+    "mongoose": "^8.5.1",
     "next": "14.2.4",
     "query-string": "^9.1.0",
     "react": "^18",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/mongoose": "^5.11.97",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-datepicker": "^7.0.0",

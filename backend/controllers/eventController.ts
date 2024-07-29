@@ -3,39 +3,25 @@ import { Request, Response } from 'express';
 
 import { connectDB } from '../database';
 import Event from '../models/event.model';
+import Category from '../models/category.model';
 dotenv.config();
 
 export const createEvent = async (req: Request, res: Response) => {
   try {
     await connectDB();
     const {
-      title,
-      description,
-      location,
-      startDateTime,
-      endDateTime,
-      imageUrl,
-      price,
-      isFree,
-      url,
-      category,
-      organizer,
+      event,
     } = req.body;
 
-    const event = await Event.create({
-      title,
-      description,
-      location,
-      startDateTime,
-      endDateTime,
-      imageUrl,
-      price,
-      isFree,
-      url,
-      category,
-      organizer,
+    const category = await Category.findOne({ name: event.category });
+
+    const categoryId = category._id;
+
+    const newEvent = await Event.create({
+      ...event,
+      category: categoryId,
     });
-    return res.status(201).json(event);
+    return res.status(201).json(newEvent);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -45,32 +31,19 @@ export const createEvent = async (req: Request, res: Response) => {
 export const editEvent = async (req: Request, res: Response) => {
   try {
     const {
-      eventId,
-      title,
-      description,
-      location,
-      startDateTime,
-      endDateTime,
-      imageUrl,
-      price,
-      isFree,
-      url,
-      category,
+      event,
+      eventId
     } = req.body;
 
-    const event = await Event.findByIdAndUpdate(eventId, {
-      title,
-      description,
-      location,
-      startDateTime,
-      endDateTime,
-      imageUrl,
-      price,
-      isFree,
-      url,
-      category,
+    const category = await Category.findOne({ name: event.category });
+
+    const categoryId = category._id;
+
+    const UpdateEvent = await Event.findByIdAndUpdate(eventId, {
+      ...event,
+      category: categoryId,
     });
-    return res.status(201).json(event);
+    return res.status(201).json(UpdateEvent);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);

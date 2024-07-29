@@ -14,7 +14,7 @@ export const createCategory = async({categoryName}: CreateCategoryParams) => {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error creating category:', errorData);
-      throw new Error(errorData.message || 'Failed to create category');
+      throw new Error(errorData.message || 'Failed to create category'); 
     }
 
     return response.json();

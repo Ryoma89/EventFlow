@@ -149,8 +149,8 @@ export type SearchParamProps = {
 }
 
 export interface ICategory {
-  _id: string;
   name: string;
+  image: string;
 }
 
 export interface IEvent {

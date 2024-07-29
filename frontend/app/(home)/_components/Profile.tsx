@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FileUploader } from "@/components/shared/FileUploader";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z.string().min(5).max(50),
@@ -39,6 +40,7 @@ const formSchema = z.object({
 
 const Profile = ({ user: initialUser }: { user: any }) => {
   const [files, setFiles] = useState<File[]>([]);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,6 +49,12 @@ const Profile = ({ user: initialUser }: { user: any }) => {
       photo: "",
     },
   });
+
+  useEffect(() => {
+    if (!initialUser) {
+      router.push('/');
+    }
+  }, [initialUser, router]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
