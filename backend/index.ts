@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
+import eventRoutes from './routes/eventRoutes';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
+app.use('/api', eventRoutes);
 
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
