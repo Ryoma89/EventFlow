@@ -9,9 +9,7 @@ dotenv.config();
 export const createEvent = async (req: Request, res: Response) => {
   try {
     await connectDB();
-    const {
-      event,
-    } = req.body;
+    const { event } = req.body;
 
     const category = await Category.findOne({ name: event.category });
 
@@ -30,10 +28,8 @@ export const createEvent = async (req: Request, res: Response) => {
 
 export const editEvent = async (req: Request, res: Response) => {
   try {
-    const {
-      event,
-      eventId
-    } = req.body;
+    await connectDB();
+    const { event, eventId } = req.body;
 
     const category = await Category.findOne({ name: event.category });
 
@@ -44,6 +40,19 @@ export const editEvent = async (req: Request, res: Response) => {
       category: categoryId,
     });
     return res.status(201).json(UpdateEvent);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+export const deleteEvent = async (req: Request, res: Response) => {
+  try {
+    await connectDB();
+    const { eventId } = req.body;
+
+    const deleteEvent = await Event.findByIdAndDelete(eventId);
+    return res.status(201).json(deleteEvent);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
