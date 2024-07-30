@@ -13,6 +13,7 @@ import Link from "next/link";
 import { IEvent } from "@/types";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { convertToAbsolutePath, formatDateTime } from "@/lib/eventUtils";
 
 interface EventCardProps {
   event: IEvent;
@@ -21,20 +22,21 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
   const router = useRouter();
-  const formattedStartDateTime = new Date(event.startDateTime).toLocaleString();
-  const formattedEndDateTime = new Date(event.endDateTime).toLocaleString();
 
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ eventId: event._id }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/events`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ eventId: event._id }),
+        }
+      );
 
       if (response.ok) {
         toast({
@@ -46,7 +48,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
         const errorData = await response.json();
         toast({
           title: "Error",
-          description: `Failed to delete event: ${errorData.message}`,
+          description: `${errorData.message}`,
           variant: "destructive",
         });
       }
@@ -60,14 +62,8 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
     }
   };
 
-  const convertToAbsolutePath = (relativePath: string) => {
-    if (relativePath.startsWith('../../assets/images/')) {
-      return relativePath.replace('../../assets/images/', '/');
-    }
-    return relativePath;
-  };
-
   const absoluteImageUrl = convertToAbsolutePath(event.imageUrl);
+  const { dateTime } = formatDateTime(new Date(event.startDateTime));
 
   return (
     <>
@@ -89,7 +85,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
           <CardContent className="space-y-2 flex-grow">
             <div className="flex items-center space-x-2">
               <CalendarDays className="h-5 w-5 text-icon" />
-              <p>{formattedStartDateTime}</p>
+              <p>{dateTime}</p>
             </div>
             <div className="flex items-center space-x-2">
               <MapPin className="h-5 w-5 text-icon" />
@@ -97,7 +93,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
             </div>
           </CardContent>
         </div>
-        <CardFooter className={`grid ${canEdit ? 'grid-cols-3' : ''} gap-2`}>
+        <CardFooter className={`grid ${canEdit ? "grid-cols-3" : ""} gap-2`}>
           <Link href={`/events/${event._id}`} className="w-full">
             <Button
               variant={"custom"}
@@ -113,7 +109,11 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
                   Edit
                 </Button>
               </Link>
-              <Button variant="destructive" className="w-full" onClick={handleDelete}>
+              <Button
+                variant="destructive"
+                className="w-full"
+                onClick={handleDelete}
+              >
                 Delete
               </Button>
             </>

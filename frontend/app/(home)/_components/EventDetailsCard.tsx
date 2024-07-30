@@ -7,6 +7,7 @@ import { Calendar, MapPin, User } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
+import { convertToAbsolutePath, formatDateTime } from '@/lib/eventUtils'
 
 const EventDetailsCard = ({ params }: { params: { id: string } }) => {
   const [event, setEvent] = useState<IEvent | null>(null);
@@ -27,16 +28,8 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
   if (!event) return <Skeleton className="w-10/12 mx-auto my-10 max-w-5xl rounded-ld h-[500px]" />
   ;
 
-  const formattedStartDateTime = new Date(event.startDateTime).toLocaleString();
-  const formattedEndDateTime = new Date(event.endDateTime).toLocaleString();
-  const convertToAbsolutePath = (relativePath: string) => {
-    if (relativePath.startsWith('../../assets/images/')) {
-      return relativePath.replace('../../assets/images/', '/');
-    }
-    return relativePath;
-  };
-
   const absoluteImageUrl = convertToAbsolutePath(event.imageUrl);
+  const { dateTime } = formatDateTime(new Date(event.startDateTime));
   return (
     <Card className="w-10/12 mx-auto my-10 max-w-5xl">
         <div className="grid grid-cols-1 ">
@@ -78,7 +71,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
                 <div className="flex items-center gap-3">
                   <Calendar className="h-5 w-5 md:h-8 md:w-8" />
                   <div className="flex flex-wrap items-center md:text-lg">
-                    <p>{formattedStartDateTime} ~ {formattedEndDateTime}</p>
+                    <p>{dateTime}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
