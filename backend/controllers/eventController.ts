@@ -4,6 +4,9 @@ import { Request, Response } from 'express';
 import { connectDB } from '../database';
 import Event from '../models/event.model';
 import Category from '../models/category.model';
+import Booking from '../models/booking.model';
+import Comment from '../models/comment.model';
+
 dotenv.config();
 
 export const getAllEvents = async (req: Request, res: Response) => {
@@ -32,7 +35,12 @@ export const getEventById = async (req: Request, res: Response) => {
       .populate('organizer');
 
     if (!event) return res.status(404).json({ message: 'Event is not found' });
-    return res.status(200).json(event);
+
+    const attendees = await Booking.find({ event: eventId }).populate('user');
+
+    const comments = await Comment.find({ event: eventId }).populate('user');
+
+    return res.status(200).json({ event, attendees, comments });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Failed to get event' });
