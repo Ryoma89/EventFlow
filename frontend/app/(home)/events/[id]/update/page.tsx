@@ -2,16 +2,24 @@ import React from "react";
 import { getUser } from "@/lib/getUser";
 import Title from "@/app/(home)/_components/Title";
 import EventForm from "@/components/shared/EventForm";
+import { fetchEventById } from "@/lib/fetcheventById";
 
-const EventUpdatePage = async () => {
+type UpdateEventProps = {
+  params: {
+    id: string
+  }
+}
+
+const EventUpdatePage = async ({ params: { id } }: UpdateEventProps) => {
   const user = await getUser();
-  // console.log("EventUpdatePageのuser", user);
   const userId = user?._id;
-  console.log("EventUpdatePageのuserId", userId);
+
+  const event = await fetchEventById(id);
+
   return (
     <section className="my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28">
       <Title title="Create Event" />
-      <EventForm userId={userId} type="Update"/>
+      <EventForm userId={userId} type="Update" event={event} eventId={id}/>
     </section>
   );
 };

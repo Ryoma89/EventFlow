@@ -12,7 +12,6 @@ const Header = ({ user: initialUser }: { user: any }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!initialUser);
 
   useEffect(() => {
-    // console.log("user",user);
     setIsAuthenticated(!!user);
   }, [user]);
 
@@ -29,6 +28,7 @@ const Header = ({ user: initialUser }: { user: any }) => {
         }
       );
       if (response.ok) {
+        localStorage.removeItem('authToken');
         toast({
           title: "👋 See you soon!",
           description:
