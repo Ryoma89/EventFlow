@@ -35,6 +35,8 @@ const SignInPage = () => {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('authToken', data.token);
         router.push('/');
         toast({
           title: "✅ Sign in successful!",

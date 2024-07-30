@@ -49,7 +49,8 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     ? { 
       ...event, 
       startDateTime: new Date(event.startDateTime), 
-      endDateTime: new Date(event.endDateTime) 
+      endDateTime: new Date(event.endDateTime) ,
+      category: event.category?.name
     }
     : eventDefaultValues;
 
@@ -61,7 +62,6 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
   });
 
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    console.log(values);
     let uploadedImageUrl = values.imageUrl;
 
     if(files.length > 0) {
@@ -81,10 +81,12 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     };
 
     try {
+      const token = localStorage.getItem('authToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
         method: type === 'Create' ? 'POST' : 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ event: payload, eventId }),
       });

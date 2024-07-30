@@ -11,7 +11,7 @@ const ProfilePage = async () => {
     <section className="my-14 mx-auto w-4/5 sm:my-20">
       <Title title="Profile" />
       <Profile user={user}/>
-      <MyOrganizedEvents />
+      <MyOrganizedEvents user={user}/>
       <MyAttendingEvents />
     </section>
   )
