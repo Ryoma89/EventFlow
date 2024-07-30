@@ -6,6 +6,38 @@ import Event from '../models/event.model';
 import Category from '../models/category.model';
 dotenv.config();
 
+export const getAllEvents = async (req: Request, res: Response) => {
+  try {
+    await connectDB();
+    const events = await Event.find({})
+      .populate('category')
+      .populate('organizer');
+    return res.status(200).json(events);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+export const getEventById = async (req: Request, res: Response) => {
+  try {
+    await connectDB();
+    const { eventId } = req.params;
+
+    if (!eventId)
+      return res.status(400).json({ message: 'Event ID is required' });
+
+    const event = await Event.findById(eventId)
+      .populate('category')
+      .populate('organizer');
+
+    if (!event) return res.status(404).json({ message: 'Event is not found' });
+    return res.status(200).json(event);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: 'Failed to get event' });
+  }
+};
 export const createEvent = async (req: Request, res: Response) => {
   try {
     await connectDB();

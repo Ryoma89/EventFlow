@@ -67,8 +67,8 @@ export const checkAuth = async (req: Request, res: Response) => {
   if (!token) return res.status(401).json({ message: 'No token provided' });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    res.status(200).json({ decoded});
+    res.status(200).json({ decoded });
   } catch (err) {
     res.status(403).json({ valid: false, message: 'Invalid token' });
   }
-}
+};

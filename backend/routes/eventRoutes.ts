@@ -4,12 +4,16 @@ import {
   createEvent,
   editEvent,
   deleteEvent,
+  getAllEvents,
 } from '../controllers/eventController';
+
+import authenticateJWT from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.post('/events', createEvent);
-router.put('/events', editEvent);
-router.delete('/events', deleteEvent);
+router.get('/events', getAllEvents);
+router.post('/events', authenticateJWT, createEvent);
+router.put('/events', authenticateJWT, editEvent);
+router.delete('/events', authenticateJWT, deleteEvent);
 
 export default router;
