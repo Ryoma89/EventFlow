@@ -27,23 +27,32 @@ import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { IEvent } from "@/types";
 import { eventDefaultValues } from "../../../constants/categories";
+import { getUser } from "@/lib/getUser";
+import { fetchEventById } from "@/lib/fetcheventById";
 
 type EventFormProps = {
-  userId: string;
   type: "Create" | "Update";
-  event?: IEvent;
   eventId?: string;
 };
 
-const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
-  const [files, setFiles] = useState<File[]>([]);
+const EventForm = ({ type, eventId  }: EventFormProps) => {
   const router = useRouter();
+  const [files, setFiles] = useState<File[]>([]);
+  const [user, setUser] = useState<any>(null)
+  const [event, setEvent] = useState<IEvent | null>(null);
 
-  useEffect(() => {
-    if (!userId) {
-      router.push(`/`);
-    }
-  }, [userId, router]);
+  const { startUpload } = useUploadThing('imageUploader');
+
+useEffect(() => {
+    const fetchUser = async () => {
+        const userData = await getUser();
+        if (!userData) {
+          router.push('/sign-in');
+        } 
+        setUser(userData);
+      }
+    fetchUser();
+  }, []);
 
   const initialValues = event && type === 'Update' 
     ? { 
@@ -54,7 +63,6 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     }
     : eventDefaultValues;
 
-    const { startUpload } = useUploadThing('imageUploader');
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -77,16 +85,14 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     const payload = {
       ...values,
       imageUrl: uploadedImageUrl,
-      organizer: userId,
+      organizer: user._id,
     };
 
     try {
-      // const token = localStorage.getItem('authToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
         method: type === 'Create' ? 'POST' : 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${token}`,
         },
         credentials: 'include',
         body: JSON.stringify({ event: payload, eventId }),

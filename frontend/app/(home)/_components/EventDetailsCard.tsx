@@ -1,14 +1,5 @@
 "use client";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Comment, IEvent } from "@/types";
 import { Calendar, DollarSign, MapPin, User } from "lucide-react";
 import Image from "next/image";
@@ -20,23 +11,25 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 const EventDetailsCard = ({ params }: { params: { id: string } }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comment, setComment] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
+  const [attendees, setAttendees] = useState<IEvent | null>(null);
+  const [event, setEvent] = useState<IEvent | null>(null);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/events/${params.id}/comments`
-        );
-        const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
-    fetchComments();
-  }, [params.id]);
+  // useEffect(() => {
+  //   const fetchComments = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/events/${params.id}/comments`
+  //       );
+  //       const data = await response.json();
+  //       setComments(data);
+  //     } catch (error) {
+  //       console.error("Error fetching comments:", error);
+  //     }
+  //   };
+  //   fetchComments();
+  // }, [params.id]);
 
   const handleAddComment = async () => {
     try {
@@ -54,7 +47,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setComments([...comments, data]);
+        setComment([...comment, data]);
         setNewComment("");
       } else {
         toast({
@@ -71,7 +64,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
       })
     }
   }
-  const [event, setEvent] = useState<IEvent | null>(null);
+
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -80,7 +73,9 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
           `${process.env.NEXT_PUBLIC_API_URL}/events/${params.id}`
         );
         const data = await response.json();
-        setEvent(data);
+        setEvent(data.event);
+        setComment(data.comment);
+        setAttendees(data.attendees);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -92,16 +87,14 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
     return (
       <Skeleton className="w-10/12 mx-auto my-10 max-w-5xl rounded-ld h-[500px]" />
     );
-
-  const absoluteImageUrl = convertToAbsolutePath(event.imageUrl);
   const { dateTime } = formatDateTime(new Date(event.startDateTime));
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 bg-main text-white">
         <div className="relative w-full h-[300px] md:h-[400px]">
           <Image
-            src={absoluteImageUrl}
-            alt={absoluteImageUrl}
+            src={event.imageUrl}
+            alt={event.title}
             fill
             className="object-cover object-center"
             priority

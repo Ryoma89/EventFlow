@@ -11,15 +11,11 @@ type UpdateEventProps = {
 }
 
 const EventUpdatePage = async ({ params: { id } }: UpdateEventProps) => {
-  const user = await getUser();
-  const userId = user?._id;
-
-  const event = await fetchEventById(id);
 
   return (
     <section className="my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28">
       <Title title="Create Event" />
-      <EventForm userId={userId} type="Update" event={event} eventId={id}/>
+      <EventForm  type="Update" eventId={id}/>
     </section>
   );
 };
