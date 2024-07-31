@@ -5,17 +5,25 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "../ui/use-toast";
+import { getUser } from "@/lib/getUser";
 
-const Header = ({ user: initialUser }: { user: any }) => {
+
+const Header = () => {
   const router = useRouter();
-  const [user, setUser] = useState(initialUser);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!initialUser);
+  const [user, setUser] = useState<any>(null);
+
 
   useEffect(() => {
-    setIsAuthenticated(!!user);
-  }, [user]);
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
 
-  const SignOut = async () => {
+    fetchUser();
+  }, []);
+
+
+  const onSignOut = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/sign-out`,
@@ -28,14 +36,12 @@ const Header = ({ user: initialUser }: { user: any }) => {
         }
       );
       if (response.ok) {
-        localStorage.removeItem('authToken');
         toast({
           title: "👋 See you soon!",
           description:
             "You have been signed out. Looking forward to seeing you again!",
         });
         setUser(null);
-        setIsAuthenticated(false);
         router.push("/");
       } else {
         const errorData = await response.json();
@@ -71,7 +77,7 @@ const Header = ({ user: initialUser }: { user: any }) => {
                   <AvatarFallback>{user.username}</AvatarFallback>
                 </Avatar>
               </Link>
-              <Button onClick={SignOut} variant={"custom"}>
+              <Button onClick={onSignOut} variant={"custom"}>
                 Sign out
               </Button>
             </div>

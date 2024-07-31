@@ -3,9 +3,20 @@ import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
 import Title from './Title';
 import { IEvent } from '@/types';
+import { getUser } from '@/lib/getUser';
 
-const MyOrganizedEvents = ({ user }: { user: any }) => {
+const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchEvents = async () => {

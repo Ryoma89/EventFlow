@@ -1,5 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Card,
   CardContent,
@@ -7,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogContent,
@@ -16,10 +20,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -28,36 +28,100 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getUser } from "@/lib/getUser";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { useUploadThing } from "@/lib/uploadthing";
 import { FileUploader } from "@/components/shared/FileUploader";
-import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const formSchema = z.object({
-  username: z.string().min(5).max(50),
-  email: z.string().email(),
+  username: z.string().min(1).max(50),
   photo: z.string(),
 });
 
-const Profile = ({ user: initialUser }: { user: any }) => {
+const Profile = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const [user, setUser] = useState<any>(null)
   const router = useRouter();
+  const { startUpload } = useUploadThing("imageUploader");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
+
+    fetchUser();
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: initialUser.username,
-      email: initialUser.email,
+      username: '',
       photo: "",
     },
   });
 
-  useEffect(() => {
-    if (!initialUser) {
-      router.push('/');
-    }
-  }, [initialUser, router]);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    let uploadedImageUrl = values.photo;
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
+
+      if (!uploadedImages) {
+        return;
+      }
+
+      uploadedImageUrl = uploadedImages[0].url;
+    }
+
+    const payload = {
+      ...values,
+      photo: uploadedImageUrl,
+      userId: user._id,
+    };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ user:payload }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("result", result);
+        setUser(result);
+        toast({
+          title: "Profile Updated",
+          description: "Your profile has been updated successfully.",
+        });
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Error",
+          description: `Failed to update profile: ${errorData.message}`,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: `An unexpected error occurred. Please try again later.`,
+        variant: "destructive",
+      });
+    }
+  }
+
+
+  if (!user) {
+    return <div>Loading...</div>;
   }
   return (
     <div className="mt-10 max-w-96">
@@ -68,13 +132,13 @@ const Profile = ({ user: initialUser }: { user: any }) => {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={initialUser.photo || "https://github.com/shadcn.png"} />
+              <AvatarImage src={user.photo || "https://github.com/shadcn.png"} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <p>{initialUser.username}</p>
+            <p>{user.username}</p>
           </div>
           <div>
-            email: <span>{initialUser.email}</span>
+            email: <span>{user.email}</span>
           </div>
         </CardContent>
         <CardFooter>
@@ -102,19 +166,6 @@ const Profile = ({ user: initialUser }: { user: any }) => {
                         <FormLabel>Username</FormLabel>
                         <FormControl>
                           <Input placeholder="username" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

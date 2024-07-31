@@ -81,13 +81,14 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     };
 
     try {
-      const token = localStorage.getItem('authToken');
+      // const token = localStorage.getItem('authToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
         method: type === 'Create' ? 'POST' : 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          // 'Authorization': `Bearer ${token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({ event: payload, eventId }),
       });
 
