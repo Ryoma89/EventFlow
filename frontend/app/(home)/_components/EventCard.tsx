@@ -25,15 +25,14 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
 
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("authToken");
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/events`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
           body: JSON.stringify({ eventId: event._id }),
         }
       );
