@@ -1,5 +1,5 @@
 import React from 'react';
-import EventsList from '../_components/EventsList';
+import EventsList from './_components/EventsList';
 
 const EventsPage = () => {
 

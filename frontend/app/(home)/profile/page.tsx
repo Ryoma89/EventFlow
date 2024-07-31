@@ -1,8 +1,8 @@
 import React from 'react'
 import Title from '../_components/Title'
-import Profile from '../_components/Profile'
-import MyOrganizedEvents from '../_components/MyOrganizedEvents';
-import MyAttendingEvents from '../_components/MyAttendingEvents';
+import Profile from './_components/Profile'
+import MyOrganizedEvents from './_components/MyOrganizedEvents';
+import MyAttendingEvents from './_components/MyAttendingEvents';
 
 const ProfilePage = () => {
   return (

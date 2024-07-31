@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { eventFormSchema } from "@/lib/validator";
+import { useForm } from "react-hook-form";
+import { getUser } from "@/lib/getUser";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,8 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { eventFormSchema } from "@/lib/validator";
-import Dropdown from "./Dropdown";
 import { Textarea } from "../ui/textarea";
 import { FileUploader } from "./FileUploader";
 import Image from "next/image";
@@ -27,8 +28,6 @@ import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { IEvent } from "@/types";
 import { eventDefaultValues } from "../../../constants/categories";
-import { getUser } from "@/lib/getUser";
-import { fetchEventById } from "@/lib/fetcheventById";
 
 type EventFormProps = {
   type: "Create" | "Update";

@@ -1,5 +1,5 @@
 import React from "react";
-import EventDetailsCard from "../../_components/EventDetailsCard";
+import EventDetailsCard from "./_components/EventDetailsCard";
 
 const EventDetailsPage = ({ params }: { params: { id: string } }) => {
   

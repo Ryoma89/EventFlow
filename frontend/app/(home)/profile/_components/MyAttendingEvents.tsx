@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import EventCard from "./EventCard";
-import Title from "./Title";
+import EventCard from "../../_components/EventCard";
+import Title from "../../_components/Title";
 import { IEvent } from "@/types";
 
 const MyAttendingEvents = () => {
