@@ -33,7 +33,7 @@ const MyOrganizedEvents = () => {
     if (user) {
       fetchEvents();
     }
-  }, [user]);
+  }, [user, events]);
 
   return (
     <div className='mt-14 md:mt-20'>

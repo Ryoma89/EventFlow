@@ -42,7 +42,6 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
           title: "Event Deleted",
           description: "The event has been deleted successfully.",
         });
-        router.push("/");
       } else {
         const errorData = await response.json();
         toast({
