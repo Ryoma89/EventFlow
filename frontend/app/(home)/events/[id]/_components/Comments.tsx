@@ -1,5 +1,5 @@
 import { Comment } from '@/types'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -13,22 +13,44 @@ interface CommentsProps {
 
 const Comments = ({ eventId, comment, setComment }: CommentsProps) => {
   const [newComment, setNewComment] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   // useEffect(() => {
   //   const fetchComments = async () => {
+  //     setIsLoading(true);
   //     try {
   //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/events/${params.id}/comments`
+  //         `${process.env.NEXT_PUBLIC_API_URL}/events/${eventId}/comments`
   //       );
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch comments');
+  //       }
   //       const data = await response.json();
-  //       setComments(data);
+  //       setComment(data);
   //     } catch (error) {
   //       console.error("Error fetching comments:", error);
+  //       toast({
+  //         title: "Error",
+  //         description: "Failed to load comments. Please try again.",
+  //         variant: "destructive",
+  //       });
+  //     } finally {
+  //       setIsLoading(false);
   //     }
   //   };
   //   fetchComments();
-  // }, [params.id]);
+  // }, [eventId, setComment]);
 
   const handleAddComment = async () => {
+    if (!newComment.trim()) {
+      toast({
+        title: "Error",
+        description: "Comment cannot be empty",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/events/${eventId}/comments`,
@@ -40,27 +62,30 @@ const Comments = ({ eventId, comment, setComment }: CommentsProps) => {
           credentials: 'include',
           body: JSON.stringify({ comment: newComment }),
         }
-      )
+      );
 
       if (response.ok) {
         const data = await response.json();
         setComment([...comment, data]);
         setNewComment("");
-      } else {
         toast({
-          title: "Error",
-          description: "Failed to add comment",
-          variant: "destructive",
-        })
+          title: "Success",
+          description: "Comment added successfully",
+        });
+      } else {
+        throw new Error('Failed to add comment');
       }
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to add comment",
+        description: "Failed to add comment. Please try again.",
         variant: "destructive",
-      })
+      });
+    } finally {
+      setIsLoading(false);
     }
   }
+  
   return (
     <div>
       <div className="px-5">
