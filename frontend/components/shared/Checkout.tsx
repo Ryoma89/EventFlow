@@ -5,6 +5,9 @@ import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { loadStripe } from '@stripe/stripe-js';
+
+loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
   const router = useRouter();
@@ -38,13 +41,14 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders`,
+        `${process.env.NEXT_PUBLIC_API_URL}/stripe/create-checkout-session`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(order),
+          credentials: "include",
+          body: JSON.stringify({order}),
         }
       );
 

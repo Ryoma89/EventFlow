@@ -6,10 +6,12 @@ import Booking from '../models/booking.model';
 
 dotenv.config();
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const { order } = req.body;
+  console.log({order})
+  
   const price = order.isFree ? 0 : Number(order.price) * 100;
 
   try {
@@ -35,7 +37,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       cancel_url: `${process.env.FRONTEND_URL}/events/${order.eventId}`,
     });
 
-    return res.redirect(session.url!);
+    return res.status(200).json({ url: session.url });
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
@@ -43,11 +45,11 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 };
 
 export const stripeWebhook = async (req: Request, res: Response) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const sig = req.headers['stripe-signature'];
   const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   let event;
-
   try {
     event = stripe.webhooks.constructEvent(
       req.body,

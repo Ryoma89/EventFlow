@@ -1,3 +1,0 @@
-GET http://localhost:5000/api/user
-Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmE4ODE5YjJkOWYyMTFhNjY4YThhYjUiLCJpYXQiOjE3MjIzOTkyMjYsImV4cCI6MTcyMjQwMjgyNn0.qnvW3bhsH3U0h5RxVsd5gM5ljR2AsrMUTXteXv9RoD0

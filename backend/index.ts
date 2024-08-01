@@ -11,14 +11,22 @@ import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET is not defined');
+}
+if (!process.env.FRONTEND_URL) {
+  throw new Error('FRONTEND_URL is not defined');
+}
+
 const app = express();
-const port = process.env.BACKEND_PORT || 5000;
+const port = Number(process.env.BACKEND_PORT) || 5000;
 
 if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined');
 }
 
 app.use(cookieParser());
+app.use('/api/stripe', stripeRoutes);
 app.use(express.json());
 app.use(
   cors({
@@ -34,7 +42,6 @@ app.use('/api', userRoutes);
 app.use('/api', eventRoutes);
 app.use('/api', bookingRoutes);
 app.use('/api', commentRoutes);
-app.use('/api/stripe', stripeRoutes);
 
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
