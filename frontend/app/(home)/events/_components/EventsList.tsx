@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import Title from "./Title";
+import Title from "../../_components/Title";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import EventCard from "./EventCard";
+import EventCard from "../../_components/EventCard";
 import { IEvent } from "@/types";
-import Pagination from "./Pagination";
+import Pagination from "../../_components/Pagination";
 
 const EventsList = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -19,7 +19,6 @@ const EventsList = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/events`
         );
         const data = await response.json();
-        console.log("fetchEventsのdata", data);
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);

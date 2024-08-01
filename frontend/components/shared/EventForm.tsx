@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { eventFormSchema } from "@/lib/validator";
+import { useForm } from "react-hook-form";
+import { getUser } from "@/lib/getUser";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,8 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { eventFormSchema } from "@/lib/validator";
-import Dropdown from "./Dropdown";
 import { Textarea } from "../ui/textarea";
 import { FileUploader } from "./FileUploader";
 import Image from "next/image";
@@ -29,21 +30,28 @@ import { IEvent } from "@/types";
 import { eventDefaultValues } from "../../../constants/categories";
 
 type EventFormProps = {
-  userId: string;
   type: "Create" | "Update";
-  event?: IEvent;
   eventId?: string;
 };
 
-const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
-  const [files, setFiles] = useState<File[]>([]);
+const EventForm = ({ type, eventId  }: EventFormProps) => {
   const router = useRouter();
+  const [files, setFiles] = useState<File[]>([]);
+  const [user, setUser] = useState<any>(null)
+  const [event, setEvent] = useState<IEvent | null>(null);
 
-  useEffect(() => {
-    if (!userId) {
-      router.push(`/`);
-    }
-  }, [userId, router]);
+  const { startUpload } = useUploadThing('imageUploader');
+
+useEffect(() => {
+    const fetchUser = async () => {
+        const userData = await getUser();
+        if (!userData) {
+          router.push('/sign-in');
+        } 
+        setUser(userData);
+      }
+    fetchUser();
+  }, []);
 
   const initialValues = event && type === 'Update' 
     ? { 
@@ -54,7 +62,6 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     }
     : eventDefaultValues;
 
-    const { startUpload } = useUploadThing('imageUploader');
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -77,17 +84,16 @@ const EventForm = ({ userId, type, event, eventId  }: EventFormProps) => {
     const payload = {
       ...values,
       imageUrl: uploadedImageUrl,
-      organizer: userId,
+      organizer: user._id,
     };
 
     try {
-      const token = localStorage.getItem('authToken');
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`, {
         method: type === 'Create' ? 'POST' : 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({ event: payload, eventId }),
       });
 

@@ -15,6 +15,8 @@ const UpcomingEvents = () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
         let data: IEvent[] = await response.json();
 
+        const now = new Date();
+        data = data.filter((event) => new Date(event.startDateTime) > now);
         data = data.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
         data = data.slice(0, 6);
         setEvents(data);

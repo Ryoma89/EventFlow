@@ -1,11 +1,22 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import EventCard from './EventCard';
-import Title from './Title';
 import { IEvent } from '@/types';
+import { getUser } from '@/lib/getUser';
+import Title from '../../_components/Title';
+import React, { useEffect, useState } from 'react';
+import EventCard from '../../_components/EventCard';
 
-const MyOrganizedEvents = ({ user }: { user: any }) => {
+const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -22,7 +33,7 @@ const MyOrganizedEvents = ({ user }: { user: any }) => {
     if (user) {
       fetchEvents();
     }
-  }, [user]);
+  }, [user, events]);
 
   return (
     <div className='mt-14 md:mt-20'>
@@ -34,7 +45,7 @@ const MyOrganizedEvents = ({ user }: { user: any }) => {
           })}
         </div>
       ) : (
-        <p className='mt-10 text-center text-gray-500'>No events found</p>
+        <p className='mt-10 text-center text-gray-500 text-xl'>No events found</p>
       )}
     </div>
   );

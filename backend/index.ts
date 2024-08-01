@@ -16,6 +16,8 @@ if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined');
 }
 
+app.use(cookieParser());
+app.use(express.json());
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -24,8 +26,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(cookieParser());
 
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
