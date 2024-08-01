@@ -1,5 +1,3 @@
-
-
 import { expressjwt } from 'express-jwt';
 import { Request, Response, NextFunction } from 'express';
 
@@ -8,7 +6,7 @@ const jwtMiddleware = expressjwt({
   algorithms: ['HS256'],
   requestProperty: 'user',
   credentialsRequired: true,
-  getToken: (req: Request) => req.cookies.token
+  getToken: (req: Request) => req.cookies.token,
 });
 
 const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
@@ -22,4 +20,3 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default authenticateJWT;
-
