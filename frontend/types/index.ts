@@ -161,7 +161,7 @@ export interface IEvent {
   startDateTime: Date;
   endDateTime: Date;
   imageUrl: string;
-  price?: string;
+  price: string;
   isFree: boolean;
   url?: string;
   createdAt: Date;

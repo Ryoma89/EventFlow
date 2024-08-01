@@ -64,8 +64,8 @@ const Comments = ({ eventId, comment, setComment }: CommentsProps) => {
   return (
     <div>
       <div className="px-5">
-          <h3 className="text-2xl font-semibold text-main">Comments</h3>
-          <div className="mt-5 grid grid-cols-3 gap-3">
+          <h3 className="text-2xl font-semibold text-main md:text-3xl">Comments</h3>
+          <div className="mt-8 grid grid-cols-3 gap-3">
             <Input 
             type="text" 
             placeholder="Add a comment" 

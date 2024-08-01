@@ -1,4 +1,7 @@
 import React from "react";
+import { IEvent } from "@/types";
+import { convertToAbsolutePath, formatDateTime } from "@/lib/eventUtils";
+
 import {
   Card,
   CardContent,
@@ -6,14 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
-import { CalendarDays, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { IEvent } from "@/types";
-import { toast } from "@/components/ui/use-toast";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { convertToAbsolutePath, formatDateTime } from "@/lib/eventUtils";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { CalendarDays, MapPin } from "lucide-react";
 
 interface EventCardProps {
   event: IEvent;
@@ -60,16 +61,16 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
     }
   };
 
-  const absoluteImageUrl = convertToAbsolutePath(event.imageUrl);
-  const { dateTime } = formatDateTime(new Date(event.startDateTime));
+  const absoluteUrl = convertToAbsolutePath(event.imageUrl);
+  const { date: startDate, time: startTime } = formatDateTime(new Date(event.startDateTime));
 
   return (
     <>
       <Card className="shadow-lg bg-cardBg flex flex-col">
         <div className="relative w-full h-52">
           <Image
-            src={absoluteImageUrl}
-            alt={absoluteImageUrl}
+            src={absoluteUrl}
+            alt={absoluteUrl}
             fill={true}
             className="rounded-t-md"
             priority
@@ -83,7 +84,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
           <CardContent className="space-y-2 flex-grow">
             <div className="flex items-center space-x-2">
               <CalendarDays className="h-5 w-5 text-icon" />
-              <p>{dateTime}</p>
+              <p>{startDate}</p>
             </div>
             <div className="flex items-center space-x-2">
               <MapPin className="h-5 w-5 text-icon" />

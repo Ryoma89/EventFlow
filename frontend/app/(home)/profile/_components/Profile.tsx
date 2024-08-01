@@ -33,6 +33,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useUploadThing } from "@/lib/uploadthing";
+import { Skeleton } from "@/components/ui/skeleton";
 import { FileUploader } from "@/components/shared/FileUploader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -121,7 +122,7 @@ const Profile = () => {
 
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <Skeleton className="mt-10 w-[300px] h-[250px]"/>
   }
   return (
     <div className="mt-10 max-w-96">

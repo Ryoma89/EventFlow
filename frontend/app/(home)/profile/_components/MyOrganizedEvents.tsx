@@ -1,9 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import EventCard from '../../_components/EventCard';
-import Title from '../../_components/Title';
 import { IEvent } from '@/types';
 import { getUser } from '@/lib/getUser';
+import Title from '../../_components/Title';
+import React, { useEffect, useState } from 'react';
+import EventCard from '../../_components/EventCard';
 
 const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -45,7 +45,7 @@ const MyOrganizedEvents = () => {
           })}
         </div>
       ) : (
-        <p className='mt-10 text-center text-gray-500'>No events found</p>
+        <p className='mt-10 text-center text-gray-500 text-xl'>No events found</p>
       )}
     </div>
   );

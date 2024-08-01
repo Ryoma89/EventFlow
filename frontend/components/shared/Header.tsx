@@ -1,12 +1,12 @@
 "use client";
-import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "../ui/use-toast";
 import { getUser } from "@/lib/getUser";
 
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { toast } from "../ui/use-toast";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const Header = () => {
   const router = useRouter();
@@ -67,7 +67,6 @@ const Header = () => {
         <nav className="flex items-center justify-end space-x-2">
           {user ? (
             <div className="flex items-center space-x-2">
-              <h3 className="text-white">{user.username}</h3>
               <Link href="/profile">
                 <Avatar>
                   <AvatarImage
