@@ -161,10 +161,18 @@ export interface IEvent {
   startDateTime: Date;
   endDateTime: Date;
   imageUrl: string;
-  price?: string;
+  price: string;
   isFree: boolean;
   url?: string;
   createdAt: Date;
   category: { _id: string; name: string };
   organizer: { _id: string; username: string };
+}
+
+export interface Comment {
+  _id: string;
+  content: string;
+  userId: {
+    username: string;
+  };
 }

@@ -1,8 +1,8 @@
 'use client'
-import React, { useEffect, useState } from "react";
-import EventCard from "./EventCard";
-import Title from "./Title";
 import { IEvent } from "@/types";
+import Title from "../../_components/Title";
+import React, { useEffect, useState } from "react";
+import EventCard from "../../_components/EventCard";
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -20,6 +20,7 @@ const MyAttendingEvents = () => {
 
     fetchEvents();
   }, []);
+
   return (
     <div className="mt-14 md:mt-20">
       <Title title="My Attending Events" />

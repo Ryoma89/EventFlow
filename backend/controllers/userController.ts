@@ -5,10 +5,17 @@ import { connectDB } from '../database';
 dotenv.config();
 
 export const getUser = async (req: Request, res: Response) => {
-  const { userId } = req.params;
   try {
     await connectDB();
+    const userId = req.user?.userId
+
+    if(!userId) {
+      return res.status(404).json({ message: 'User not found' });
+    }
     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json(null);
+    } 
     return res.status(200).json(user);
   } catch (error) {
     console.log(error);
@@ -19,14 +26,14 @@ export const getUser = async (req: Request, res: Response) => {
 export const editUser = async (req: Request, res: Response) => {
   try {
     await connectDB();
-    const { username, photo, userId } = req.body;
+    const { user } = req.body;
 
-    const user = await User.findByIdAndUpdate(userId, {
-      username,
-      photo,
-    });
+    const updateUser = await User.findByIdAndUpdate(user.userId, {
+      username: user.username,
+      photo: user.photo,
+    }, { new: true });
 
-    return res.status(201).json(user);
+    return res.status(200).json(updateUser);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);

@@ -1,20 +1,20 @@
-import jwt from 'jsonwebtoken';
+import { expressjwt } from 'express-jwt';
 import { Request, Response, NextFunction } from 'express';
 
+const jwtMiddleware = expressjwt({
+  secret: process.env.JWT_SECRET as string,
+  algorithms: ['HS256'],
+  requestProperty: 'user',
+  credentialsRequired: true,
+  getToken: (req: Request) => req.cookies.token,
+});
+
 const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: 'Access Denied: No token provided' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET as string, (err, user) => {
+  jwtMiddleware(req, res, (err) => {
     if (err) {
-      return res.status(403).json({ message: 'Access Denied: Invalid token' });
+      console.log('Error in JWT middleware:', err);
+      return res.status(401).json({ message: 'Unauthorized' });
     }
-    req.user = user;
     next();
   });
 };

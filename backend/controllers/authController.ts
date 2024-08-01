@@ -43,11 +43,13 @@ export const signIn = async (req: Request, res: Response) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      domain: 'localhost',
+      // secure: true,
       sameSite: 'strict',
       maxAge: 3600000,
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ message: 'Sign in successful' });
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -55,7 +57,13 @@ export const signIn = async (req: Request, res: Response) => {
 
 export const signOut = async (req: Request, res: Response) => {
   try {
-    res.clearCookie('token');
+    res.clearCookie('token',{
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      domain: 'localhost',
+      // secure: true,
+      sameSite: 'strict',
+    });
     res.status(200).json({ message: 'Sign out successful' });
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error' });
