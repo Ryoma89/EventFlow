@@ -1,9 +1,10 @@
 'use client';
 import Comments from './Comments';
 import Attendees from './Attendees';
+import { getUser } from '@/lib/getUser';
 import { Comment, IEvent } from '@/types';
-import CheckoutButton from '@/components/shared/CheckoutButton';
 import { formatDateTime } from '@/lib/eventUtils';
+import CheckoutButton from '@/components/shared/CheckoutButton';
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -14,6 +15,15 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
   const [attendees, setAttendees] = useState<IEvent | null>(null);
   const [event, setEvent] = useState<IEvent | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -36,12 +46,14 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
     return (
       <Skeleton className='w-10/12 mx-auto my-10 max-w-5xl rounded-ld h-[500px]' />
     );
+
   const { date: startDate, time: startTime } = formatDateTime(
     new Date(event.startDateTime)
   );
   const { date: endDate, time: endTime } = formatDateTime(
     new Date(event.endDateTime)
   );
+
   return (
     <div className='w-full'>
       <div className='grid grid-cols-1 bg-main text-white md:grid md:grid-cols-2'>
@@ -105,6 +117,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
           eventId={params.id}
           comments={comments}
           setComments={setComments}
+          user={user}
         />
       </div>
     </div>

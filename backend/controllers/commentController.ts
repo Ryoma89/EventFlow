@@ -28,7 +28,7 @@ export const deleteComment = async (req: Request, res: Response) => {
   try {
     await connectDB();
 
-    const { commentId } = req.body;
+    const { commentId } = req.params;
     const deleteComment = await Comment.findByIdAndDelete(commentId);
     return res.status(201).json(deleteComment);
   } catch (error) {

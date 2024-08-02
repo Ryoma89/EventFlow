@@ -172,7 +172,14 @@ export interface IEvent {
 export interface Comment {
   _id: string;
   content: string;
-  userId: {
+  createdAt: string;
+  event: string;
+  user: {
+    _id: string;
     username: string;
+    email: string;
+    photo?: string;
+    password: string;
+    _v: number
   };
 }
