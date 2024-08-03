@@ -12,16 +12,14 @@ const Header = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
-
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
+        const userData = await getUser();
+        setUser(userData);
     };
 
     fetchUser();
   }, []);
-
 
   const onSignOut = async () => {
     try {
@@ -45,7 +43,6 @@ const Header = () => {
         router.push("/");
       } else {
         const errorData = await response.json();
-        console.log(errorData);
         toast({
           title: "Sign out failed",
           description: `${errorData.message}`,

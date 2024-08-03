@@ -98,7 +98,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
           </div>
-          <div className='md:w-1/2 md:mx-auto'>
+          <div className=''>
             <CheckoutButton event={event} />
           </div>
         </div>

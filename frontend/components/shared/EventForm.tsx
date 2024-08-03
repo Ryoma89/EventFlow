@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Dropdown from "./Dropdown";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { eventFormSchema } from "@/lib/validator";
-import { useForm } from "react-hook-form";
+import { IEvent } from "@/types";
+import Dropdown from "./Dropdown";
 import { getUser } from "@/lib/getUser";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { eventFormSchema } from "@/lib/validator";
+
 import {
   Form,
   FormControl,
@@ -15,19 +14,22 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import { FileUploader } from "./FileUploader";
 import Image from "next/image";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Checkbox } from "../ui/checkbox";
-import { Calendar } from "lucide-react";
-import { useUploadThing } from "@/lib/uploadthing";
 import { toast } from "../ui/use-toast";
+import { Calendar } from "lucide-react";
+import DatePicker from "react-datepicker";
+import { useForm } from "react-hook-form";
+import { Checkbox } from "../ui/checkbox";
+import { Textarea } from "../ui/textarea";
 import { useRouter } from "next/navigation";
-import { IEvent } from "@/types";
+import { Input } from "@/components/ui/input";
+import { FileUploader } from "./FileUploader";
+import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
+import { useUploadThing } from "@/lib/uploadthing";
+import "react-datepicker/dist/react-datepicker.css";
 import { eventDefaultValues } from "../../../constants/categories";
+import { fetchEventById } from "@/lib/fetcheventById";
 
 type EventFormProps = {
   type: "Create" | "Update";
@@ -53,7 +55,32 @@ useEffect(() => {
     fetchUser();
   }, []);
 
-  const initialValues = event && type === 'Update' 
+  useEffect(() => {
+    if(type === 'Update' && eventId) {
+      const fetchEventDetails = async () => {
+        try {
+          const data = await fetchEventById(eventId);
+          const eventData = data.event;
+          setEvent(eventData);
+          form.reset({
+            ...eventData,
+            startDateTime: new Date(eventData.startDateTime),
+            endDateTime: new Date(eventData.endDateTime),
+            category: eventData.category.name || ""
+          });
+        } catch (error) {
+          toast({
+            title: "Error",
+            description: "Failed to fetch event details.",
+            variant: "destructive",
+          });
+        }
+      }
+      fetchEventDetails();
+    }
+  }, [type, eventId])
+
+  const initialValues = event && type === 'Update' && event 
     ? { 
       ...event, 
       startDateTime: new Date(event.startDateTime), 
