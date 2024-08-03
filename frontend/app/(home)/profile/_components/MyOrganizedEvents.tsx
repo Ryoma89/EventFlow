@@ -2,8 +2,10 @@
 import { IEvent } from '@/types';
 import { getUser } from '@/lib/getUser';
 import Title from '../../_components/Title';
-import React, { useEffect, useState } from 'react';
+import { fetchEvents } from '@/lib/fetchEvents';
 import EventCard from '../../_components/EventCard';
+
+import React, { useEffect, useState } from 'react';
 
 const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -19,10 +21,9 @@ const MyOrganizedEvents = () => {
   }, []);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchAndSetEvents = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
-        const data = await response.json();
+        const data = await fetchEvents();
         const organizedEvents = data.filter((event: IEvent) => event.organizer._id === user._id);
         setEvents(organizedEvents);
       } catch (error) {
@@ -31,7 +32,7 @@ const MyOrganizedEvents = () => {
     };
 
     if (user) {
-      fetchEvents();
+      fetchAndSetEvents();
     }
   }, [user]);
 

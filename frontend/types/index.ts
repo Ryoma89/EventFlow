@@ -169,6 +169,12 @@ export interface IEvent {
   organizer: { _id: string; username: string };
 }
 
+export interface EventResponse {
+  event: IEvent;
+  comments: Comment[]
+  attendees: any[]
+}
+
 export interface Comment {
   _id: string;
   content: string;

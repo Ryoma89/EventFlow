@@ -1,24 +1,25 @@
 'use client'
 import { IEvent } from "@/types";
 import Title from "../../_components/Title";
-import React, { useEffect, useState } from "react";
+import { fetchEvents } from "@/lib/fetchEvents";
 import EventCard from "../../_components/EventCard";
+
+import React, { useEffect, useState } from "react";
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchAndSetEvents = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
-        const data = await response.json();
+        const data = await fetchEvents();
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     }
 
-    fetchEvents();
+    fetchAndSetEvents();
   }, []);
 
   return (
