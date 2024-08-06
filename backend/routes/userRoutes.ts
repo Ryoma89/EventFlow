@@ -4,7 +4,7 @@ import authenticateJWT from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.get('/user',authenticateJWT, getUser);
+router.get('/user', getUser);
 router.put('/users/:userId', authenticateJWT, editUser);
 router.delete('/users/:userId', authenticateJWT, deleteUser);
 
