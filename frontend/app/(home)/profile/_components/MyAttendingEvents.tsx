@@ -1,35 +1,56 @@
 'use client'
 import { IEvent } from "@/types";
+import { getUser } from "@/lib/getUser";
+import { DataTable } from "./data-table";
 import Title from "../../_components/Title";
 import { fetchEvents } from "@/lib/fetchEvents";
-import EventCard from "../../_components/EventCard";
 
 import React, { useEffect, useState } from "react";
+import { formatEventData } from "@/lib/eventUtils";
+import { useColumnsAttending } from "./collumnsAttending";
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const fetchAndSetEvents = async () => {
-      try {
-        const data = await fetchEvents();
-        setEvents(data);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    }
+    const fetchUser = async () => {
+      const userData = await getUser();
+      setUser(userData);
+    };
 
-    fetchAndSetEvents();
+    fetchUser();
   }, []);
 
+  const fetchAndSetEvents = async () => {
+    try {
+      const data = await fetchEvents();
+      const organizedEvents = data.filter((event: IEvent) => event.organizer._id === user._id);
+      const formattedEvents = formatEventData(organizedEvents);
+      setEvents(formattedEvents);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchAndSetEvents();
+    }
+  }, [user]);
+
+  const columns = useColumnsAttending();
+
   return (
-    <div className="mt-14 md:mt-20">
+    <div className='mt-14 md:mt-20'>
       <Title title="My Attending Events" />
-      <div className="mt-10 space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:mt-12 lg:grid-cols-3">
-      {events.map((event) => {
-          return <EventCard event={event} key={event._id} />
-        })}
-      </div>
+      {events.length > 0 ? (
+        <div className='mt-10'>
+          <DataTable columns={columns} data={events} />
+        </div>
+      ) : (
+        <p className='mt-10 text-center text-gray-500 text-xl'>No events found</p>
+      )}
     </div>
   );
 };

@@ -26,7 +26,7 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
   return (
     <div
       {...getRootProps()}
-      className="flex justify-center items-center h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-gray-50">
+      className="flex justify-center items-center h-72 cursor-pointer flex-col overflow-hidden rounded-xl bg-auth">
       <input {...getInputProps()} className="cursor-pointer" />
 
       {imageUrl ? (

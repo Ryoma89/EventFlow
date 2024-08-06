@@ -106,7 +106,7 @@ const Comments = ({ eventId, comments, setComments, user }: CommentsProps) => {
   return (
     <div>
       <div className="px-5">
-        <h3 className="text-2xl font-semibold text-main md:text-3xl">
+        <h3 className="text-3xl font-semibold text-main md:text-4xl">
           Comments
         </h3>
         <div className="mt-8 grid grid-cols-3 gap-3">

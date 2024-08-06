@@ -44,7 +44,7 @@ const formSchema = z.object({
 
 const Profile = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
 
@@ -60,7 +60,7 @@ const Profile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      username: "",
       photo: "",
     },
   });
@@ -85,14 +85,17 @@ const Profile = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ user:payload }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ user: payload }),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -111,7 +114,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       toast({
         title: "Error",
         description: `An unexpected error occurred. Please try again later.`,
@@ -120,9 +123,41 @@ const Profile = () => {
     }
   }
 
+  const onSignOut = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sign-out`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        toast({
+          title: "👋 See you soon!",
+          description:
+            "You have been signed out. Looking forward to seeing you again!",
+        });
+        setUser(null);
+        router.push("/");
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Sign out failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   if (!user) {
-    return <Skeleton className="mt-10 w-[300px] h-[250px]"/>
+    return <Skeleton className="mt-10 w-[300px] h-[250px]" />;
   }
   return (
     <div className="mt-10 max-w-96">
@@ -133,7 +168,9 @@ const Profile = () => {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={user.photo || "https://github.com/shadcn.png"} />
+              <AvatarImage
+                src={user.photo || "https://github.com/shadcn.png"}
+              />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p>{user.username}</p>
@@ -142,7 +179,7 @@ const Profile = () => {
             email: <span>{user.email}</span>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="grid grid-cols-2 gap-5">
           <Dialog>
             <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg">
               Edit Profile
@@ -166,7 +203,9 @@ const Profile = () => {
                       <FormItem>
                         <FormLabel>Username</FormLabel>
                         <FormControl>
-                          <Input placeholder="username" {...field} />
+                          <Input
+                          className="bg-auth border-none"
+                          placeholder="username" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -196,6 +235,9 @@ const Profile = () => {
               </Form>
             </DialogContent>
           </Dialog>
+          <Button onClick={onSignOut} variant={"custom"}>
+            Sign out
+          </Button>
         </CardFooter>
       </Card>
     </div>

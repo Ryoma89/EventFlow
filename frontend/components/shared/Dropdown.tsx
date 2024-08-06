@@ -16,7 +16,7 @@ const Dropdown =  ({ value, onChangeHandler }: DropdownProps) => {
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="bg-gray-50 border-none text-gray-500">
+      <SelectTrigger className="bg-auth border-none text-gray-500">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
