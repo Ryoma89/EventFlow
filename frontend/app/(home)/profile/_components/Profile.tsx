@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/useUserStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -28,7 +29,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getUser } from "@/lib/getUser";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
@@ -44,26 +44,31 @@ const formSchema = z.object({
 
 const Profile = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [user, setUser] = useState<any>(null)
+  const { user, setUser, fetchUser } = useUserStore();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-    };
-
-    fetchUser();
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      username: "",
       photo: "",
     },
   });
+
+  useEffect(() => {
+    if (!user) {
+      fetchUser();
+    } else {
+      form.reset({
+        username: user.username,
+        photo: user.photo,
+      });
+    }
+  }, [user, form, fetchUser]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     let uploadedImageUrl = values.photo;
@@ -78,6 +83,8 @@ const Profile = () => {
       uploadedImageUrl = uploadedImages[0].url;
     }
 
+    if (!user) return;
+
     const payload = {
       ...values,
       photo: uploadedImageUrl,
@@ -85,23 +92,26 @@ const Profile = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ user:payload }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ user: payload }),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
-        console.log("result", result);
         setUser(result);
         toast({
-          title: "Profile Updated",
+          title: "✅ Profile Updated",
           description: "Your profile has been updated successfully.",
         });
+        setIsDialogOpen(false); 
       } else {
         const errorData = await response.json();
         toast({
@@ -111,7 +121,7 @@ const Profile = () => {
         });
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       toast({
         title: "Error",
         description: `An unexpected error occurred. Please try again later.`,
@@ -120,9 +130,41 @@ const Profile = () => {
     }
   }
 
+  const onSignOut = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/sign-out`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        toast({
+          title: "👋 See you soon!",
+          description:
+            "You have been signed out. Looking forward to seeing you again!",
+        });
+        setUser(null);
+        router.push("/");
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: "Sign out failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   if (!user) {
-    return <Skeleton className="mt-10 w-[300px] h-[250px]"/>
+    return <Skeleton className="mt-10 w-[300px] h-[250px]" />;
   }
   return (
     <div className="mt-10 max-w-96">
@@ -133,7 +175,9 @@ const Profile = () => {
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={user.photo || "https://github.com/shadcn.png"} />
+              <AvatarImage
+                src={user.photo || "https://github.com/shadcn.png"}
+              />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p>{user.username}</p>
@@ -142,9 +186,9 @@ const Profile = () => {
             email: <span>{user.email}</span>
           </div>
         </CardContent>
-        <CardFooter>
-          <Dialog>
-            <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg">
+        <CardFooter className="grid grid-cols-2 gap-5">
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg hover:bg-main/80">
               Edit Profile
             </DialogTrigger>
             <DialogContent className="w-4/5 rounded-lg">
@@ -166,7 +210,9 @@ const Profile = () => {
                       <FormItem>
                         <FormLabel>Username</FormLabel>
                         <FormControl>
-                          <Input placeholder="username" {...field} />
+                          <Input
+                          className="bg-auth border-none"
+                          placeholder="username" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -189,13 +235,23 @@ const Profile = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full" variant={"main"}>
-                    Submit
+                  <Button 
+                  type="submit"
+                  className="w-full" 
+                  variant={"main"}
+                  disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
                 </form>
               </Form>
             </DialogContent>
           </Dialog>
+          <Button 
+          onClick={onSignOut} 
+          className="bg-red-600 hover:bg-red-400" >
+            Sign out
+          </Button>
         </CardFooter>
       </Card>
     </div>

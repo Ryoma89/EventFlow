@@ -1,22 +1,22 @@
 'use client'
-import React, { useEffect, useState } from 'react'
 import Title from './Title'
-import EventCard from './EventCard'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { IEvent } from '@/types'
+import EventCard from './EventCard'
+import { fetchEvents } from '@/lib/fetchEvents'
+
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import React, { useEffect, useState } from 'react'
 
 const UpcomingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchAndSetEvents = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
-        let data: IEvent[] = await response.json();
+        let data: IEvent[] = await fetchEvents();
 
         const now = new Date();
-        data = data.filter((event) => new Date(event.startDateTime) > now);
         data = data.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
         data = data.slice(0, 6);
         setEvents(data);
@@ -25,7 +25,7 @@ const UpcomingEvents = () => {
       }
     }
 
-    fetchEvents();
+    fetchAndSetEvents();
   }, []);
   return (
     <section className="my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28">

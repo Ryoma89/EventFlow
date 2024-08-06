@@ -1,28 +1,30 @@
 'use client'
-import React, { useEffect, useState } from "react";
 import Title from "./Title";
-import EventCard from "./EventCard";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { IEvent } from "@/types";
+import EventCard from "./EventCard";
+import { fetchEvents } from "@/lib/fetchEvents";
+
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 
 const TrendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchAndSetEvents = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
-        let data = await response.json();
+        let data = await fetchEvents();
         data = data.slice(0, 6);
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
-    }
+    };
 
-    fetchEvents();
+    fetchAndSetEvents();
   }, []);
+
   return (
     <section className="my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28">
       <Title title="Trending Events" />

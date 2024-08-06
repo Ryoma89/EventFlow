@@ -1,3 +1,4 @@
+import Search from '@/components/shared/Search'
 import { Input } from '@/components/ui/input'
 import { SearchIcon } from 'lucide-react'
 import React from 'react'
@@ -14,14 +15,7 @@ const Hero = () => {
     >
       <div className='flex flex-col justify-center items-center h-full px-10'>
         <h2 className='text-white text-center text-2xl sm:text-3xl md:text-4xl'>Find the perfect event for you</h2>
-        <div className="relative mt-3 w-[338px] sm:w-[422px] md:w-[506px]">
-          <Input
-            type="text"
-            placeholder="Search events"
-            className="py-2 pl-10 pr-4 border rounded-md w-full bg-inputBg"
-          />
-          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-icon" />
-        </div>
+        <Search />
       </div>
     </section>
   )

@@ -4,7 +4,6 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import eventRoutes from './routes/eventRoutes';
-import bookingRoutes from './routes/bookingRoutes';
 import commentRoutes from './routes/commentRoutes';
 import stripeRoutes from './routes/stripeRoutes';
 import cookieParser from 'cookie-parser';
@@ -40,7 +39,6 @@ app.use(
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', eventRoutes);
-app.use('/api', bookingRoutes);
 app.use('/api', commentRoutes);
 
 app.listen(port, () => {

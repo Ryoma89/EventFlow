@@ -24,6 +24,7 @@ const config = {
         button: "#C0D0E7",
         cardBg: "#F8F8F8",
         inputBg: "#D6E2E2",
+        auth: "#EDF5FD",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

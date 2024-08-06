@@ -1,8 +1,6 @@
 import React from "react";
-import { getUser } from "@/lib/getUser";
 import Title from "@/app/(home)/_components/Title";
 import EventForm from "@/components/shared/EventForm";
-import { fetchEventById } from "@/lib/fetcheventById";
 
 type UpdateEventProps = {
   params: {

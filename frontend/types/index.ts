@@ -169,10 +169,37 @@ export interface IEvent {
   organizer: { _id: string; username: string };
 }
 
+export interface EventResponse {
+  event: IEvent;
+  comments: Comment[]
+  attendees: IAttendee[];
+}
+
 export interface Comment {
   _id: string;
   content: string;
-  userId: {
+  createdAt: string;
+  event: string;
+  user: {
+    _id: string;
     username: string;
+    email: string;
+    photo?: string;
+    password: string;
+    _v: number
   };
+}
+
+export interface User {
+  _id: string;
+  email: string;
+  password: string;
+  username: string;
+  photo?: string;
+}
+
+export interface IAttendee {
+  _id: string;
+  username: string;
+  photo?: string;
 }
