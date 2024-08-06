@@ -189,3 +189,11 @@ export interface Comment {
     _v: number
   };
 }
+
+export interface User {
+  _id: string;
+  email: string;
+  password: string;
+  username: string;
+  photo?: string;
+}

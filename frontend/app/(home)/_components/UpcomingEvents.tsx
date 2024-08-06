@@ -17,7 +17,6 @@ const UpcomingEvents = () => {
         let data: IEvent[] = await fetchEvents();
 
         const now = new Date();
-        data = data.filter((event) => new Date(event.startDateTime) > now);
         data = data.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
         data = data.slice(0, 6);
         setEvents(data);

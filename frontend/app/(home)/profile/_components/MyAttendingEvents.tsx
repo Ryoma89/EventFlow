@@ -7,7 +7,7 @@ import { fetchEvents } from "@/lib/fetchEvents";
 
 import React, { useEffect, useState } from "react";
 import { formatEventData } from "@/lib/eventUtils";
-import { useColumnsAttending } from "./collumnsAttending";
+import { useColumnsAttending } from "./attendingEventColumns";
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -25,8 +25,7 @@ const MyAttendingEvents = () => {
   const fetchAndSetEvents = async () => {
     try {
       const data = await fetchEvents();
-      const organizedEvents = data.filter((event: IEvent) => event.organizer._id === user._id);
-      const formattedEvents = formatEventData(organizedEvents);
+      const formattedEvents = formatEventData(data);
       setEvents(formattedEvents);
     } catch (error) {
       console.error("Error fetching events:", error);

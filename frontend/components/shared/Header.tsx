@@ -1,25 +1,17 @@
 "use client";
-import { getUser } from "@/lib/getUser";
+import { useUserStore } from "@/store/useUserStore";
 
 import Link from "next/link";
+import { useEffect} from "react";
 import { Button } from "../ui/button";
-import { toast } from "../ui/use-toast";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const Header = () => {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const { user, fetchUser } = useUserStore();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-    };
-
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   return (
     <header className="w-full bg-main">
@@ -29,14 +21,6 @@ const Header = () => {
             EventFlow
           </Link>
         </h1>
-        <ul className="hidden sm:text-white sm:flex sm:items-center sm:justify-center sm:gap-5">
-          <li className="text-lg">
-            <Link href="/events">Event List</Link>
-          </li>
-          <li className="text-lg">
-            <Link href="/events/create">Create Events</Link>
-          </li>
-        </ul>
         <nav className="flex items-center justify-end space-x-2">
           {user ? (
             <div className="flex items-center space-x-2">

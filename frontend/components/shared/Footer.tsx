@@ -23,7 +23,7 @@ const Footer = () => {
                   <Link href="/profile">Account</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Events Lists</Link>
+                  <Link href="/events">Event List</Link>
                 </li>
                 <li className="hover:opacity-70">
                   <Link href="/events/create">Create Event</Link>
@@ -34,27 +34,27 @@ const Footer = () => {
               <h5 className="text-lg font-bold mb-4">Categories</h5>
               <ul className="space-y-1">
                 <li className="hover:opacity-70">
-                  <Link href="/events">Music</Link>
+                <Link href={`/events?category=music`}>Music</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Art</Link>
+                  <Link href={`/events?category=art`}>Art</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Food</Link>
+                  <Link href={`/events?category=food`}>Food</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Tech</Link>
+                  <Link href={`/events?category=tech`}>Tech</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Sports</Link>
+                  <Link href={`/events?category=sports`}>Sports</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events">Wellness</Link>
+                  <Link href={`/events?category=wellness`}>Wellness</Link>
                 </li>
               </ul>
             </div>
             <div className="w-3/5 mx-auto">
-              <h5 className="text-lg font-bold mb-4">Contact Us</h5>
+              <h5 className="text-lg font-bold mb-4">Contact</h5>
               <ul className="space-y-1">
                 <li className="flex items-center space-x-2 hover:opacity-70">
                   <FacebookIcon className="w-5 h-5" />
@@ -83,7 +83,7 @@ const Footer = () => {
                       <Link href="/profile">Account</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Events Lists</Link>
+                      <Link href="/events">Event List</Link>
                     </li>
                     <li className="hover:opacity-70">
                       <Link href="/events/create">Create Event</Link>
@@ -96,28 +96,28 @@ const Footer = () => {
                 <AccordionContent>
                   <ul className="space-y-1">
                     <li className="hover:opacity-70">
-                      <Link href="/events">Music</Link>
+                      <Link href={`/events?category=music`}>Music</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Art</Link>
+                      <Link href={`/events?category=art`}>Art</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Food</Link>
+                      <Link href={`/events?category=food`}>Food</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Tech</Link>
+                      <Link href={`/events?category=tech`}>Tech</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Sports</Link>
+                      <Link href={`/events?category=sports`}>Sports</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events">Wellness</Link>
+                      <Link href={`/events?category=wellness`}>Wellness</Link>
                     </li>
                   </ul>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="contact">
-                <AccordionTrigger>Contact Us</AccordionTrigger>
+                <AccordionTrigger>Contact</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
                     <li className="flex items-center space-x-2 hover:opacity-70">

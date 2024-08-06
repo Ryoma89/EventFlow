@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { IEvent } from "@/types";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
 
 export const useColumns = (
   handleDelete: (eventId: string) => void

@@ -1,10 +1,10 @@
 'use client';
 import { IEvent } from '@/types';
-import { useColumns } from './columns';
 import { getUser } from '@/lib/getUser';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 import { fetchEvents } from '@/lib/fetchEvents';
+import { useColumns } from './organizedEventColumns';
 
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/useUserStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -28,7 +29,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getUser } from "@/lib/getUser";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
@@ -44,18 +44,12 @@ const formSchema = z.object({
 
 const Profile = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const { user, setUser, fetchUser } = useUserStore();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const router = useRouter();
   const { startUpload } = useUploadThing("imageUploader");
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-    };
-
-    fetchUser();
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,6 +58,17 @@ const Profile = () => {
       photo: "",
     },
   });
+
+  useEffect(() => {
+    if (!user) {
+      fetchUser();
+    } else {
+      form.reset({
+        username: user.username,
+        photo: user.photo,
+      });
+    }
+  }, [user, form, fetchUser]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     let uploadedImageUrl = values.photo;
@@ -77,6 +82,8 @@ const Profile = () => {
 
       uploadedImageUrl = uploadedImages[0].url;
     }
+
+    if (!user) return;
 
     const payload = {
       ...values,
@@ -99,12 +106,12 @@ const Profile = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("result", result);
         setUser(result);
         toast({
-          title: "Profile Updated",
+          title: "✅ Profile Updated",
           description: "Your profile has been updated successfully.",
         });
+        setIsDialogOpen(false); 
       } else {
         const errorData = await response.json();
         toast({
@@ -180,7 +187,7 @@ const Profile = () => {
           </div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-5">
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg">
               Edit Profile
             </DialogTrigger>
@@ -228,14 +235,21 @@ const Profile = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full" variant={"main"}>
-                    Submit
+                  <Button 
+                  type="submit"
+                  className="w-full" 
+                  variant={"main"}
+                  disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                   </Button>
                 </form>
               </Form>
             </DialogContent>
           </Dialog>
-          <Button onClick={onSignOut} variant={"custom"}>
+          <Button 
+          onClick={onSignOut} 
+          variant={"custom"}>
             Sign out
           </Button>
         </CardFooter>
