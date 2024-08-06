@@ -2,13 +2,13 @@ import React from "react";
 import {
   Card,
 } from "@/components/ui/card";
-import categories from "@/constants/categories";
 import Link from "next/link";
+import { CATEGORIES } from "../../../../constants/categories";
 
 const CategoryCard = () => {
   return (
     <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mt-12 md:grid-cols-3">
-      {categories.map((category) => (
+      {CATEGORIES.map((category) => (
         <Link href={`/events`} key={category.name}>
           <Card key={category.name} className="relative hover:opacity-90">
           <div 

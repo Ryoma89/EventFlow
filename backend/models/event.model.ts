@@ -60,6 +60,7 @@ const EventSchema = new Schema({
   organizer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
   },
 });
 

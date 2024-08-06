@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import EventDetailsCard from "./_components/EventDetailsCard";
 
-const EventPage = () => {
+const EventDetailsPage = ({ params }: { params: { id: string } }) => {
+  
   return (
-    <div>
-      a event page
-    </div>
-  )
-}
+    <section className="flex justify-center">
+      <EventDetailsCard params={params}/>
+    </section>
+  );
+};
 
-export default EventPage
+export default EventDetailsPage;
+

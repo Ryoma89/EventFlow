@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 const SignInPage = () => {
   const router = useRouter();
@@ -34,14 +35,28 @@ const SignInPage = () => {
         }
       );
       if (response.ok) {
+        const data = await response.json();
+        // localStorage.setItem('authToken', data.token);
         router.push('/');
-        alert('Sign in successful!');
+        toast({
+          title: "✅ Sign in successful!",
+          description: "You have been signed in.",
+        });
       } else {
         const errorData = await response.json();
-        alert(`Sign in failed: ${errorData.message}`);
+        toast({
+          title: "Sign in failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again later.",
+        variant: "destructive",
+      });
     }
   };
   return (
@@ -83,7 +98,7 @@ const SignInPage = () => {
               <Link href='/sign-up' className='underline text-blue-600'>
                 <span className='hover:opacity-80'> click here </span>
               </Link>
-              to sign up.
+              to sign in.
             </div>
           </div>
         </CardContent>

@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import Title from "../../_components/Title";
+import EventForm from "../../../../components/shared/EventForm";
 
-const EventCreatePage = () => {
+const EventCreatePage = async () => {
   return (
-    <div>
-      create event
-    </div>
-  )
-}
+    <section className="my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28">
+      <Title title="Create Event" />
+      <EventForm type="Create"/>
+    </section>
+  );
+};
 
-export default EventCreatePage
+export default EventCreatePage;

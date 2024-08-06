@@ -6,14 +6,16 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { toast } from '@/components/ui/use-toast';
 
 const SignUpPage = () => {
-  const onSubmit = async (formData: FormData) => {
+  const router = useRouter();
+    const onSubmit = async (formData: FormData) => {
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -34,14 +36,27 @@ const SignUpPage = () => {
         }
       );
       if (response.ok) {
-        alert('Sign up successful!');
+        toast({
+          title: "🎉 Sign up successful!",
+          description: "You can now sign in with your new account.",
+        });
+        router.push('/sign-in');
       } else {
         const errorData = await response.json();
         console.log(errorData);
-        alert(`Sign up failed: ${errorData.message}`);
+        toast({
+          title: "Sign up failed",
+          description: `${errorData.message}`,
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again later.",
+        variant: "destructive",
+      });
     }
   };
   return (
@@ -86,16 +101,16 @@ const SignUpPage = () => {
               />
             </div>
             <Button className='w-full bg-main mt-2' type='submit'>
-              Login
+              Sign Up
             </Button>
           </form>
           <div className='flex justify-center items-center space-x-2 mt-2 text-sm'>
             <div className='text-center'>
-              Already have an account? Then please <span> </span>
+              Already have an account? Then please{' '}
               <Link href='/sign-in' className='underline text-blue-600'>
                 <span className='hover:opacity-80'>click here </span>
               </Link>
-              to sign in.
+              to sign up.
             </div>
           </div>
         </CardContent>
