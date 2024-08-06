@@ -32,19 +32,22 @@ const seedData = async () => {
         username: 'admin',
         email: 'admin@example.com',
         password: 'password123',
-        photo: '../../assets/images/user_image1.jpg',
+        photo:
+          'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHVzZXJ8ZW58MHx8MHx8fDA%3D',
       },
       {
         username: 'user1',
         email: 'user1@example.com',
         password: 'password123',
-        photo: '../../assets/images/user_image2.jpg',
+        photo:
+          'https://images.unsplash.com/photo-1640951613773-54706e06851d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHVzZXJ8ZW58MHx8MHx8fDA%3D',
       },
       {
         username: 'user2',
         email: 'user2@example.com',
         password: 'password123',
-        photo: '../../assets/images/user_image3.jpg',
+        photo:
+          'https://images.unsplash.com/photo-1640960543409-dbe56ccc30e2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXJ8ZW58MHx8MHx8fDA%3D',
       },
     ]);
 
@@ -55,7 +58,8 @@ const seedData = async () => {
         location: 'New York, NY',
         startDateTime: new Date('2024-09-15T20:00:00Z'),
         endDateTime: new Date('2024-09-15T23:00:00Z'),
-        imageUrl: '../../assets/images/event_image1.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnR8ZW58MHx8MHx8fDA%3D',
         price: '50',
         isFree: false,
         url: 'https://rockconcert.com',
@@ -68,7 +72,8 @@ const seedData = async () => {
         location: 'San Francisco, CA',
         startDateTime: new Date('2024-10-01T11:00:00Z'),
         endDateTime: new Date('2024-10-01T17:00:00Z'),
-        imageUrl: '../../assets/images/event_image2.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1656129974517-7da8bb940a1d?q=80&w=985&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         price: '30',
         isFree: false,
         url: 'https://modernartexpo.com',
@@ -81,7 +86,8 @@ const seedData = async () => {
         location: 'Los Angeles, CA',
         startDateTime: new Date('2024-11-10T12:00:00Z'),
         endDateTime: new Date('2024-11-10T20:00:00Z'),
-        imageUrl: '../../assets/images/event_image3.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1678646142794-253fdd20fa05?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Rm9vZCUyMGZlc3RpdmFsfGVufDB8fDB8fHww',
         price: 'Free',
         isFree: true,
         url: 'https://foodfestival.com',
@@ -95,7 +101,8 @@ const seedData = async () => {
         location: 'Austin, TX',
         startDateTime: new Date('2024-12-05T09:00:00Z'),
         endDateTime: new Date('2024-12-05T17:00:00Z'),
-        imageUrl: '../../assets/images/event_image4.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y29uZmVyZW5jZXxlbnwwfHwwfHx8MA%3D%3D',
         price: 'Free',
         isFree: true,
         url: 'https://techconference.com',
@@ -109,7 +116,8 @@ const seedData = async () => {
         location: 'Berlin, Germany',
         startDateTime: new Date('2024-12-20T08:00:00Z'),
         endDateTime: new Date('2024-12-20T12:00:00Z'),
-        imageUrl: '../../assets/images/event_image5.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1524646349956-1590eacfa324?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bWFyYXRob258ZW58MHx8MHx8fDA%3D',
         price: 'Free',
         isFree: true,
         url: 'https://marathonrace.com',
@@ -123,7 +131,8 @@ const seedData = async () => {
         location: 'Bali, Indonesia',
         startDateTime: new Date('2024-11-25T09:00:00Z'),
         endDateTime: new Date('2024-11-25T17:00:00Z'),
-        imageUrl: '../../assets/images/event_image6.jpg',
+        imageUrl:
+          'https://images.unsplash.com/photo-1529693662653-9d480530a697?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHlvZ2F8ZW58MHx8MHx8fDA%3D',
         price: '200',
         isFree: false,
         url: 'https://yogaretreat.com',

@@ -12,13 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@stripe/stripe-js": "^4.1.0",
-    "concurrently": "^8.2.2",
-    "js-cookie": "^3.0.5",
-    "stripe": "^16.5.0",
-    "zustand": "^4.5.4"
-  },
-  "devDependencies": {
-    "@types/js-cookie": "^3.0.6"
+    "concurrently": "^8.2.2"
   }
 }
