@@ -1,5 +1,6 @@
 "use client";
 import { useUserStore } from "@/store/useUserStore";
+import SheetMenu from "@/app/(home)/_components/SheetMenu";
 
 import Link from "next/link";
 import { useEffect } from "react";
@@ -23,9 +24,9 @@ const Header = () => {
         </h1>
         <nav className="flex items-center justify-end space-x-4">
           <div className="hidden sm:flex">
-          <Link href="/events">
-            <p className="text-white">Events</p>
-          </Link>
+            <Link href="/events">
+              <p className="text-white">Events</p>
+            </Link>
           </div>
           {user ? (
             <div className="flex items-center space-x-4">
@@ -43,6 +44,9 @@ const Header = () => {
                   <AvatarFallback>{user.username}</AvatarFallback>
                 </Avatar>
               </Link>
+              <div className="flex flex-col items-center sm:hidden">
+                <SheetMenu />
+              </div>
             </div>
           ) : (
             <Link href="/sign-in" className="text-white cursor-pointer w-24">

@@ -8,6 +8,8 @@ import { fetchEvents } from "@/lib/fetchEvents";
 import React, { useEffect, useState } from "react";
 import { formatEventData } from "@/lib/eventUtils";
 import { useColumnsAttending } from "./attendingEventColumns";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);

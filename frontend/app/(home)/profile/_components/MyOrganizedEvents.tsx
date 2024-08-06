@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -84,7 +86,14 @@ const MyOrganizedEvents = () => {
 
   return (
     <div className='mt-14 md:mt-20'>
+      <div className='sm:flex sm:items-center sm:justify-between'>
       <Title title="My Events" />
+      <div className='mt-7 sm:mt-0'>
+        <Link href="/events/create">
+          <Button variant={"outline"} className="w-full">Create Event</Button>
+        </Link>
+      </div>
+      </div>
       {events.length > 0 ? (
         <div className='mt-10'>
           <DataTable columns={columns} data={events} />

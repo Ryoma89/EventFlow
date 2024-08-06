@@ -72,7 +72,7 @@ const SignIn = () => {
             className="text-4xl text-center font-bold text-main"
             style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)" }}
           >
-            Welcome Back
+            Welcome
           </h2>
           <p className="text-center mt-1 lg:mt-4 lg:text-lg">Enter your credentials to login</p>
         </div>

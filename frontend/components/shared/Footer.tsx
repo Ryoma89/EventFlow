@@ -1,18 +1,20 @@
 import React from "react";
+import Link from "next/link";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
+
 import { Separator } from "../ui/separator";
-import Link from "next/link";
+import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-main text-white pt-10">
-      <div className="mx-auto w-4/5 mb-8">
+      <div className="mx-auto w-4/5 mb-10">
         <div className="lg:w-[818px] mx-auto">
           {/* md */}
           <div className="hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-6">

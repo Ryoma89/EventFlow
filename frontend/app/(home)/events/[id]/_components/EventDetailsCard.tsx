@@ -2,17 +2,28 @@
 import Comments from "./Comments";
 import Attendees from "./Attendees";
 import { getUser } from "@/lib/getUser";
-import { Comment, IEvent } from "@/types";
+import { Comment, IAttendee, IEvent } from "@/types";
 import { formatDateTime } from "@/lib/eventUtils";
 import CheckoutButton from "@/components/shared/CheckoutButton";
 
+import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, DollarSign, Facebook, Instagram, Mail, MapPin, Twitter } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  DollarSign,
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Twitter,
+} from "lucide-react";
+import { fetchEventById } from "@/lib/fetcheventById";
 
 const EventDetailsCard = ({ params }: { params: { id: string } }) => {
-  const [attendees, setAttendees] = useState<IEvent | null>(null);
+  const [attendees, setAttendees] = useState<IAttendee[]>([]);
   const [event, setEvent] = useState<IEvent | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [user, setUser] = useState<any>(null);
@@ -28,10 +39,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/events/${params.id}`
-        );
-        const data = await response.json();
+        const data = await fetchEventById(params.id);
         setEvent(data.event);
         setComments(data.comments);
         setAttendees(data.attendees);
@@ -121,25 +129,33 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
         />
       </div>
 
-      {/* <div className="pb-10 md:py-10">
+      <div className="pb-10 md:py-10">
         <h3 className="text-3xl font-semibold text-main text-center md:text-4xl">
           Share This Event
         </h3>
-        <div className="mt-5 flex items-center justify-center gap-5">
+        <div className="mt-7 flex items-center justify-center gap-5">
           <div>
-            <Mail className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            <Link href="mailto:">
+              <Mail className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            </Link>
           </div>
           <div>
-            <Instagram className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            <Link href="https://instagram.com">
+              <Instagram className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            </Link>
           </div>
           <div>
-            <Twitter className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            <Link href="https://twitter.com">
+              <Twitter className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            </Link>
           </div>
           <div>
-            <Facebook className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            <Link href="https://facebook.com">
+              <Facebook className="h-8 w-8 text-icon md:h-10 md:w-10" />
+            </Link>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

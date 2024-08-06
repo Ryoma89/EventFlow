@@ -1,6 +1,6 @@
+import { User } from '@/types';
 import { create } from 'zustand'
 import { getUser } from '@/lib/getUser';
-import { User } from '@/types';
 
 interface UserState {
   user: User | null;

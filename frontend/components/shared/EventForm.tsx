@@ -4,8 +4,9 @@ import { z } from "zod";
 import { IEvent } from "@/types";
 import Dropdown from "./Dropdown";
 import { getUser } from "@/lib/getUser";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { eventFormSchema } from "@/lib/validator";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { fetchEventById } from "@/lib/fetcheventById";
 
 import {
   Form,
@@ -15,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Link from "next/link";
 import Image from "next/image";
 import { toast } from "../ui/use-toast";
 import { Calendar } from "lucide-react";
@@ -30,8 +32,6 @@ import React, { useEffect, useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 import "react-datepicker/dist/react-datepicker.css";
 import { eventDefaultValues } from "../../../constants/categories";
-import { fetchEventById } from "@/lib/fetcheventById";
-import Link from "next/link";
 
 type EventFormProps = {
   type: "Create" | "Update";
@@ -40,8 +40,8 @@ type EventFormProps = {
 
 const EventForm = ({ type, eventId }: EventFormProps) => {
   const router = useRouter();
-  const [files, setFiles] = useState<File[]>([]);
   const [user, setUser] = useState<any>(null);
+  const [files, setFiles] = useState<File[]>([]);
   const [event, setEvent] = useState<IEvent | null>(null);
 
   const { startUpload } = useUploadThing("imageUploader");

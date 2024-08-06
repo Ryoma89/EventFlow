@@ -188,7 +188,7 @@ const Profile = () => {
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-5">
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg">
+            <DialogTrigger className="w-full bg-main text-white py-2 rounded-lg hover:bg-main/80">
               Edit Profile
             </DialogTrigger>
             <DialogContent className="w-4/5 rounded-lg">
@@ -249,7 +249,7 @@ const Profile = () => {
           </Dialog>
           <Button 
           onClick={onSignOut} 
-          variant={"custom"}>
+          className="bg-red-600 hover:bg-red-400" >
             Sign out
           </Button>
         </CardFooter>

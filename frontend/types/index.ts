@@ -172,7 +172,7 @@ export interface IEvent {
 export interface EventResponse {
   event: IEvent;
   comments: Comment[]
-  attendees: any[]
+  attendees: IAttendee[];
 }
 
 export interface Comment {
@@ -194,6 +194,12 @@ export interface User {
   _id: string;
   email: string;
   password: string;
+  username: string;
+  photo?: string;
+}
+
+export interface IAttendee {
+  _id: string;
   username: string;
   photo?: string;
 }
