@@ -2,7 +2,7 @@
 import { useUserStore } from "@/store/useUserStore";
 
 import Link from "next/link";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
@@ -21,9 +21,19 @@ const Header = () => {
             EventFlow
           </Link>
         </h1>
-        <nav className="flex items-center justify-end space-x-2">
+        <nav className="flex items-center justify-end space-x-4">
+          <div className="hidden sm:flex">
+          <Link href="/events">
+            <p className="text-white">Events</p>
+          </Link>
+          </div>
           {user ? (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-4">
+              <div className="hidden sm:flex">
+                <Link href="/events/create">
+                  <p className="text-white">Create Event</p>
+                </Link>
+              </div>
               <Link href="/profile">
                 <Avatar>
                   <AvatarImage
@@ -35,11 +45,11 @@ const Header = () => {
               </Link>
             </div>
           ) : (
-              <Link href="/sign-in" className="text-white cursor-pointer w-24">
-                <Button variant={"custom"} className="w-full">
-                  Sign In
-                </Button>
-              </Link>
+            <Link href="/sign-in" className="text-white cursor-pointer w-24">
+              <Button variant={"custom"} className="w-full">
+                Sign In
+              </Button>
+            </Link>
           )}
         </nav>
       </div>
