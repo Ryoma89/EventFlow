@@ -19,9 +19,8 @@ const database_1 = require("../database");
 const booking_model_1 = __importDefault(require("../models/booking.model"));
 dotenv_1.default.config();
 const createCheckoutSession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
+    const stripe = new stripe_1.default(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
     const { order } = req.body;
-    console.log({ order });
     const price = order.isFree ? 0 : Number(order.price) * 100;
     try {
         const session = yield stripe.checkout.sessions.create({
@@ -56,7 +55,7 @@ exports.createCheckoutSession = createCheckoutSession;
 const stripeWebhook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
     const sig = req.headers['stripe-signature'];
-    const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const stripeWebhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
     let event;
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
