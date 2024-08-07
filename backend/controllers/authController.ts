@@ -33,8 +33,11 @@ export const signIn = async (req: Request, res: Response) => {
     await connectDB();
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+    if (!user) {
+      return res.status(401).json({ message: 'The email does not exist' });
+    }
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: 'The password is incorrect' });
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
       expiresIn: '1h',
@@ -57,7 +60,7 @@ export const signIn = async (req: Request, res: Response) => {
 
 export const signOut = async (req: Request, res: Response) => {
   try {
-    res.clearCookie('token',{
+    res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       domain: 'localhost',
@@ -69,4 +72,3 @@ export const signOut = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
