@@ -6,12 +6,10 @@ import Booking from '../models/booking.model';
 
 dotenv.config();
 
-
 export const createCheckoutSession = async (req: Request, res: Response) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
   const { order } = req.body;
-  console.log({order})
-  
+
   const price = order.isFree ? 0 : Number(order.price) * 100;
 
   try {
@@ -47,7 +45,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 export const stripeWebhook = async (req: Request, res: Response) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const sig = req.headers['stripe-signature'];
-  const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const stripeWebhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
 
   let event;
   try {
