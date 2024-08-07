@@ -18,11 +18,7 @@ if (!process.env.FRONTEND_URL) {
 }
 
 const app = express();
-const port = Number(process.env.BACKEND_PORT) || 5000;
-
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET is not defined');
-}
+const port = Number(process.env.PORT) || 5000;
 
 app.use(cookieParser());
 app.use('/api/stripe', stripeRoutes);

@@ -10,7 +10,6 @@ const jwtMiddleware = expressjwt({
 });
 
 const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
-  console.log('Authenticating JWT...');
   jwtMiddleware(req, res, (err) => {
     if (err) {
       console.log('Error in JWT middleware:', err);

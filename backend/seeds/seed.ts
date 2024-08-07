@@ -4,11 +4,18 @@ import mongoose from 'mongoose';
 import User from '../models/user.model';
 import Event from '../models/event.model';
 import Category from '../models/category.model';
-import { CATEGORIES } from '../../constants/categories';
 
 dotenv.config();
 
 const MONGODB_URI = process.env.MONGODB_URI;
+const CATEGORIES = [
+  { name: 'Music', image: '/music.jpeg' },
+  { name: 'Art', image: '/art.jpeg' },
+  { name: 'Food', image: '/food.jpeg' },
+  { name: 'Tech', image: '/tech.jpeg' },
+  { name: 'Sports', image: '/sports.jpeg' },
+  { name: 'Wellness', image: '/wellness.jpeg' },
+];
 
 const seedData = async () => {
   try {
