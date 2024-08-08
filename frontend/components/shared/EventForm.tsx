@@ -36,25 +36,20 @@ import { eventDefaultValues } from '../../constants/categories';
 type EventFormProps = {
   type: 'Create' | 'Update';
   eventId?: string;
+  user: User;
 };
 
-const EventForm = ({ type, eventId }: EventFormProps) => {
+const EventForm = ({ type, eventId, user }: EventFormProps) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [event, setEvent] = useState<IEvent | null>(null);
   const { startUpload } = useUploadThing('imageUploader');
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      if (!userData) {
-        router.push('/sign-in');
-      }
-      setUser(userData);
-    };
-    fetchUser();
-  }, [router]);
+    if (!user?._id) {
+      router.push('/sign-in');
+    }
+  }, [user, router]);
 
   const initialValues =
     event && type === 'Update' && event

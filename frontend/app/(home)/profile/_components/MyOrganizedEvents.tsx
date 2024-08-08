@@ -1,6 +1,5 @@
 'use client';
 import { IEvent, User } from '@/types';
-import { getUser } from '@/lib/getUser';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 import { fetchEvents } from '@/lib/fetchEvents';
@@ -12,25 +11,19 @@ import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
 import React, { useCallback, useEffect, useState } from 'react';
 
-const MyOrganizedEvents = () => {
+interface OrganizedProps {
+  user: User;
+}
+
+const MyOrganizedEvents = ({ user }: OrganizedProps) => {
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-    };
-
-    fetchUser();
-  }, []);
 
   const fetchAndSetEvents = useCallback(async () => {
     try {
       if (!user) return;
       const data = await fetchEvents();
       const organizedEvents = data.filter(
-        (event: IEvent) => event.organizer._id === user._id
+        (event: IEvent) => event.organizer && event.organizer._id === user._id
       );
       const formattedEvents = formatEventData(organizedEvents);
       setEvents(formattedEvents);

@@ -5,7 +5,7 @@ import Categories from './_components/Categories';
 import TrendingEvents from './_components/TrendingEvents';
 import UpcomingEvents from './_components/UpcomingEvents';
 
-const HomePage = () => {
+const HomePage = async () => {
   return (
     <main>
       <Hero />

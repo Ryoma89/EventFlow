@@ -52,7 +52,7 @@ export const signIn = async (req: Request, res: Response) => {
       maxAge: 3600000,
     });
 
-    res.status(200).json({ message: 'Sign in successful' });
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
