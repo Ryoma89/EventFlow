@@ -1,14 +1,14 @@
-import React from "react";
-import EventDetailsCard from "./_components/EventDetailsCard";
+import React from 'react';
+import { getUser } from '@/lib/getUser';
+import EventDetailsCard from './_components/EventDetailsCard';
 
-const EventDetailsPage = ({ params }: { params: { id: string } }) => {
-  
+const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
+  const user = await getUser();
   return (
-    <section className="flex justify-center">
-      <EventDetailsCard params={params}/>
+    <section className='flex justify-center'>
+      <EventDetailsCard params={params} user={user} />
     </section>
   );
 };
 
 export default EventDetailsPage;
-

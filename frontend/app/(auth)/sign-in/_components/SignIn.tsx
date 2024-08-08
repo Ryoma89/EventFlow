@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
 import { CalendarCheck, LockKeyhole, Mail } from 'lucide-react';
+import { useUserStore } from '@/store/useUserStore';
 
 const SignIn = () => {
   const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const onSubmit = async (formData: FormData) => {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -30,6 +32,7 @@ const SignIn = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        setUser(data);
         router.push('/');
         toast({
           title: '✅ Sign in successful!',

@@ -1,24 +1,19 @@
 'use client';
-import { useUserStore } from '@/store/useUserStore';
 import SheetMenu from '@/app/(home)/_components/SheetMenu';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { getUser } from '@/lib/getUser';
+
+import { useUserStore } from '@/store/useUserStore';
+import { useEffect } from 'react';
 
 const Header = () => {
-  const { user, setUser } = useUserStore();
+  const { user, fetchUser } = useUserStore();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getUser();
-      setUser(user);
-    };
-
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   return (
     <header className='w-full bg-main'>
