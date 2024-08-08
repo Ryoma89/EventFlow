@@ -45,8 +45,11 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, database_1.connectDB)();
         const { email, password } = req.body;
         const user = yield user_model_1.default.findOne({ email });
-        if (!user || !(yield bcrypt_1.default.compare(password, user.password))) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+        if (!user) {
+            return res.status(401).json({ message: 'The email does not exist' });
+        }
+        if (!(yield bcrypt_1.default.compare(password, user.password))) {
+            return res.status(401).json({ message: 'The password is incorrect' });
         }
         const token = jsonwebtoken_1.default.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: '1h',
@@ -59,7 +62,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             sameSite: 'strict',
             maxAge: 3600000,
         });
-        res.status(200).json({ message: 'Sign in successful' });
+        res.status(200).json(user);
     }
     catch (err) {
         res.status(500).json({ error: 'Internal Server Error' });

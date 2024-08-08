@@ -17,23 +17,27 @@ const user_model_1 = __importDefault(require("../models/user.model"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const database_1 = require("../database");
 dotenv_1.default.config();
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    yield (0, database_1.connectDB)();
+    const tokenFromCookie = req.cookies.token;
+    const tokenFromHeader = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+    const token = tokenFromCookie || tokenFromHeader;
+    if (!token) {
+        return res.json(null);
+    }
     try {
-        yield (0, database_1.connectDB)();
-        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
-        if (!userId) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.userId;
         const user = yield user_model_1.default.findById(userId);
         if (!user) {
-            return res.status(404).json(null);
+            return res.status(404).json({ message: 'User not found' });
         }
         return res.status(200).json(user);
     }
     catch (error) {
-        console.log(error);
-        return res.status(500).json(error);
+        return res.status(500).json(null);
     }
 });
 exports.getUser = getUser;
