@@ -12,8 +12,7 @@
     "build": "npm run build:frontend && npm run build:backend",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && node dist/index.js",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "heroku-postbuild": "npm run build"
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
   "keywords": [],
   "author": "",
