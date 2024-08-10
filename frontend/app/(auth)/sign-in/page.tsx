@@ -1,4 +1,8 @@
-import SignIn from "./_components/SignIn";
+import dynamic from 'next/dynamic';
+
+const SignIn = dynamic(() => import('./_components/SignIn'), {
+  ssr: false,
+});
 
 const SignInPage = () => {
   return (
