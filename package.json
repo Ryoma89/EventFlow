@@ -7,18 +7,20 @@
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "build:frontend": "cd frontend && npm run build",
-    "build:backend": "cd backend && tsc --project tsconfig.json",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:backend": "cd backend && npm install && tsc --project tsconfig.json",
     "build": "npm run build:frontend && npm run build:backend",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && node dist/index.js",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "heroku-postbuild": "npm run build"
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20.6.1"
   }
 }
