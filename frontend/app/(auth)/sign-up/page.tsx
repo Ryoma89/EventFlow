@@ -1,4 +1,8 @@
-import SignUp from './_components/SignUp';
+import dynamic from 'next/dynamic';
+
+const SignUp = dynamic(() => import('./_components/SignUp'), {
+  ssr: false,
+});
 
 const SignUpPage = () => {
   
