@@ -1,9 +1,7 @@
 "use client";
 
 import { IEvent } from "@/types";
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ColumnDef } from "@tanstack/react-table";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
 
 export const useColumnsAttending = (): ColumnDef<IEvent>[] => [
   {

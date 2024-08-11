@@ -1,10 +1,10 @@
 'use client'
-import React, { useEffect, useState } from 'react'
 import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import React, { useState } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
-import { Button } from '../ui/button'
 
 const Search = ({}) => {
   const [query, setQuery] = useState('');

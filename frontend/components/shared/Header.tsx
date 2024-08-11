@@ -1,12 +1,12 @@
 'use client';
+import { useUserStore } from '@/store/useUserStore';
 import SheetMenu from '@/app/(home)/_components/SheetMenu';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-import { useUserStore } from '@/store/useUserStore';
-import { useEffect } from 'react';
 
 const Header = () => {
   const { user, fetchUser } = useUserStore();

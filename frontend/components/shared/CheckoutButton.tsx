@@ -1,6 +1,7 @@
 'use client';
 import { IEvent } from '@/types';
 import Checkout from './Checkout';
+
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { useUserStore } from '@/store/useUserStore';

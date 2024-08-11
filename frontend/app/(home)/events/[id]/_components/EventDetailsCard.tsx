@@ -1,15 +1,10 @@
 'use client';
 import Comments from './Comments';
 import Attendees from './Attendees';
-import { getUser } from '@/lib/getUser';
-import { Comment, IAttendee, IEvent, User } from '@/types';
 import { formatDateTime } from '@/lib/eventUtils';
+import { Comment, IAttendee, IEvent, User } from '@/types';
 import CheckoutButton from '@/components/shared/CheckoutButton';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   Calendar,
   Clock,
@@ -20,6 +15,10 @@ import {
   MapPin,
   Twitter,
 } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 import { fetchEventById } from '@/lib/fetcheventById';
 
 const EventDetailsCard = ({

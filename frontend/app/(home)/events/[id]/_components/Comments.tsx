@@ -1,13 +1,13 @@
 import { Comment } from "@/types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { formatDateTime } from "@/lib/eventUtils";
 
+import { Trash } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatDateTime } from "@/lib/eventUtils";
-import { Card } from "@/components/ui/card";
-import { Trash } from "lucide-react";
 
 interface CommentsProps {
   eventId: string;

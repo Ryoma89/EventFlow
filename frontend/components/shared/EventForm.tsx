@@ -1,9 +1,8 @@
 'use client';
 
 import { z } from 'zod';
-import { IEvent, User } from '@/types';
 import Dropdown from './Dropdown';
-import { getUser } from '@/lib/getUser';
+import { IEvent, User } from '@/types';
 import { eventFormSchema } from '@/lib/validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fetchEventById } from '@/lib/fetcheventById';
