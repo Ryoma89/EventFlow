@@ -11,7 +11,8 @@ import { CalendarCheck, LockKeyhole, Mail } from 'lucide-react';
 
 const SignIn = () => {
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
+  const { setUser } = useUserStore();
+  
   const onSubmit = async (formData: FormData) => {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
