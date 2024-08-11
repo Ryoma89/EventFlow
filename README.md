@@ -2,8 +2,20 @@
 
 ## Getting Started
 
-First, run the development server:
+Welcome to the EventFlow project! Follow the instructions below to get started with the development server.
 
-```bash
-npm start
-```
+### Prerequisites
+
+Before running the development server, make sure you have the following installed:
+
+- Node.js (v14 or higher recommended)
+- npm (v6 or higher recommended)
+
+### Steps to Run the Development Server
+
+1. **Install Dependencies:**
+
+   Before starting the server, ensure all dependencies are installed by running:
+
+   ```bash
+   npm install
