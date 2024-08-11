@@ -10,12 +10,3 @@ Before running the development server, make sure you have the following installe
 
 - Node.js (v14 or higher recommended)
 - npm (v6 or higher recommended)
-
-### Steps to Run the Development Server
-
-1. **Install Dependencies:**
-
-   Before starting the server, ensure all dependencies are installed by running:
-
-   ```bash
-   npm install
