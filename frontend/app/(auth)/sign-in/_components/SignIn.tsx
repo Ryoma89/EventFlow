@@ -1,12 +1,13 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { useUserStore } from '@/store/useUserStore';
+
 import Link from 'next/link';
+import { Card } from '@/components/ui/card';
 import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { CalendarCheck, LockKeyhole, Mail } from 'lucide-react';
-import { useUserStore } from '@/store/useUserStore';
 
 const SignIn = () => {
   const router = useRouter();
