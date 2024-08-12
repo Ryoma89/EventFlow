@@ -45,7 +45,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
   const { startUpload } = useUploadThing('imageUploader');
 
   useEffect(() => {
-    if (!user?._id) {
+    if (user && !user._id) {
       console.log("user", user);
       router.push('/sign-in');
     }
