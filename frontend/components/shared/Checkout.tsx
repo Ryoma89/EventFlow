@@ -40,6 +40,7 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
     };
 
     try {
+      console.log("user", userId);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/stripe/create-checkout-session`,
         {
