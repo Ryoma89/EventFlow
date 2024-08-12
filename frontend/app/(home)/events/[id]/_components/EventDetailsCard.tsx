@@ -20,17 +20,24 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchEventById } from '@/lib/fetcheventById';
+import { useUserStore } from '@/store/useUserStore';
 
 const EventDetailsCard = ({
   params,
-  user,
+  // user,
 }: {
   params: { id: string };
-  user: User;
+  // user: User;
 }) => {
   const [attendees, setAttendees] = useState<IAttendee[]>([]);
   const [event, setEvent] = useState<IEvent | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
+  const user = useUserStore((state) => state.user);
+  const fetchUser = useUserStore((state) => state.fetchUser);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   useEffect(() => {
     const fetchEvent = async () => {
