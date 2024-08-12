@@ -15,6 +15,7 @@ const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
       console.log('Error in JWT middleware:', err);
       return res.status(401).json({ message: 'Unauthorized' });
     }
+    console.log('JWT middleware successful');
     next();
   });
 };
