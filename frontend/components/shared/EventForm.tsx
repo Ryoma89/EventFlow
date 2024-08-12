@@ -46,6 +46,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
 
   useEffect(() => {
     if (!user?._id) {
+      console.log("user", user);
       router.push('/sign-in');
     }
   }, [user, router]);
