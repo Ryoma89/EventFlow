@@ -5,7 +5,6 @@ import EventForm from '../../../../components/shared/EventForm';
 
 const EventCreatePage = async () => {
   const user = await getUser();
-  console.log("user", user);
   return (
     <section className='my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28'>
       <Title title='Create Events' />
