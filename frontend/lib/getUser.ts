@@ -1,9 +1,7 @@
 import { cookies } from 'next/headers';
 
 export const getUser = async () => {
-  console.log('getUser function called');
   const token = cookies().get('token')?.value;
-  console.log('Token:', token);
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
       method: 'GET',

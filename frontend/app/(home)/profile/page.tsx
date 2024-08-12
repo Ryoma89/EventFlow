@@ -6,9 +6,7 @@ import MyOrganizedEvents from './_components/MyOrganizedEvents';
 import MyAttendingEvents from './_components/MyAttendingEvents';
 
 const ProfilePage = async () => {
-  console.log("ProfilePage component is rendering...");
   const user = await getUser();
-  console.log("Fetched user:", user);
   return (
     <section className='my-14 mx-auto w-4/5 sm:my-20'>
       <Title title='Profile' />

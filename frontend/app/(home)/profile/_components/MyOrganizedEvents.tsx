@@ -16,18 +16,15 @@ interface OrganizedProps {
 }
 
 const MyOrganizedEvents = ({ user }: OrganizedProps) => {
-  console.log("User in MyOrganizedEvents:", user);
   const [events, setEvents] = useState<IEvent[]>([]);
 
   const fetchAndSetEvents = useCallback(async () => {
     try {
       if (!user) return;
       const data = await fetchEvents();
-      console.log("Fetched events:", data); 
       const organizedEvents = data.filter(
         (event: IEvent) => event.organizer && event.organizer._id === user._id
       );
-      console.log("Organized events:", organizedEvents);
       const formattedEvents = formatEventData(organizedEvents);
       setEvents(formattedEvents);
     } catch (error) {
