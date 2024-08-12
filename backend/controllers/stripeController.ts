@@ -70,6 +70,8 @@ export const stripeWebhook = async (req: Request, res: Response) => {
       createdAt: new Date(),
     };
 
+    console.log(order);
+
     try {
       await connectDB();
       const newOrder = await Booking.create(order);
