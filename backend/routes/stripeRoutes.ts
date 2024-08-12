@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import express from 'express';
-import authenticateJWT from '../middleware/authMiddleware';
 import {
   createCheckoutSession,
   stripeWebhook,
@@ -8,7 +7,7 @@ import {
 
 const router = Router();
 
-router.post('/create-checkout-session', authenticateJWT, createCheckoutSession);
+router.post('/create-checkout-session', createCheckoutSession);
 
 router.post(
   '/webhook',
