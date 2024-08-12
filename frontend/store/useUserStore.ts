@@ -25,7 +25,16 @@ export const useUserStore = create<UserState>((set) => ({
         credentials: 'include',
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
       const data = await response.json();
+
+      if (!data || typeof data !== 'object') {
+        throw new Error('Invalid user data received');
+      }
+      
       set({ user: data });
     } catch (error) {
       set({ error: (error as Error).message });

@@ -13,6 +13,7 @@ const Header = () => {
 
   useEffect(() => {
     fetchUser();
+    console.log('user', user);
   }, [fetchUser]);
 
   return (
