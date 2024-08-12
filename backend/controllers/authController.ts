@@ -43,12 +43,19 @@ export const signIn = async (req: Request, res: Response) => {
       expiresIn: '1h',
     });
 
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   // domain: 'localhost',
+    //   // secure: true,
+    //   sameSite: 'strict',
+    //   maxAge: 3600000,
+    // });
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      // domain: 'localhost',
-      // secure: true,
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
+      domain: '.onrender.com',
       maxAge: 3600000,
     });
 
