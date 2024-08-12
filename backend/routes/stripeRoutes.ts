@@ -4,10 +4,11 @@ import {
   createCheckoutSession,
   stripeWebhook,
 } from '../controllers/stripeController';
+import authenticateJWT from '../middleware/authMiddleware';
 
 const router = Router();
 
-router.post('/create-checkout-session', createCheckoutSession);
+router.post('/create-checkout-session', authenticateJWT, createCheckoutSession);
 
 router.post(
   '/webhook',
