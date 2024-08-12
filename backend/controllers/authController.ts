@@ -46,7 +46,7 @@ export const signIn = async (req: Request, res: Response) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      domain: 'localhost',
+      // domain: 'localhost',
       // secure: true,
       sameSite: 'strict',
       maxAge: 3600000,
