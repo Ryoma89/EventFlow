@@ -21,8 +21,6 @@ const app = express();
 const port = Number(process.env.PORT) || 5000;
 
 app.use(cookieParser());
-app.use('/api/stripe', stripeRoutes);
-app.use(express.json());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -30,7 +28,9 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
-);
+  );
+  app.use('/api/stripe', stripeRoutes);
+  app.use(express.json());
   
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
