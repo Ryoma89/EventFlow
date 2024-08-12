@@ -47,8 +47,10 @@ export const signIn = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       // domain: 'localhost',
+      domain: '.onrender.com',
       // secure: true,
-      sameSite: 'strict',
+      // sameSite: 'strict',
+      sameSite: 'none',
       maxAge: 3600000,
     });
 
