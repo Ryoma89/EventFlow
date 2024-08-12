@@ -55,7 +55,7 @@ export const signIn = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain: '.onrender.com',
+      domain: 'eventflow-backend-stripe.onrender.com',
       maxAge: 3600000,
     });
 
