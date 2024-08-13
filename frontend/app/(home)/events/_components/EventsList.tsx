@@ -7,15 +7,26 @@ import EventCard from "../../_components/EventCard";
 import Pagination from "../../_components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { filterEvents } from "@/lib/filterEvents";
 import { getPaginatedData } from "@/lib/pagination";
+import { CATEGORIES } from "@/constants/categories";
 
 const EventsList = () => {
   const router = useRouter();
-  
+
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isSearchComplete, setIsSearchComplete] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [events, setEvents] = useState<IEvent[]>([]);
 
@@ -38,13 +49,24 @@ const EventsList = () => {
   }, []);
 
   const handleSearch = () => {
+    const searchParams = new URLSearchParams();
     if (search) {
-      router.push(`/events?query=${search}`, { scroll: false });
-    } else {
-      router.push(`/events`, { scroll: false });
+      searchParams.set("query", search);
     }
+    if (selectedCategory) {
+      searchParams.set("category", selectedCategory);
+    }
+    router.push(`/events?${searchParams.toString()}`, { scroll: false });
     setSearch("");
+    setIsSearchComplete(true);
   };
+
+  useEffect(() => {
+    if (isSearchComplete) {
+      setSelectedCategory(null);
+      setIsSearchComplete(false);
+    }
+  }, [isSearchComplete]);
 
   const filteredEvents = filterEvents(events, query, category);
 
@@ -55,21 +77,45 @@ const EventsList = () => {
   );
   return (
     <>
-      <div className="sm:flex sm:justify-between sm:items-center">
+      <div className="lg:flex lg:justify-between lg:items-center">
         <Title title="Event List" />
         <div className="flex items-center justify-center gap-2 mt-5 sm:mt-0 md:mt-0">
-          <div className="flex-1 max-w-96">
-            <div className="flex items-center justify-center">
-              <Input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search quizzes..."
-                className="w-full rounded-lg bg-background pr-4 py-2 text-sm max-w-52"
-              />
-              <div>
+          <div className="flex-1">
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between sm:mt-10 lg:mt-0">
+              <div className="w-full min-w-40">
+                <Input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search quizzes..."
+                  className="w-full min-w-40 rounded-lg bg-background pr-4 py-2 text-sm"
+                />
+              </div>
+              <div className="w-full min-w-40">
+                <Select
+                  value={selectedCategory || ""}
+                  onValueChange={(value) => setSelectedCategory(value)}
+                >
+                  <SelectTrigger className="w-full min-w-40">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CATEGORIES.length > 0 &&
+                      CATEGORIES.map((category) => (
+                        <SelectItem
+                          key={category.name}
+                          value={category.name}
+                          className="select-item p-regular-14"
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="w-full min-w-40">
                 <Button
-                  className="ml-2 py-2 px-4"
+                  className="py-2 px-4 w-full min-w-40"
                   variant={"main"}
                   onClick={handleSearch}
                 >

@@ -1,8 +1,8 @@
 import { Comment } from "@/types";
-import React, { useState } from "react";
-import { formatDateTime } from "@/lib/eventUtils";
+import { formatDateTime } from "@/lib/utils";
 
 import { Trash } from "lucide-react";
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,15 @@ const Comments = ({ eventId, comments, setComments, user }: CommentsProps) => {
       toast({
         title: "Error",
         description: "Comment cannot be empty",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You need to sign in to add a comment",
         variant: "destructive",
       });
       return;
@@ -122,18 +131,19 @@ const Comments = ({ eventId, comments, setComments, user }: CommentsProps) => {
               className="w-full"
               variant={"icon"}
               onClick={handleAddComment}
+              disabled={!user?._id}
             >
               Add
             </Button>
           </div>
         </div>
-        <Card className="mt-5 p-5">
+        <Card className="mt-5 p-5 max-h-96 overflow-auto">
           {comments && comments.length === 0 ? (
-            <p>No comments yet. Be the first to comment!</p>
+            <p>No comments yet.</p>
           ) : (
             comments &&
             comments.map((c) => {
-              const { date, time } = formatDateTime(new Date(c.createdAt));
+              const date = formatDateTime(new Date(c.createdAt));
               return (
                 <div key={c._id}>
                   <div className="flex items-center justify-between">
@@ -143,9 +153,9 @@ const Comments = ({ eventId, comments, setComments, user }: CommentsProps) => {
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <p className="text-gray-600">{c.user.username}</p>
-                    <p className="text-gray-600">{date} : {time}</p>
+                    <p className="text-gray-600">{date.dateTime}</p>
                     </div>
-                    {c.user._id === user._id? (
+                    {c.user._id === user?._id ? (
                       <button onClick={() => handleDeleteComment(c._id)}>
                       <Trash className="text-gray-600 h-5 w-5 hover:text-red-500 hover:cursor-pointer" />
                       </button>

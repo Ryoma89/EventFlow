@@ -4,8 +4,8 @@ import EventCard from './EventCard';
 import { IEvent, TrendingEvents } from '@/types';
 
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
 
 const TrendingEvents = () => {
   const [events, setEvents] = useState<TrendingEvents[]>([]);

@@ -1,4 +1,6 @@
 "use client";
+import { User } from "@/types";
+
 import {
   Sheet,
   SheetContent,
@@ -12,7 +14,7 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-const SheetMenu = () => {
+const SheetMenu = ({user}: {user: User | null}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -34,11 +36,15 @@ const SheetMenu = () => {
           </Link>
         </div>
         <Separator />
+        {user ? (
         <div className="py-5">
           <Link href="/events/create" className="hover:opacity-60" onClick={handleClose}>
             <p className="text-center text-xl">Create Event</p>
           </Link>
         </div>
+        ) : (
+          <></>
+        )}
         <Separator />
       </SheetContent>
     </Sheet>

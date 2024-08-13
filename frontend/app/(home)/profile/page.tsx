@@ -1,13 +1,11 @@
 import React from 'react';
-import { getUser } from '@/lib/getUser';
+import { cookies } from 'next/headers';
 import Title from '../_components/Title';
 import Profile from './_components/Profile';
 import MyOrganizedEvents from './_components/MyOrganizedEvents';
 import MyAttendingEvents from './_components/MyAttendingEvents';
-import { cookies } from 'next/headers';
 
 const ProfilePage = async () => {
-  const user = await getUser();
   const token = cookies().get('token')?.value;
   const myEvents = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-events`, {
     method: 'GET',

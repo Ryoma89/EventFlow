@@ -129,7 +129,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
         form.reset();
         router.push(`/events/${result._id}`);
         toast({
-          title: 'Event saved',
+          title: '✅ Event saved',
           description: `Your event has been ${type.toLowerCase()}d successfully.`,
         });
       } else {
@@ -272,7 +272,9 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
                       </p>
                       <DatePicker
                         selected={field.value}
-                        onChange={(date: Date | null) => field.onChange(date)}
+                        onChange={(date: Date | null) => {
+                          field.onChange(date);
+                        }}
                         showTimeSelect
                         timeInputLabel='Time:'
                         dateFormat='MM/dd/yyy h:mm aa'
