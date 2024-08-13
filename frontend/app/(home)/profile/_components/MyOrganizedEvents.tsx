@@ -1,5 +1,5 @@
 'use client';
-import { IEvent, User } from '@/types';
+import { IEvent } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 import { useColumns } from './organizedEventColumns';
@@ -8,14 +8,19 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface OrganizedProps {
-  user: User;
-  events: IEvent[];
+  myEvents: IEvent[];
 }
 
-const MyOrganizedEvents = ({ user, events}: OrganizedProps) => {
+const MyOrganizedEvents = ({ myEvents}: OrganizedProps) => {
+  const [events, setEvents] = useState(myEvents);
+
+  useEffect(() => {
+    const formattedEvents = formatEventData(events);
+    setEvents(formattedEvents);
+  }, []);
 
   const handleDelete = async (eventId: string) => {
     try {
@@ -32,6 +37,10 @@ const MyOrganizedEvents = ({ user, events}: OrganizedProps) => {
       );
 
       if (response.ok) {
+        setEvents((prevEvents) => {
+          const updatedEvents = prevEvents.filter((event) => event._id !== eventId);
+          return updatedEvents;
+        })
         toast({
           title: '✅ Event Deleted',
           description: 'The event has been deleted successfully.',

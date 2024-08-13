@@ -29,8 +29,8 @@ const ProfilePage = async () => {
     <section className='my-14 mx-auto w-4/5 sm:my-20'>
       <Title title='Profile' />
       <Profile />
-      <MyOrganizedEvents user={user} events={myEvents}/>
-      <MyAttendingEvents user={user} events={myAttendingEvents}/>
+      <MyOrganizedEvents myEvents={myEvents}/>
+      <MyAttendingEvents myAttendingEvents={myAttendingEvents}/>
     </section>
   );
 };

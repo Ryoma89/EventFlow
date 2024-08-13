@@ -1,19 +1,34 @@
 'use client';
-import { User } from '@/types';
 import { IEvent } from '@/types';
+import { AttendingEvents } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatEventData } from '@/lib/eventUtils';
 import { useColumnsAttending } from './attendingEventColumns';
 
 interface AttendingProps {
-  user: User;
-  events: IEvent[];
+  myAttendingEvents: AttendingEvents[];
 }
 
-const MyAttendingEvents = ({ user, events }: AttendingProps) => {
+const MyAttendingEvents = ({ myAttendingEvents }: AttendingProps) => {
+  const [events, setEvents] = useState<IEvent[]>([]);
+
+  useEffect(() => {
+    const filteredEvents = myAttendingEvents
+      .filter((attendingEvent) => attendingEvent.event !== null)
+      .map((attendingEvent) => {
+        const event = attendingEvent.event;
+        return {
+          ...event,
+          category: { _id: event.category, name: '' },
+          organizer: { _id: event.organizer, username: '' },
+        } as IEvent;
+      });
+    const formattedEvents = formatEventData(filteredEvents);
+    setEvents(formattedEvents);
+  }, []);
 
   const columns = useColumnsAttending();
 
