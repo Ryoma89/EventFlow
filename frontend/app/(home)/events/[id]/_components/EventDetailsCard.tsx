@@ -124,7 +124,11 @@ const EventDetailsCard = ({
       </div>
 
       <div className='pt-5 pb-10 md:px-10 md:grid md:grid-cols-2'>
-        <Attendees />
+        <Attendees 
+        eventId={params.id}
+        attendees={attendees}
+        user={user}
+        />
         <Comments
           eventId={params.id}
           comments={comments}

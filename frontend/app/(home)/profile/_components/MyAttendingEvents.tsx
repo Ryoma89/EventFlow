@@ -3,34 +3,17 @@ import { User } from '@/types';
 import { IEvent } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
-import { fetchEvents } from '@/lib/fetchEvents';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { formatEventData } from '@/lib/eventUtils';
 import { useColumnsAttending } from './attendingEventColumns';
 
 interface AttendingProps {
   user: User;
+  events: IEvent[];
 }
 
-const MyAttendingEvents = ({ user }: AttendingProps) => {
-  const [events, setEvents] = useState<IEvent[]>([]);
-
-  const fetchAndSetEvents = async () => {
-    try {
-      const data = await fetchEvents();
-      const formattedEvents = formatEventData(data);
-      setEvents(formattedEvents);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchAndSetEvents();
-    }
-  }, [user]);
+const MyAttendingEvents = ({ user, events }: AttendingProps) => {
 
   const columns = useColumnsAttending();
 

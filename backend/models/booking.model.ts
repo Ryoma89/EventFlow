@@ -4,15 +4,8 @@ export interface IBooking extends Document {
   createdAt: Date;
   stripeId: string;
   totalAmount: string;
-  event: {
-    _id: string;
-    title: string;
-  };
-  buyer: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-  };
+  event: Schema.Types.ObjectId;
+  buyer: Schema.Types.ObjectId;
 }
 
 export type IBookingItem = {

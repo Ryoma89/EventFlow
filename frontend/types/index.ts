@@ -203,3 +203,24 @@ export interface IAttendee {
   username: string;
   photo?: string;
 }
+
+export interface TrendingEvents {
+  count: number;
+    eventId: string,
+    event: {
+      _id: string,
+      title: string,
+      description: string,
+      location:   string,
+      startDateTime: string,
+      endDateTime: string,
+      imageUrl: string,
+      price: string,
+      isFree: boolean,
+      url: string,
+      category: string,
+      organizer: string,
+      createdAt:  string,
+      __v: 0
+    }
+}

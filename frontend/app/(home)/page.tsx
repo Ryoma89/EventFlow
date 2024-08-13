@@ -6,12 +6,15 @@ import TrendingEvents from './_components/TrendingEvents';
 import UpcomingEvents from './_components/UpcomingEvents';
 
 const HomePage = async () => {
+  const trendingEvents = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trending-events`, {
+    method: 'GET',
+  }).then((response) => response.json());
   return (
     <main>
       <Hero />
       <Promotion />
       <Categories />
-      <TrendingEvents />
+      <TrendingEvents events={trendingEvents}/>
       <UpcomingEvents />
     </main>
   );
