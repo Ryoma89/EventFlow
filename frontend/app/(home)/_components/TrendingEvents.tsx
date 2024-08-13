@@ -3,21 +3,35 @@ import Title from './Title';
 import EventCard from './EventCard';
 import { IEvent, TrendingEvents } from '@/types';
 
-import React from 'react';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
-interface TrendingProps {
-events: TrendingEvents[];
-}
+const TrendingEvents = () => {
+  const [events, setEvents] = useState<TrendingEvents[]>([]);
 
-const TrendingEvents = ({events}: TrendingProps) => {
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trending-events`, {
+          method: 'GET',
+        });
+        let data = await response.json();
+        data = data.slice(0, 6);
+        setEvents(data);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   return (
     <section className='my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28'>
       <Title title='Trending Events' />
       <div className='mt-10 space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:mt-12 lg:grid-cols-3'>
-      {events.map((trendingEvent) => {
+      {events.map((trendingEvent: TrendingEvents) => {
           const event: IEvent = {
             _id: trendingEvent.event._id,
             title: trendingEvent.event.title,
