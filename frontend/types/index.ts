@@ -204,7 +204,7 @@ export interface IAttendee {
   photo?: string;
 }
 
-export interface TrendingEvents {
+export interface ITrendingEvents {
   count: number;
     eventId: string,
     event: {

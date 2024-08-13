@@ -1,14 +1,14 @@
 'use client';
 import Title from './Title';
 import EventCard from './EventCard';
-import { IEvent, TrendingEvents } from '@/types';
+import { IEvent, ITrendingEvents } from '@/types';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 
 const TrendingEvents = () => {
-  const [events, setEvents] = useState<TrendingEvents[]>([]);
+  const [events, setEvents] = useState<ITrendingEvents[]>([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -31,7 +31,7 @@ const TrendingEvents = () => {
     <section className='my-20 rounded-lg mx-auto w-4/5 sm:my-20 md:my-28'>
       <Title title='Trending Events' />
       <div className='mt-10 space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:mt-12 lg:grid-cols-3'>
-      {events.map((trendingEvent: TrendingEvents) => {
+      {events.map((trendingEvent: ITrendingEvents) => {
           const event: IEvent = {
             _id: trendingEvent.event._id,
             title: trendingEvent.event.title,
