@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 import Link from "next/link";
+import React, { useEffect } from "react";
 
 import {
   Accordion,
@@ -10,8 +11,15 @@ import {
 
 import { Separator } from "../ui/separator";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
+import { useUserStore } from "@/store/useUserStore";
 
 const Footer = () => {
+  const { user, fetchUser } = useUserStore();
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   return (
     <footer className="bg-main text-white pt-10">
       <div className="mx-auto w-4/5 mb-10">
@@ -22,13 +30,23 @@ const Footer = () => {
               <h5 className="text-lg font-bold mb-4">Help</h5>
               <ul className="space-y-1">
                 <li className="hover:opacity-70">
-                  <Link href="/profile">Account</Link>
+                  <Link
+                    href={user ? "/profile" : "/sign-in"}
+                    className="hover:opacity-60"
+                  >
+                    Profile
+                  </Link>
                 </li>
                 <li className="hover:opacity-70">
                   <Link href="/events">Event List</Link>
                 </li>
                 <li className="hover:opacity-70">
-                  <Link href="/events/create">Create Event</Link>
+                  <Link
+                    href={user ? "/events/create" : "/sign-in"}
+                    className="hover:opacity-60"
+                  >
+                    Create Event
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -36,7 +54,7 @@ const Footer = () => {
               <h5 className="text-lg font-bold mb-4">Categories</h5>
               <ul className="space-y-1">
                 <li className="hover:opacity-70">
-                <Link href={`/events?category=music`}>Music</Link>
+                  <Link href={`/events?category=music`}>Music</Link>
                 </li>
                 <li className="hover:opacity-70">
                   <Link href={`/events?category=art`}>Art</Link>
@@ -60,15 +78,33 @@ const Footer = () => {
               <ul className="space-y-1">
                 <li className="flex items-center space-x-2 hover:opacity-70">
                   <FacebookIcon className="w-5 h-5" />
-                  <Link href="https://facebook.com">Facebook</Link>
+                  <Link
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Facebook
+                  </Link>
                 </li>
                 <li className="flex items-center space-x-2 hover:opacity-70">
                   <InstagramIcon className="w-5 h-5" />
-                  <Link href="https://instagram.com">Instagram</Link>
+                  <Link
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Instagram
+                  </Link>
                 </li>
                 <li className="flex items-center space-x-2 hover:opacity-70">
                   <TwitterIcon className="w-5 h-5" />
-                  <Link href="https://twitter.com">Twitter</Link>
+                  <Link
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    X
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -76,19 +112,33 @@ const Footer = () => {
 
           {/* sm */}
           <div className="sm:hidden">
-            <Accordion type="single" collapsible className="flex justify-between space-x-2">
+            <Accordion
+              type="single"
+              collapsible
+              className="flex justify-between space-x-2"
+            >
               <AccordionItem value="help">
                 <AccordionTrigger>Help</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-1">
                     <li className="hover:opacity-70">
-                      <Link href="/profile">Account</Link>
+                      <Link
+                        href={user ? "/profile" : "/sign-in"}
+                        className="hover:opacity-60"
+                      >
+                        Profile
+                      </Link>
                     </li>
                     <li className="hover:opacity-70">
                       <Link href="/events">Event List</Link>
                     </li>
                     <li className="hover:opacity-70">
-                      <Link href="/events/create">Create Event</Link>
+                      <Link
+                        href={user ? "/events/create" : "/sign-in"}
+                        className="hover:opacity-60"
+                      >
+                        Create Event
+                      </Link>
                     </li>
                   </ul>
                 </AccordionContent>
@@ -124,15 +174,33 @@ const Footer = () => {
                   <ul className="space-y-1">
                     <li className="flex items-center space-x-2 hover:opacity-70">
                       <FacebookIcon className="w-5 h-5" />
-                      <Link href="https://facebook.com">Facebook</Link>
+                      <Link
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Facebook
+                      </Link>
                     </li>
                     <li className="flex items-center space-x-2 hover:opacity-70">
                       <InstagramIcon className="w-5 h-5" />
-                      <Link href="https://instagram.com">Instagram</Link>
+                      <Link
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Instagram
+                      </Link>
                     </li>
                     <li className="flex items-center space-x-2 hover:opacity-70">
                       <TwitterIcon className="w-5 h-5" />
-                      <Link href="https://twitter.com">Twitter</Link>
+                      <Link
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        X
+                      </Link>
                     </li>
                   </ul>
                 </AccordionContent>

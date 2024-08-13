@@ -203,3 +203,50 @@ export interface IAttendee {
   username: string;
   photo?: string;
 }
+
+export interface ITrendingEvents {
+  count: number;
+    eventId: string,
+    event: {
+      _id: string,
+      title: string,
+      description: string,
+      location:   string,
+      startDateTime: string,
+      endDateTime: string,
+      imageUrl: string,
+      price: string,
+      isFree: boolean,
+      url: string,
+      category: string,
+      organizer: string,
+      createdAt:  string,
+      __v: 0
+    }
+}
+
+export interface AttendingEvents {
+  _id: string;
+  createdAt: Date;
+  stripeId: string;
+  totalAmount: string;
+  event: {
+    _id: string;
+    title: string;
+    description: string;
+    location: string;
+    startDateTime: Date;
+    endDateTime: Date;
+    imageUrl: string;
+    price: string;
+    isFree: boolean;
+    url: string;
+    category: string;
+    organizer: string;
+    createdAt: Date;
+    __v: number;
+  };
+  buyer: string;
+  __v: number;
+}
+

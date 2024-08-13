@@ -1,42 +1,26 @@
 'use client';
-import { IEvent, User } from '@/types';
+import { IEvent } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
-import { fetchEvents } from '@/lib/fetchEvents';
 import { useColumns } from './organizedEventColumns';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface OrganizedProps {
-  user: User;
+  myEvents: IEvent[];
 }
 
-const MyOrganizedEvents = ({ user }: OrganizedProps) => {
-  const [events, setEvents] = useState<IEvent[]>([]);
-
-  const fetchAndSetEvents = useCallback(async () => {
-    try {
-      if (!user) return;
-      const data = await fetchEvents();
-      const organizedEvents = data.filter(
-        (event: IEvent) => event.organizer && event.organizer._id === user._id
-      );
-      const formattedEvents = formatEventData(organizedEvents);
-      setEvents(formattedEvents);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    }
-  }, [user]);
+const MyOrganizedEvents = ({ myEvents}: OrganizedProps) => {
+  const [events, setEvents] = useState(myEvents);
 
   useEffect(() => {
-    if (user) {
-      fetchAndSetEvents();
-    }
-  }, [user, fetchAndSetEvents]);
+    const formattedEvents = formatEventData(events);
+    setEvents(formattedEvents);
+  }, []);
 
   const handleDelete = async (eventId: string) => {
     try {
@@ -53,11 +37,14 @@ const MyOrganizedEvents = ({ user }: OrganizedProps) => {
       );
 
       if (response.ok) {
+        setEvents((prevEvents) => {
+          const updatedEvents = prevEvents.filter((event) => event._id !== eventId);
+          return updatedEvents;
+        })
         toast({
           title: '✅ Event Deleted',
           description: 'The event has been deleted successfully.',
         });
-        fetchAndSetEvents();
       } else {
         const errorData = await response.json();
         toast({

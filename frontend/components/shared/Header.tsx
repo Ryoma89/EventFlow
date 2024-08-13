@@ -1,12 +1,12 @@
 'use client';
+import { useUserStore } from '@/store/useUserStore';
 import SheetMenu from '@/app/(home)/_components/SheetMenu';
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-import { useUserStore } from '@/store/useUserStore';
-import { useEffect } from 'react';
 
 const Header = () => {
   const { user, fetchUser } = useUserStore();
@@ -45,17 +45,19 @@ const Header = () => {
                   <AvatarFallback>{user.username}</AvatarFallback>
                 </Avatar>
               </Link>
-              <div className='flex flex-col items-center sm:hidden'>
-                <SheetMenu />
-              </div>
             </div>
           ) : (
+            <>
             <Link href='/sign-in' className='text-white cursor-pointer w-24'>
               <Button variant={'custom'} className='w-full'>
                 Sign In
               </Button>
             </Link>
+            </>
           )}
+          <div className='flex flex-col items-center sm:hidden'>
+                <SheetMenu user={user}/>
+          </div>
         </nav>
       </div>
     </header>

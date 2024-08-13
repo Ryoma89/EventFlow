@@ -1,11 +1,21 @@
 import { IEvent } from "@/types";
 
 export const formatDateTime = (date: Date) => {
-  const isoString = date.toISOString();
-  const formattedDate = isoString.slice(0, 10);
-  const formattedTime = isoString.slice(11, 19);
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: 'America/Vancouver',
+  };
 
-  return { date: formattedDate, time: formattedTime };
+  const formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(date);
+  const [formattedDate, formattedTime] = formattedDateTime.split(', ');
+
+  return { date: formattedDate.replace(/\//g, '-'), time: formattedTime };
 };
 
 export const formatEventData = (events: IEvent[]) => {

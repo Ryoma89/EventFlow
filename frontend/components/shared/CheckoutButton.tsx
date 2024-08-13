@@ -1,6 +1,7 @@
 'use client';
 import { IEvent } from '@/types';
 import Checkout from './Checkout';
+
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { useUserStore } from '@/store/useUserStore';
@@ -23,7 +24,7 @@ const CheckoutButton = ({ event }: { event: IEvent }) => {
           ) : (
             <>
               <Link href={`/sign-in`}>
-                <Button variant={'icon'}>Book Tickets</Button>
+                <Button variant={'icon'} className="w-[139.85px]">Sign In</Button>
               </Link>
               <p className='text-red-400'>You need to sign in to buy tickets</p>
             </>

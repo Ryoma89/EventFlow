@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from '@/components/ui/card';
 import Link from 'next/link';
+import { Card } from '@/components/ui/card';
 import { CATEGORIES } from '../../../constants/categories';
 
 const CategoryCard = () => {

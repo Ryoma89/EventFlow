@@ -1,36 +1,34 @@
 'use client';
-import { User } from '@/types';
 import { IEvent } from '@/types';
+import { AttendingEvents } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
-import { fetchEvents } from '@/lib/fetchEvents';
 
 import React, { useEffect, useState } from 'react';
 import { formatEventData } from '@/lib/eventUtils';
 import { useColumnsAttending } from './attendingEventColumns';
 
 interface AttendingProps {
-  user: User;
+  myAttendingEvents: AttendingEvents[];
 }
 
-const MyAttendingEvents = ({ user }: AttendingProps) => {
+const MyAttendingEvents = ({ myAttendingEvents }: AttendingProps) => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
-  const fetchAndSetEvents = async () => {
-    try {
-      const data = await fetchEvents();
-      const formattedEvents = formatEventData(data);
-      setEvents(formattedEvents);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    }
-  };
-
   useEffect(() => {
-    if (user) {
-      fetchAndSetEvents();
-    }
-  }, [user]);
+    const filteredEvents = myAttendingEvents
+      .filter((attendingEvent) => attendingEvent.event !== null)
+      .map((attendingEvent) => {
+        const event = attendingEvent.event;
+        return {
+          ...event,
+          category: { _id: event.category, name: '' },
+          organizer: { _id: event.organizer, username: '' },
+        } as IEvent;
+      });
+    const formattedEvents = formatEventData(filteredEvents);
+    setEvents(formattedEvents);
+  }, []);
 
   const columns = useColumnsAttending();
 

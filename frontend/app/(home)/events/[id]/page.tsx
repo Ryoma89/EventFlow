@@ -6,7 +6,7 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
   const user = await getUser();
   return (
     <section className='flex justify-center'>
-      <EventDetailsCard params={params} user={user} />
+      <EventDetailsCard params={params} user={user}/>
     </section>
   );
 };

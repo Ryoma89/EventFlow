@@ -1,6 +1,6 @@
 import React from "react";
 import { IEvent } from "@/types";
-import { convertToAbsolutePath, formatDateTime } from "@/lib/eventUtils";
+import { convertToAbsolutePath } from "@/lib/eventUtils";
 
 import {
   Card,
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { CalendarDays, MapPin } from "lucide-react";
+import { formatDateTime } from "@/lib/utils";
 
 interface EventCardProps {
   event: IEvent;
@@ -62,7 +63,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
   };
 
   const absoluteUrl = convertToAbsolutePath(event.imageUrl);
-  const { date: startDate, time: startTime } = formatDateTime(new Date(event.startDateTime));
+  const date = formatDateTime(new Date(event.startDateTime));
 
   return (
     <>
@@ -79,12 +80,12 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
         </div>
         <div className="flex-grow flex flex-col">
           <CardHeader className="flex-grow">
-            <CardTitle className="truncate">{event.title}</CardTitle>
+            <CardTitle className="truncate leading-tight">{event.title}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 flex-grow">
             <div className="flex items-center space-x-2">
               <CalendarDays className="h-5 w-5 text-icon" />
-              <p>{startDate}</p>
+              <p>{date.dateOnly}</p>
             </div>
             <div className="flex items-center space-x-2">
               <MapPin className="h-5 w-5 text-icon" />
@@ -101,22 +102,6 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
               View Details
             </Button>
           </Link>
-          {canEdit && (
-            <>
-              <Link href={`/events/${event._id}/update`}>
-                <Button variant={"main"} className="w-full">
-                  Edit
-                </Button>
-              </Link>
-              <Button
-                variant="destructive"
-                className="w-full"
-                onClick={handleDelete}
-              >
-                Delete
-              </Button>
-            </>
-          )}
         </CardFooter>
       </Card>
     </>

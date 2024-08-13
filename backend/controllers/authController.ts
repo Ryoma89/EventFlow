@@ -46,11 +46,18 @@ export const signIn = async (req: Request, res: Response) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      domain: 'localhost',
+      // domain: 'localhost',
       // secure: true,
       sameSite: 'strict',
       maxAge: 3600000,
     });
+    // res.cookie('token', token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'none',
+    //   domain: 'eventflow-backend-stripe.onrender.com',
+    //   maxAge: 3600000,
+    // });
 
     res.status(200).json(user);
   } catch (err) {

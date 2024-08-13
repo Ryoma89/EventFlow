@@ -1,8 +1,9 @@
-import dotenv from 'dotenv';
-import { Request, Response } from 'express';
-import Stripe from 'stripe';
-import { connectDB } from '../database';
-import Booking from '../models/booking.model';
+import dotenv from "dotenv";
+import { Request, Response } from "express";
+import Stripe from "stripe";
+import { connectDB } from "../database";
+import Booking from "../models/booking.model";
+import { Types } from "mongoose";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       line_items: [
         {
           price_data: {
-            currency: 'cad',
+            currency: "cad",
             unit_amount: price,
             product_data: {
               name: order.eventTitle,
@@ -30,8 +31,8 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         eventId: order.eventId,
         buyerId: order.buyerId,
       },
-      mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL}/profile`,
+      mode: "payment",
+      success_url: `${process.env.FRONTEND_URL}/events/${order.eventId}`,
       cancel_url: `${process.env.FRONTEND_URL}/events/${order.eventId}`,
     });
 
@@ -44,13 +45,13 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 
 export const stripeWebhook = async (req: Request, res: Response) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-  const sig = req.headers['stripe-signature'];
+  const sig = req.headers["stripe-signature"];
   const stripeWebhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
 
   let event;
   try {
     event = stripe.webhooks.constructEvent(
-      req.body,
+      req.body.toString(),
       sig!,
       stripeWebhookSecret!
     );
@@ -60,23 +61,33 @@ export const stripeWebhook = async (req: Request, res: Response) => {
 
   const eventType = event.type;
 
-  if (eventType === 'checkout.session.completed') {
+  try {
+    if (eventType !== "checkout.session.completed")
+      return res.status(400).json({ message: "Webhook error" });
     const { id, amount_total, metadata } = event.data.object;
-    const order = {
-      stripeId: id,
-      eventId: metadata?.eventId || '',
-      buyerId: metadata?.buyerId || '',
-      totalAmount: amount_total ? (amount_total / 100).toString() : '0',
-      createdAt: new Date(),
-    };
 
-    try {
-      await connectDB();
-      const newOrder = await Booking.create(order);
-      return res.status(200).json({ message: 'OK', order: newOrder });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json(error);
+    const eventId = metadata?.eventId
+      ? new Types.ObjectId(metadata.eventId)
+      : null;
+    const buyerId = metadata?.buyerId
+      ? new Types.ObjectId(metadata.buyerId)
+      : null;
+
+    if (!eventId || !buyerId) {
+      return res.status(400).json({ message: "Invalid eventId or buyerId" });
     }
+
+    await connectDB();
+    const newOrder = await Booking.create({
+      stripeId: id,
+      totalAmount: amount_total ? (amount_total / 100).toString() : "0",
+      event: eventId,
+      buyer: buyerId,
+      createdAt: new Date(),
+    });
+    return res.status(200).json({ message: "OK", order: newOrder });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
   }
 };

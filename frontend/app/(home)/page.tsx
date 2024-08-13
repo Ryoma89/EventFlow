@@ -6,12 +6,13 @@ import TrendingEvents from './_components/TrendingEvents';
 import UpcomingEvents from './_components/UpcomingEvents';
 
 const HomePage = async () => {
+
   return (
     <main>
       <Hero />
       <Promotion />
       <Categories />
-      <TrendingEvents />
+      <TrendingEvents/>
       <UpcomingEvents />
     </main>
   );

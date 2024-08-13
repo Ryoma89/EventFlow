@@ -1,8 +1,8 @@
 'use client';
 
 import { z } from 'zod';
-import { IEvent, User } from '@/types';
 import Dropdown from './Dropdown';
+import { IEvent, User } from '@/types';
 import { eventFormSchema } from '@/lib/validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fetchEventById } from '@/lib/fetcheventById';
@@ -45,7 +45,8 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
   const { startUpload } = useUploadThing('imageUploader');
 
   useEffect(() => {
-    if (!user?._id) {
+    if (user && !user._id) {
+      console.log("user", user);
       router.push('/sign-in');
     }
   }, [user, router]);
@@ -128,7 +129,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
         form.reset();
         router.push(`/events/${result._id}`);
         toast({
-          title: 'Event saved',
+          title: '✅ Event saved',
           description: `Your event has been ${type.toLowerCase()}d successfully.`,
         });
       } else {
@@ -271,7 +272,9 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
                       </p>
                       <DatePicker
                         selected={field.value}
-                        onChange={(date: Date | null) => field.onChange(date)}
+                        onChange={(date: Date | null) => {
+                          field.onChange(date);
+                        }}
                         showTimeSelect
                         timeInputLabel='Time:'
                         dateFormat='MM/dd/yyy h:mm aa'

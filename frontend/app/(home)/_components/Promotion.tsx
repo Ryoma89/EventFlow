@@ -1,7 +1,7 @@
+import React from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plus } from "lucide-react";
-import Link from "next/link";
-import React from "react";
 
 const Promotion = () => {
   return (

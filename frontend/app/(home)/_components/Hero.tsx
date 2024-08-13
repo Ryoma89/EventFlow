@@ -1,7 +1,5 @@
-import Search from '@/components/shared/Search'
-import { Input } from '@/components/ui/input'
-import { SearchIcon } from 'lucide-react'
 import React from 'react'
+import Search from '@/components/shared/Search'
 
 const Hero = () => {
   return (
