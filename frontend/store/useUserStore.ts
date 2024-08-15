@@ -1,3 +1,4 @@
+import { fetchWithToken } from '@/lib/fetchWithToken';
 import { User } from '@/types';
 import { create } from 'zustand';
 
@@ -17,16 +18,19 @@ export const useUserStore = create<UserState>((set) => ({
   fetchUser: async () => {
     set({ loading: true });
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
+      const response = await fetchWithToken(
+        `${process.env.NEXT_PUBLIC_API_URL}/user`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        return set({ user: null });
       }
 
       const data = await response.json();
@@ -34,7 +38,7 @@ export const useUserStore = create<UserState>((set) => ({
       if (!data || typeof data !== 'object') {
         throw new Error('Invalid user data received');
       }
-      
+
       set({ user: data });
     } catch (error) {
       set({ error: (error as Error).message });

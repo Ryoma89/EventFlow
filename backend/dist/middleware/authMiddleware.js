@@ -6,7 +6,13 @@ const jwtMiddleware = (0, express_jwt_1.expressjwt)({
     algorithms: ['HS256'],
     requestProperty: 'user',
     credentialsRequired: true,
-    getToken: (req) => req.cookies.token,
+    getToken: (req) => {
+        if (req.headers.authorization &&
+            req.headers.authorization.startsWith('Bearer ')) {
+            return req.headers.authorization.split(' ')[1];
+        }
+        return req.cookies.token;
+    },
 });
 const authenticateJWT = (req, res, next) => {
     jwtMiddleware(req, res, (err) => {

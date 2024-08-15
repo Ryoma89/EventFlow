@@ -36,6 +36,7 @@ import { useUploadThing } from '@/lib/uploadthing';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FileUploader } from '@/components/shared/FileUploader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
 const formSchema = z.object({
   username: z.string().min(1).max(50),
@@ -46,11 +47,7 @@ const Profile = () => {
   const [files, setFiles] = useState<File[]>([]);
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
-  const fetchUser = useUserStore((state) => state.fetchUser);
 
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const router = useRouter();
@@ -94,7 +91,7 @@ const Profile = () => {
     };
 
     try {
-      const response = await fetch(
+      const response = await fetchWithToken(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${user._id}`,
         {
           method: 'PUT',
