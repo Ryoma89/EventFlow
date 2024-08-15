@@ -39,11 +39,12 @@ export const signIn = async (req: Request, res: Response) => {
     if (!(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'The password is incorrect' });
     }
+
     const accessToken = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET!,
       {
-        expiresIn: '1m',
+        expiresIn: '15m',
       }
     );
 
@@ -57,21 +58,14 @@ export const signIn = async (req: Request, res: Response) => {
 
     res.cookie('token', accessToken, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
-    // res.cookie('token', token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    //   domain: 'eventflow-dev-backend.onrender.com,
-    //   maxAge: 15 * 60 * 1000,
-    // });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
