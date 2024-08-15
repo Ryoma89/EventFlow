@@ -21,7 +21,6 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
-  const absoluteUrl = convertToAbsolutePath(event.imageUrl);
   const date = formatDateTime(new Date(event.startDateTime));
 
   return (
@@ -29,8 +28,8 @@ const EventCard: React.FC<EventCardProps> = ({ event, canEdit = false }) => {
       <Card className='shadow-lg bg-cardBg flex flex-col'>
         <div className='relative w-full h-52'>
           <Image
-            src={absoluteUrl}
-            alt={absoluteUrl}
+            src={event.imageUrl}
+            alt={event.imageUrl}
             fill={true}
             className='rounded-t-md'
             priority
