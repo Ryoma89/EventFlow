@@ -59,7 +59,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         res.cookie('token', accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'none',
             maxAge: 15 * 60 * 1000, // 15 minutes
         });
@@ -72,7 +72,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // });
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'none',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
