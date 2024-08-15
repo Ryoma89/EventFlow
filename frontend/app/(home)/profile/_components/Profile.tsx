@@ -2,7 +2,7 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/useUserStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -62,7 +62,7 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) return redirect('/sign-in');
     form.reset({
       username: user.username,
       photo: user.photo,

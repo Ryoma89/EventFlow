@@ -10,8 +10,6 @@ const ProfilePage = async () => {
   const token = cookies().get('token')?.value;
   const refreshToken = cookies().get('refreshToken')?.value;
 
-  if (!token && !refreshToken) return redirect('/sign-in');
-
   const myEvents = await fetchWithToken(
     `${process.env.NEXT_PUBLIC_API_URL}/my-events`,
     {
