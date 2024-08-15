@@ -10,12 +10,14 @@ export const getUser = async (req: Request, res: Response) => {
   await connectDB();
 
   const tokenFromCookie = req.cookies.token;
-
+  const refreshTokenFromCookie = req.cookies.refreshToken;
   const tokenFromHeader = req.headers.authorization?.split(' ')[1];
 
   const token = tokenFromCookie || tokenFromHeader;
-  if (!token) {
+  if (!refreshTokenFromCookie) {
     return res.json(null);
+  } else if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   try {
@@ -23,7 +25,6 @@ export const getUser = async (req: Request, res: Response) => {
     const userId = decoded.userId;
 
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

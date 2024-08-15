@@ -22,10 +22,14 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     yield (0, database_1.connectDB)();
     const tokenFromCookie = req.cookies.token;
+    const refreshTokenFromCookie = req.cookies.refreshToken;
     const tokenFromHeader = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
     const token = tokenFromCookie || tokenFromHeader;
-    if (!token) {
+    if (!refreshTokenFromCookie) {
         return res.json(null);
+    }
+    else if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);

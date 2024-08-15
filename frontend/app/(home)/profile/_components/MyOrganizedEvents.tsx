@@ -9,12 +9,13 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
 import React, { useEffect, useState } from 'react';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
 interface OrganizedProps {
   myEvents: IEvent[];
 }
 
-const MyOrganizedEvents = ({ myEvents}: OrganizedProps) => {
+const MyOrganizedEvents = ({ myEvents }: OrganizedProps) => {
   const [events, setEvents] = useState(myEvents);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const MyOrganizedEvents = ({ myEvents}: OrganizedProps) => {
 
   const handleDelete = async (eventId: string) => {
     try {
-      const response = await fetch(
+      const response = await fetchWithToken(
         `${process.env.NEXT_PUBLIC_API_URL}/events`,
         {
           method: 'DELETE',
@@ -38,9 +39,11 @@ const MyOrganizedEvents = ({ myEvents}: OrganizedProps) => {
 
       if (response.ok) {
         setEvents((prevEvents) => {
-          const updatedEvents = prevEvents.filter((event) => event._id !== eventId);
+          const updatedEvents = prevEvents.filter(
+            (event) => event._id !== eventId
+          );
           return updatedEvents;
-        })
+        });
         toast({
           title: '✅ Event Deleted',
           description: 'The event has been deleted successfully.',

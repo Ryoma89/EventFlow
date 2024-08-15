@@ -33,25 +33,25 @@ export const getTrendingEvents = async (req: Request, res: Response) => {
         },
       },
       {
-        $sort: { count: -1 }, 
+        $sort: { count: -1 },
       },
       {
         $lookup: {
-          from: 'events', 
+          from: 'events',
           localField: '_id',
           foreignField: '_id',
           as: 'eventDetails',
         },
       },
       {
-        $unwind: '$eventDetails', 
+        $unwind: '$eventDetails',
       },
       {
         $project: {
           _id: 0,
           eventId: '$_id',
           count: 1,
-          event: '$eventDetails', 
+          event: '$eventDetails',
         },
       },
     ]);
@@ -60,7 +60,7 @@ export const getTrendingEvents = async (req: Request, res: Response) => {
     console.log(error);
     return res.status(500).json({ error: 'Failed to get events' });
   }
-}
+};
 
 export const getMyEvents = async (req: Request, res: Response) => {
   try {
@@ -72,19 +72,21 @@ export const getMyEvents = async (req: Request, res: Response) => {
     console.log(error);
     return res.status(500).json({ error: 'Failed to get events' });
   }
-}
+};
 
 export const getMyAttendingEvents = async (req: Request, res: Response) => {
   try {
     await connectDB();
     const user = req.user;
-    const myEvents = await Booking.find({ buyer: user.userId }).populate('event');
+    const myEvents = await Booking.find({ buyer: user.userId }).populate(
+      'event'
+    );
     return res.status(200).json(myEvents);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Failed to get events' });
   }
-}
+};
 
 export const getEventById = async (req: Request, res: Response) => {
   try {
@@ -106,7 +108,7 @@ export const getEventById = async (req: Request, res: Response) => {
 
     const comments = await Comment.find({ event: eventId }).populate('user');
 
-    return res.status(200).json({ event,attendees, comments });
+    return res.status(200).json({ event, attendees, comments });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Failed to get event' });
@@ -114,8 +116,11 @@ export const getEventById = async (req: Request, res: Response) => {
 };
 export const createEvent = async (req: Request, res: Response) => {
   try {
+    console.log('create event');
     await connectDB();
     const { event } = req.body;
+
+    console.log(event);
 
     const category = await Category.findOne({ name: event.category });
 

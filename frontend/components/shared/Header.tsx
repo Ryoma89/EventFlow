@@ -3,18 +3,23 @@ import { useUserStore } from '@/store/useUserStore';
 import SheetMenu from '@/app/(home)/_components/SheetMenu';
 
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
+import { useEffect } from 'react';
 
 const Header = () => {
-  const { user, fetchUser } = useUserStore();
-
+  const user = useUserStore((state) => state.user);
+  const fetchUser = useUserStore((state) => state.fetchUser);
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    const fetchData = async () => {
+      if (!user) {
+        await fetchUser();
+      }
+    };
 
+    fetchData();
+  }, [user, fetchUser]);
   return (
     <header className='w-full bg-main'>
       <div className='container h-[70px] flex items-center justify-between'>
@@ -48,15 +53,15 @@ const Header = () => {
             </div>
           ) : (
             <>
-            <Link href='/sign-in' className='text-white cursor-pointer w-24'>
-              <Button variant={'custom'} className='w-full'>
-                Sign In
-              </Button>
-            </Link>
+              <Link href='/sign-in' className='text-white cursor-pointer w-24'>
+                <Button variant={'custom'} className='w-full'>
+                  Sign In
+                </Button>
+              </Link>
             </>
           )}
           <div className='flex flex-col items-center sm:hidden'>
-                <SheetMenu user={user}/>
+            <SheetMenu user={user} />
           </div>
         </nav>
       </div>

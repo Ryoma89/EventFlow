@@ -1,107 +1,103 @@
-"use client";
-import Link from "next/link";
-import React, { useEffect } from "react";
+'use client';
+import Link from 'next/link';
+import React, { useEffect } from 'react';
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion';
 
-import { Separator } from "../ui/separator";
-import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
-import { useUserStore } from "@/store/useUserStore";
+import { Separator } from '../ui/separator';
+import { FacebookIcon, InstagramIcon, TwitterIcon } from 'lucide-react';
+import { useUserStore } from '@/store/useUserStore';
 
 const Footer = () => {
-  const { user, fetchUser } = useUserStore();
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+  const { user } = useUserStore();
 
   return (
-    <footer className="bg-main text-white pt-10">
-      <div className="mx-auto w-4/5 mb-10">
-        <div className="lg:w-[818px] mx-auto">
+    <footer className='bg-main text-white pt-10'>
+      <div className='mx-auto w-4/5 mb-10'>
+        <div className='lg:w-[818px] mx-auto'>
           {/* md */}
-          <div className="hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="w-3/5 mx-auto">
-              <h5 className="text-lg font-bold mb-4">Help</h5>
-              <ul className="space-y-1">
-                <li className="hover:opacity-70">
+          <div className='hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-6'>
+            <div className='w-3/5 mx-auto'>
+              <h5 className='text-lg font-bold mb-4'>Help</h5>
+              <ul className='space-y-1'>
+                <li className='hover:opacity-70'>
                   <Link
-                    href={user ? "/profile" : "/sign-in"}
-                    className="hover:opacity-60"
+                    href={user ? '/profile' : '/sign-in'}
+                    className='hover:opacity-60'
                   >
                     Profile
                   </Link>
                 </li>
-                <li className="hover:opacity-70">
-                  <Link href="/events">Event List</Link>
+                <li className='hover:opacity-70'>
+                  <Link href='/events'>Event List</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link
-                    href={user ? "/events/create" : "/sign-in"}
-                    className="hover:opacity-60"
+                    href={user ? '/events/create' : '/sign-in'}
+                    className='hover:opacity-60'
                   >
                     Create Event
                   </Link>
                 </li>
               </ul>
             </div>
-            <div className="w-3/5 mx-auto">
-              <h5 className="text-lg font-bold mb-4">Categories</h5>
-              <ul className="space-y-1">
-                <li className="hover:opacity-70">
+            <div className='w-3/5 mx-auto'>
+              <h5 className='text-lg font-bold mb-4'>Categories</h5>
+              <ul className='space-y-1'>
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=music`}>Music</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=art`}>Art</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=food`}>Food</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=tech`}>Tech</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=sports`}>Sports</Link>
                 </li>
-                <li className="hover:opacity-70">
+                <li className='hover:opacity-70'>
                   <Link href={`/events?category=wellness`}>Wellness</Link>
                 </li>
               </ul>
             </div>
-            <div className="w-3/5 mx-auto">
-              <h5 className="text-lg font-bold mb-4">Contact</h5>
-              <ul className="space-y-1">
-                <li className="flex items-center space-x-2 hover:opacity-70">
-                  <FacebookIcon className="w-5 h-5" />
+            <div className='w-3/5 mx-auto'>
+              <h5 className='text-lg font-bold mb-4'>Contact</h5>
+              <ul className='space-y-1'>
+                <li className='flex items-center space-x-2 hover:opacity-70'>
+                  <FacebookIcon className='w-5 h-5' />
                   <Link
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href='https://facebook.com'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     Facebook
                   </Link>
                 </li>
-                <li className="flex items-center space-x-2 hover:opacity-70">
-                  <InstagramIcon className="w-5 h-5" />
+                <li className='flex items-center space-x-2 hover:opacity-70'>
+                  <InstagramIcon className='w-5 h-5' />
                   <Link
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href='https://instagram.com'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     Instagram
                   </Link>
                 </li>
-                <li className="flex items-center space-x-2 hover:opacity-70">
-                  <TwitterIcon className="w-5 h-5" />
+                <li className='flex items-center space-x-2 hover:opacity-70'>
+                  <TwitterIcon className='w-5 h-5' />
                   <Link
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href='https://twitter.com'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     X
                   </Link>
@@ -111,31 +107,31 @@ const Footer = () => {
           </div>
 
           {/* sm */}
-          <div className="sm:hidden">
+          <div className='sm:hidden'>
             <Accordion
-              type="single"
+              type='single'
               collapsible
-              className="flex justify-between space-x-2"
+              className='flex justify-between space-x-2'
             >
-              <AccordionItem value="help">
+              <AccordionItem value='help'>
                 <AccordionTrigger>Help</AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-1">
-                    <li className="hover:opacity-70">
+                  <ul className='space-y-1'>
+                    <li className='hover:opacity-70'>
                       <Link
-                        href={user ? "/profile" : "/sign-in"}
-                        className="hover:opacity-60"
+                        href={user ? '/profile' : '/sign-in'}
+                        className='hover:opacity-60'
                       >
                         Profile
                       </Link>
                     </li>
-                    <li className="hover:opacity-70">
-                      <Link href="/events">Event List</Link>
+                    <li className='hover:opacity-70'>
+                      <Link href='/events'>Event List</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link
-                        href={user ? "/events/create" : "/sign-in"}
-                        className="hover:opacity-60"
+                        href={user ? '/events/create' : '/sign-in'}
+                        className='hover:opacity-60'
                       >
                         Create Event
                       </Link>
@@ -143,61 +139,61 @@ const Footer = () => {
                   </ul>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="categories">
+              <AccordionItem value='categories'>
                 <AccordionTrigger>Categories</AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-1">
-                    <li className="hover:opacity-70">
+                  <ul className='space-y-1'>
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=music`}>Music</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=art`}>Art</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=food`}>Food</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=tech`}>Tech</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=sports`}>Sports</Link>
                     </li>
-                    <li className="hover:opacity-70">
+                    <li className='hover:opacity-70'>
                       <Link href={`/events?category=wellness`}>Wellness</Link>
                     </li>
                   </ul>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="contact">
+              <AccordionItem value='contact'>
                 <AccordionTrigger>Contact</AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-1">
-                    <li className="flex items-center space-x-2 hover:opacity-70">
-                      <FacebookIcon className="w-5 h-5" />
+                  <ul className='space-y-1'>
+                    <li className='flex items-center space-x-2 hover:opacity-70'>
+                      <FacebookIcon className='w-5 h-5' />
                       <Link
-                        href="https://facebook.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href='https://facebook.com'
+                        target='_blank'
+                        rel='noopener noreferrer'
                       >
                         Facebook
                       </Link>
                     </li>
-                    <li className="flex items-center space-x-2 hover:opacity-70">
-                      <InstagramIcon className="w-5 h-5" />
+                    <li className='flex items-center space-x-2 hover:opacity-70'>
+                      <InstagramIcon className='w-5 h-5' />
                       <Link
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href='https://instagram.com'
+                        target='_blank'
+                        rel='noopener noreferrer'
                       >
                         Instagram
                       </Link>
                     </li>
-                    <li className="flex items-center space-x-2 hover:opacity-70">
-                      <TwitterIcon className="w-5 h-5" />
+                    <li className='flex items-center space-x-2 hover:opacity-70'>
+                      <TwitterIcon className='w-5 h-5' />
                       <Link
-                        href="https://twitter.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href='https://twitter.com'
+                        target='_blank'
+                        rel='noopener noreferrer'
                       >
                         X
                       </Link>
@@ -209,8 +205,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <Separator className="" />
-      <div className="text-center py-5">
+      <Separator className='' />
+      <div className='text-center py-5'>
         &copy; 2024 Evently, All rights reserved.
       </div>
     </footer>

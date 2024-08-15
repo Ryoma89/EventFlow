@@ -31,22 +31,24 @@ import React, { useEffect, useState } from 'react';
 import { useUploadThing } from '@/lib/uploadthing';
 import 'react-datepicker/dist/react-datepicker.css';
 import { eventDefaultValues } from '../../constants/categories';
+import { fetchWithToken } from '@/lib/fetchWithToken';
+import { useUserStore } from '@/store/useUserStore';
 
 type EventFormProps = {
   type: 'Create' | 'Update';
   eventId?: string;
-  user: User;
 };
 
-const EventForm = ({ type, eventId, user }: EventFormProps) => {
+const EventForm = ({ type, eventId }: EventFormProps) => {
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [event, setEvent] = useState<IEvent | null>(null);
   const { startUpload } = useUploadThing('imageUploader');
 
+  const user = useUserStore((state) => state.user);
+
   useEffect(() => {
     if (user && !user._id) {
-      console.log("user", user);
       router.push('/sign-in');
     }
   }, [user, router]);
@@ -103,6 +105,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
 
       uploadedImageUrl = uploadedImages[0].url;
     }
+
     if (!user) return;
 
     const payload = {
@@ -112,7 +115,7 @@ const EventForm = ({ type, eventId, user }: EventFormProps) => {
     };
 
     try {
-      const response = await fetch(
+      const response = await fetchWithToken(
         `${process.env.NEXT_PUBLIC_API_URL}/events`,
         {
           method: type === 'Create' ? 'POST' : 'PUT',
