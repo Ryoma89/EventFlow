@@ -60,24 +60,20 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.cookie('token', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            // domain: 'localhost',
-            // secure: true,
-            sameSite: 'strict',
-            maxAge: 1 * 60 * 1000, // 15 minutes
+            sameSite: 'none',
+            maxAge: 15 * 60 * 1000, // 15 minutes
         });
         // res.cookie('token', token, {
         //   httpOnly: true,
         //   secure: true,
         //   sameSite: 'none',
-        //   domain: 'eventflow-backend-stripe.onrender.com',
-        //   maxAge: 3600000,
+        //   domain: 'eventflow-dev-backend.onrender.com,
+        //   maxAge: 15 * 60 * 1000,
         // });
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            // domain: 'localhost',
-            // secure: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
         res.status(200).json(user);
