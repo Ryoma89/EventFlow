@@ -4,7 +4,14 @@ import { IEvent } from '@/types';
 
 const EventsPage = async () => {
   const events: IEvent[] = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/events`
+    `${process.env.NEXT_PUBLIC_API_URL}/events`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store', 
+    }
   ).then((response) => response.json());
 
   return (

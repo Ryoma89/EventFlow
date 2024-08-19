@@ -43,7 +43,11 @@ const SheetMenu = ({user}: {user: User | null}) => {
           </Link>
         </div>
         ) : (
-          <></>
+          <div className="py-5">
+          <Link href="/sign-in" className="hover:opacity-60" onClick={handleClose}>
+            <p className="text-center text-xl">Sign In</p>
+          </Link>
+        </div>
         )}
         <Separator />
       </SheetContent>
