@@ -18,10 +18,6 @@ interface OrganizedProps {
 const MyOrganizedEvents = ({ myEvents }: OrganizedProps) => {
   const [events, setEvents] = useState(myEvents);
 
-  if(!myEvents) {
-    return <div>No events</div>
-  }
-
   useEffect(() => {
     const formattedEvents = formatEventData(events);
     setEvents(formattedEvents);
