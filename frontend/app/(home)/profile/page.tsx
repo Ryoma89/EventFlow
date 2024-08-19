@@ -7,60 +7,62 @@ import { fetchWithToken } from '@/lib/fetchWithToken';
 import { redirect } from 'next/navigation';
 
 const ProfilePage = async () => {
-  const token = cookies().get('token')?.value;
-  const refreshToken = cookies().get('refreshToken')?.value;
+  // const token = cookies().get('token')?.value;
+  // const refreshToken = cookies().get('refreshToken')?.value;
 
-  const myEvents = await fetchWithToken(
-    `${process.env.NEXT_PUBLIC_API_URL}/my-events`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    },
-    refreshToken
-  ).then((response) => {
-    if (!response.ok) {
-      console.error('Failed to fetch my events:', response.statusText);
-      return null;
-    }
-    return response.json();
-  });
+  // const myEvents = await fetchWithToken(
+  //   `${process.env.NEXT_PUBLIC_API_URL}/my-events`,
+  //   {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   },
+  //   refreshToken
+  // ).then((response) => {
+  //   if (!response.ok) {
+  //     console.error('Failed to fetch my events:', response.statusText);
+  //     return null;
+  //   }
+  //   return response.json();
+  // });
 
-  if (!myEvents) {
-    console.error('No events were returned from the API.');
-  }
+  // if (!myEvents) {
+  //   console.error('No events were returned from the API.');
+  // }
   
 
-  const myAttendingEvents = await fetchWithToken(
-    `${process.env.NEXT_PUBLIC_API_URL}/my-attending-events`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    },
-    refreshToken
-  ).then((response) => {
-    if (!response.ok) {
-      console.error('Failed to fetch my attending events:', response.statusText);
-      return null;
-    }
-    return response.json();
-  });
+  // const myAttendingEvents = await fetchWithToken(
+  //   `${process.env.NEXT_PUBLIC_API_URL}/my-attending-events`,
+  //   {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   },
+  //   refreshToken
+  // ).then((response) => {
+  //   if (!response.ok) {
+  //     console.error('Failed to fetch my attending events:', response.statusText);
+  //     return null;
+  //   }
+  //   return response.json();
+  // });
 
-  if(!refreshToken) {
-    redirect('/sign-in');
-  }
+  // if(!refreshToken) {
+  //   redirect('/sign-in');
+  // }
   
   return (
     <section className='my-14 mx-auto w-4/5 sm:my-20'>
       <Title title='Profile' />
       <Profile />
-      <MyOrganizedEvents myEvents={myEvents} />
-      <MyAttendingEvents myAttendingEvents={myAttendingEvents} />
+      {/* <MyOrganizedEvents myEvents={myEvents} /> */}
+      <MyOrganizedEvents />
+      {/* <MyAttendingEvents myAttendingEvents={myAttendingEvents} /> */}
+      <MyAttendingEvents />
     </section>
   );
 };

@@ -7,28 +7,79 @@ import Title from '../../_components/Title';
 import React, { useEffect, useState } from 'react';
 import { formatEventData } from '@/lib/eventUtils';
 import { useColumnsAttending } from './attendingEventColumns';
+import { toast } from '@/components/ui/use-toast';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
-interface AttendingProps {
-  myAttendingEvents: AttendingEvents[];
-}
+// interface AttendingProps {
+//   myAttendingEvents: AttendingEvents[];
+// }
 
-const MyAttendingEvents = ({ myAttendingEvents }: AttendingProps) => {
+const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
   useEffect(() => {
-    const filteredEvents = myAttendingEvents
-      .filter((attendingEvent) => attendingEvent.event !== null)
-      .map((attendingEvent) => {
-        const event = attendingEvent.event;
-        return {
-          ...event,
-          category: { _id: event.category, name: '' },
-          organizer: { _id: event.organizer, username: '' },
-        } as IEvent;
-      });
-    const formattedEvents = formatEventData(filteredEvents);
-    setEvents(formattedEvents);
+    const fetchAttendingEvents = async () => {
+      try {
+        const response = await fetchWithToken(
+          `${process.env.NEXT_PUBLIC_API_URL}/my-attending-events`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+          }
+        );
+
+        if (response.ok) {
+          const attendingEvents = await response.json();
+          const filteredEvents = attendingEvents
+            .filter((attendingEvent: any) => attendingEvent.event !== null)
+            .map((attendingEvent: any) => {
+              const event = attendingEvent.event;
+              return {
+                ...event,
+                category: { _id: event.category, name: '' },
+                organizer: { _id: event.organizer, username: '' },
+              } as IEvent;
+            });
+          const formattedEvents = formatEventData(filteredEvents);
+          setEvents(formattedEvents);
+        } else {
+          const errorData = await response.json();
+          toast({
+            title: 'Error',
+            description: `${errorData.message}`,
+            variant: 'destructive',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching attending events:', error);
+        toast({
+          title: 'Error',
+          description: 'An unexpected error occurred. Please try again later.',
+          variant: 'destructive',
+        });
+      }
+    };
+
+    fetchAttendingEvents();
   }, []);
+
+  // useEffect(() => {
+  //   const filteredEvents = myAttendingEvents
+  //     .filter((attendingEvent) => attendingEvent.event !== null)
+  //     .map((attendingEvent) => {
+  //       const event = attendingEvent.event;
+  //       return {
+  //         ...event,
+  //         category: { _id: event.category, name: '' },
+  //         organizer: { _id: event.organizer, username: '' },
+  //       } as IEvent;
+  //     });
+  //   const formattedEvents = formatEventData(filteredEvents);
+  //   setEvents(formattedEvents);
+  // }, []);
 
   const columns = useColumnsAttending();
 
