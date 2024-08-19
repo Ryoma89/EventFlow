@@ -15,6 +15,10 @@ interface AttendingProps {
 const MyAttendingEvents = ({ myAttendingEvents }: AttendingProps) => {
   const [events, setEvents] = useState<IEvent[]>([]);
 
+  if(!myAttendingEvents) {
+    return <div>No events</div>
+  }
+
   useEffect(() => {
     const filteredEvents = myAttendingEvents
       .filter((attendingEvent) => attendingEvent.event !== null)

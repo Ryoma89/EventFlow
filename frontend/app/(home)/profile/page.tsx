@@ -20,7 +20,18 @@ const ProfilePage = async () => {
       },
     },
     refreshToken
-  ).then((response) => response.json());
+  ).then((response) => {
+    if (!response.ok) {
+      console.error('Failed to fetch my events:', response.statusText);
+      return null;
+    }
+    return response.json();
+  });
+
+  if (!myEvents) {
+    console.error('No events were returned from the API.');
+  }
+  
 
   const myAttendingEvents = await fetchWithToken(
     `${process.env.NEXT_PUBLIC_API_URL}/my-attending-events`,
@@ -32,7 +43,13 @@ const ProfilePage = async () => {
       },
     },
     refreshToken
-  ).then((response) => response.json());
+  ).then((response) => {
+    if (!response.ok) {
+      console.error('Failed to fetch my attending events:', response.statusText);
+      return null;
+    }
+    return response.json();
+  });
 
   if(!refreshToken) {
     redirect('/sign-in');
