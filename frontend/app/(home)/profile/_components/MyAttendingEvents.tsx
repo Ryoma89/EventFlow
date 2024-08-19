@@ -1,18 +1,14 @@
 'use client';
 import { IEvent } from '@/types';
-import { AttendingEvents } from '@/types';
 import { DataTable } from './data-table';
+import { AttendingEvents } from '@/types';
 import Title from '../../_components/Title';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
+import { toast } from '@/components/ui/use-toast';
 import React, { useEffect, useState } from 'react';
 import { formatEventData } from '@/lib/eventUtils';
 import { useColumnsAttending } from './attendingEventColumns';
-import { toast } from '@/components/ui/use-toast';
-import { fetchWithToken } from '@/lib/fetchWithToken';
-
-// interface AttendingProps {
-//   myAttendingEvents: AttendingEvents[];
-// }
 
 const MyAttendingEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -34,8 +30,8 @@ const MyAttendingEvents = () => {
         if (response.ok) {
           const attendingEvents = await response.json();
           const filteredEvents = attendingEvents
-            .filter((attendingEvent: any) => attendingEvent.event !== null)
-            .map((attendingEvent: any) => {
+            .filter((attendingEvent: AttendingEvents) => attendingEvent.event !== null)
+            .map((attendingEvent: AttendingEvents) => {
               const event = attendingEvent.event;
               return {
                 ...event,
@@ -65,21 +61,6 @@ const MyAttendingEvents = () => {
 
     fetchAttendingEvents();
   }, []);
-
-  // useEffect(() => {
-  //   const filteredEvents = myAttendingEvents
-  //     .filter((attendingEvent) => attendingEvent.event !== null)
-  //     .map((attendingEvent) => {
-  //       const event = attendingEvent.event;
-  //       return {
-  //         ...event,
-  //         category: { _id: event.category, name: '' },
-  //         organizer: { _id: event.organizer, username: '' },
-  //       } as IEvent;
-  //     });
-  //   const formattedEvents = formatEventData(filteredEvents);
-  //   setEvents(formattedEvents);
-  // }, []);
 
   const columns = useColumnsAttending();
 

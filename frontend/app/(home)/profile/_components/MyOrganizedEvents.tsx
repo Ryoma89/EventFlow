@@ -3,18 +3,13 @@ import { IEvent } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 import { useColumns } from './organizedEventColumns';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
 import React, { useEffect, useState } from 'react';
-import { fetchWithToken } from '@/lib/fetchWithToken';
-import { useUserStore } from '@/store/useUserStore';
-
-// interface OrganizedProps {
-//   myEvents: IEvent[];
-// }
 
 const MyOrganizedEvents = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -57,11 +52,6 @@ const MyOrganizedEvents = () => {
 
     fetchEvents();
   }, []);
-
-  // useEffect(() => {
-  //   const formattedEvents = formatEventData(events);
-  //   setEvents(formattedEvents);
-  // }, []);
 
   const handleDelete = async (eventId: string) => {
     try {
