@@ -13,8 +13,6 @@ const CategoryCard = () => {
               className='w-full h-32 rounded-lg overflow-hidden bg-cover bg-center md:h-40'
               style={{
                 backgroundImage: `url(${category.image})`,
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                backgroundBlendMode: 'lighten',
               }}
             ></div>
             <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold'>
