@@ -34,6 +34,10 @@ const ProfilePage = async () => {
     refreshToken
   ).then((response) => response.json());
 
+  if(!refreshToken) {
+    redirect('/sign-in');
+  }
+  
   return (
     <section className='my-14 mx-auto w-4/5 sm:my-20'>
       <Title title='Profile' />

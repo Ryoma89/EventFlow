@@ -62,10 +62,10 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (!user) return redirect('/sign-in');
+    
     form.reset({
-      username: user.username,
-      photo: user.photo,
+      username: user?.username,
+      photo: user?.photo,
     });
   }, [user, form]);
 

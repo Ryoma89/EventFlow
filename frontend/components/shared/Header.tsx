@@ -7,6 +7,7 @@ import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 const Header = () => {
   const user = useUserStore((state) => state.user);
@@ -24,7 +25,8 @@ const Header = () => {
     <header className='w-full bg-main'>
       <div className='container h-[70px] flex items-center justify-between'>
         <h1 className='text-button'>
-          <Link href='/' className='text-2xl font-bold'>
+          <Link href='/' className='text-2xl font-bold flex items-center gap-3'>
+            <Image src='/eflogo.svg' alt='logo' width={50} height={50} />
             EventFlow
           </Link>
         </h1>
@@ -53,7 +55,7 @@ const Header = () => {
             </div>
           ) : (
             <>
-              <Link href='/sign-in' className='text-white cursor-pointer w-24'>
+              <Link href='/sign-in' className='text-white cursor-pointer w-24 hidden sm:block'>
                 <Button variant={'custom'} className='w-full'>
                   Sign In
                 </Button>

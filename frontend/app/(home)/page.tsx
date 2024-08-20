@@ -15,6 +15,7 @@ const HomePage = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-store', 
     }
   ).then((response) => response.json());
 
@@ -27,6 +28,7 @@ const HomePage = async () => {
       },
     }
   ).then((response) => response.json());
+
   return (
     <main>
       <Hero />
