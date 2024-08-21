@@ -29,7 +29,6 @@ EventFlow is an event management application where users can search for events, 
   - shadcn: A UI component library that offers beautiful and user-friendly components.
   - Stripe: A payment processing platform integrated into the app, enabling secure event payments.
   - Zustand: A lightweight and scalable state management library that ensures consistency across the application.
-<br>
 
 - **Directory Structure:**
   - app/: Manages routing and logic for each page using Next.js app router.
@@ -38,7 +37,6 @@ EventFlow is an event management application where users can search for events, 
   - lib/: Manages logic and helper functions related to external API communication and data processing.
   - store/: Hosts Zustand state management logic, which handles the global state used throughout the application.
   - public/: Stores static assets (e.g., images, fonts) that are directly accessible by the client.
-<br>
 
 - **Data Flow:**
   - Zustand handles state management, ensuring simple and consistent state sharing between React components.

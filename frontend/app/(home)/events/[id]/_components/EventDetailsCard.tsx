@@ -149,7 +149,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
         </h3>
         <div className='mt-7 flex items-center justify-center gap-5'>
           <div>
-            <Link href='mailto:'>
+            <Link href='mailto:' className='hover:opacity-70'>
               <Mail className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
           </div>
@@ -158,6 +158,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://instagram.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Instagram className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
@@ -167,6 +168,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://twitter.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Twitter className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
@@ -176,6 +178,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://facebook.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Facebook className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>

@@ -3,11 +3,10 @@ import { useUserStore } from '@/store/useUserStore';
 import SheetMenu from '@/app/(home)/_components/SheetMenu';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-
-import { useEffect } from 'react';
-import Image from 'next/image';
 
 const Header = () => {
   const user = useUserStore((state) => state.user);
@@ -25,21 +24,21 @@ const Header = () => {
     <header className='w-full bg-main'>
       <div className='container h-[70px] flex items-center justify-between'>
         <h1 className='text-button'>
-          <Link href='/' className='text-2xl font-bold flex items-center gap-3'>
+          <Link href='/' className='text-2xl font-bold flex items-center gap-3 hover:opacity-70'>
             <Image src='/eflogo.svg' alt='logo' width={50} height={50} />
             EventFlow
           </Link>
         </h1>
         <nav className='flex items-center justify-end space-x-4'>
           <div className='hidden sm:flex'>
-            <Link href='/events'>
+            <Link href='/events' className='hover:opacity-70'>
               <p className='text-white'>Events</p>
             </Link>
           </div>
           {user ? (
             <div className='flex items-center space-x-4'>
               <div className='hidden sm:flex'>
-                <Link href='/events/create'>
+                <Link href='/events/create' className='hover:opacity-70'>
                   <p className='text-white'>Create Event</p>
                 </Link>
               </div>
@@ -55,7 +54,7 @@ const Header = () => {
             </div>
           ) : (
             <>
-              <Link href='/sign-in' className='text-white cursor-pointer w-24 hidden sm:block'>
+              <Link href='/sign-in' className='text-white cursor-pointer w-24 hidden sm:block '>
                 <Button variant={'custom'} className='w-full'>
                   Sign In
                 </Button>
