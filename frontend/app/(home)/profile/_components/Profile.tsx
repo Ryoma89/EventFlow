@@ -62,7 +62,7 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (!user) return redirect('/sign-in');
+    if (!user) return redirect('/');
     form.reset({
       username: user.username,
       photo: user.photo,
