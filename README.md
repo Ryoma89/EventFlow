@@ -68,6 +68,6 @@ Our backend is built using **Express.js**, a popular Node.js framework that prov
 
 ## 5. Portfolio Links
 
-- [Designer’s Portfolio](https://designer-portfolio.com)
-- [Frontend Developer’s Portfolio](https://frontend-developer-portfolio.com)
-- [Kento Kuki](https://kento-portfolio.vercel.app/)
+- [Azul Belmonte](https://designer-portfolio.com) - Design
+- [Ryoma Suzuki](https://frontend-developer-portfolio.com) - Frontend Development
+- [Kento Kuki](https://kento-portfolio.vercel.app/) - Backend Development
