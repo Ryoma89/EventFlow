@@ -41,8 +41,7 @@ const Search = ({}) => {
       <div>
         <Button
           onClick={handleSearch}
-          variant={'main'}
-          className='ml-2 py-2 px-4'
+          className='ml-2 py-2 px-4 bg-main '
         >
           Search
         </Button>

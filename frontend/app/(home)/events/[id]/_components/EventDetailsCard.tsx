@@ -1,7 +1,7 @@
 'use client';
 import Comments from './Comments';
 import Attendees from './Attendees';
-import { Comment, IAttendee, IEvent, User } from '@/types';
+import { Comment, IAttendee, IEvent } from '@/types';
 import CheckoutButton from '@/components/shared/CheckoutButton';
 
 import {
@@ -59,7 +59,8 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className='w-full'>
-      <div className='grid grid-cols-1 bg-main text-white md:grid md:grid-cols-2'>
+      <div className='bg-main'>
+        <div className='md:container grid grid-cols-1 text-white md:grid md:grid-cols-2'>
         <div className='relative w-full h-[300px] md:h-[400px] md:order-2'>
           <Image
             src={event.imageUrl}
@@ -69,9 +70,9 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
             priority
           />
         </div>
-        <div className='p-5 space-y-4 md:order-1 md:w-10/12 md:mx-auto md:space-y-6'>
+        <div className='p-5 space-y-4 md:order-1 md:px-0 md:space-y-6 md:flex md:flex-col md:justify-center'>
           <h3 className='text-lg md:text-2xl'>{event.title}</h3>
-          <div className=''>
+          <div>
             <div className='flex-flex-col space-y-4 sm:flex-row sm:items-center'>
               <div className='flex items-center gap-3'>
                 <Calendar className='h-5 w-5 text-icon md:h-8 md:w-8' />
@@ -123,16 +124,17 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
             </>
           )}
         </div>
+        </div>
       </div>
 
-      <div className='pt-10 pb-5 px-5 md:mx-10'>
+      <div className='md:container pt-10 pb-5 px-5 md:py-10'>
         <h3 className='text-3xl font-semibold text-main md:text-4xl'>
           About the event
         </h3>
         <div className='mt-5 md:text-lg'>{event.description}</div>
       </div>
 
-      <div className='pt-5 pb-10 md:px-10 md:grid md:grid-cols-2'>
+      <div className='pt-5 pb-10 md:container md:grid md:grid-cols-2 md:py-10'>
         <Attendees eventId={params.id} attendees={attendees} user={user} />
         <Comments
           eventId={params.id}
@@ -141,13 +143,13 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
         />
       </div>
 
-      <div className='pb-10 md:py-10'>
+      <div className='pb-10 md:py-10 md:container'>
         <h3 className='text-3xl font-semibold text-main text-center md:text-4xl'>
           Share This Event
         </h3>
         <div className='mt-7 flex items-center justify-center gap-5'>
           <div>
-            <Link href='mailto:'>
+            <Link href='mailto:' className='hover:opacity-70'>
               <Mail className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
           </div>
@@ -156,6 +158,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://instagram.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Instagram className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
@@ -165,6 +168,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://twitter.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Twitter className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>
@@ -174,6 +178,7 @@ const EventDetailsCard = ({ params }: { params: { id: string } }) => {
               href='https://facebook.com'
               target='_blank'
               rel='noopener noreferrer'
+              className='hover:opacity-70'
             >
               <Facebook className='h-8 w-8 text-icon md:h-10 md:w-10' />
             </Link>

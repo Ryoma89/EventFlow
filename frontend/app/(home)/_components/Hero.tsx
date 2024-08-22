@@ -5,7 +5,7 @@ const Hero = () => {
     <section
       className='bg-cover bg-center h-80 sm:h-96 md:h-[450px] relative'
       style={{
-        backgroundImage: 'url("/hero.jpeg")',
+        backgroundImage: 'url("/hero.jpeg")'
       }}
     >
       <div className='absolute inset-0 w-full h-full bg-black opacity-20' />

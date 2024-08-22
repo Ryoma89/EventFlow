@@ -3,24 +3,54 @@ import { IEvent } from '@/types';
 import { DataTable } from './data-table';
 import Title from '../../_components/Title';
 import { useColumns } from './organizedEventColumns';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { formatEventData } from '@/lib/eventUtils';
 import React, { useEffect, useState } from 'react';
-import { fetchWithToken } from '@/lib/fetchWithToken';
 
-interface OrganizedProps {
-  myEvents: IEvent[];
-}
-
-const MyOrganizedEvents = ({ myEvents }: OrganizedProps) => {
-  const [events, setEvents] = useState(myEvents);
+const MyOrganizedEvents = () => {
+  const [events, setEvents] = useState<IEvent[]>([]);
 
   useEffect(() => {
-    const formattedEvents = formatEventData(events);
-    setEvents(formattedEvents);
+    const fetchEvents = async () => {
+      try {
+        const response = await fetchWithToken(
+          `${process.env.NEXT_PUBLIC_API_URL}/my-events`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+          }
+        );
+
+        if (response.ok) {
+          const eventData = await response.json();
+          const formattedEvents = formatEventData(eventData);
+          setEvents(formattedEvents);
+        } else {
+          const errorData = await response.json();
+          toast({
+            title: 'Error',
+            description: `${errorData.message}`,
+            variant: 'destructive',
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        toast({
+          title: 'Error',
+          description: 'An unexpected error occurred. Please try again later.',
+          variant: 'destructive',
+        });
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   const handleDelete = async (eventId: string) => {
