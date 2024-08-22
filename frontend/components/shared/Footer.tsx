@@ -1,6 +1,7 @@
 'use client';
+import React from 'react';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import { useUserStore } from '@/store/useUserStore';
 
 import {
   Accordion,
@@ -11,7 +12,6 @@ import {
 
 import { Separator } from '../ui/separator';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from 'lucide-react';
-import { useUserStore } from '@/store/useUserStore';
 
 const Footer = () => {
   const { user } = useUserStore();
@@ -28,7 +28,6 @@ const Footer = () => {
                 <li className='hover:opacity-70'>
                   <Link
                     href={user ? '/profile' : '/sign-in'}
-                    className='hover:opacity-60'
                   >
                     Profile
                   </Link>
@@ -39,7 +38,6 @@ const Footer = () => {
                 <li className='hover:opacity-70'>
                   <Link
                     href={user ? '/events/create' : '/sign-in'}
-                    className='hover:opacity-60'
                   >
                     Create Event
                   </Link>
@@ -120,7 +118,6 @@ const Footer = () => {
                     <li className='hover:opacity-70'>
                       <Link
                         href={user ? '/profile' : '/sign-in'}
-                        className='hover:opacity-60'
                       >
                         Profile
                       </Link>
@@ -131,7 +128,6 @@ const Footer = () => {
                     <li className='hover:opacity-70'>
                       <Link
                         href={user ? '/events/create' : '/sign-in'}
-                        className='hover:opacity-60'
                       >
                         Create Event
                       </Link>

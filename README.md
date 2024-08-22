@@ -25,13 +25,28 @@ EventFlow is an event management application where users can search for events, 
 
 ### Overview
 
-- **Technology Stack**: Frontend technologies used (e.g., React, Vue.js).
-- **Architecture**: Architecture of the frontend and description of major components.
+- **Technology Stack**: 
+  - Next.js: A front-end framework that uses server-side rendering and static site generation to build fast and SEO-friendly applications.
+  - Tailwind CSS: A utility-first CSS framework that allows for efficient and responsive design development.
+  - shadcn: A UI component library that offers beautiful and user-friendly components.
+  - Stripe: A payment processing platform integrated into the app, enabling secure event payments.
+  - Zustand: A lightweight and scalable state management library that ensures consistency across the application.
+
+- **Directory Structure:**
+  - app/: Manages routing and logic for each page using Next.js app router.
+  - components/: Houses reusable UI components that maintain UI consistency across the application.
+  - styles/: Contains custom styles and global styles that complement Tailwind CSS, reflecting the design rules across the project.
+  - lib/: Manages logic and helper functions related to external API communication and data processing.
+  - store/: Hosts Zustand state management logic, which handles the global state used throughout the application.
+  - public/: Stores static assets (e.g., images, fonts) that are directly accessible by the client.
+
+- **Data Flow:**
+  - Zustand handles state management, ensuring simple and consistent state sharing between React components.
+  - UI components are designed based on shadcn, separating page components from UI components to enhance maintainability.
 
 ### Deployment
 
-- **Live Application URL**: URL where the deployed application can be accessed.
-- **Known Issues**: Any current issues or limitations of the frontend.
+- **Live Application URL**: https://eventflow-deploy-frontend.onrender.com
 
 ## 4. Backend
 

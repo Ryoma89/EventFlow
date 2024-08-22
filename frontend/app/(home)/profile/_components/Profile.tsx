@@ -2,9 +2,10 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { redirect, useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/useUserStore';
+import { redirect, useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { fetchWithToken } from '@/lib/fetchWithToken';
 
 import {
   Card,
@@ -36,7 +37,6 @@ import { useUploadThing } from '@/lib/uploadthing';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FileUploader } from '@/components/shared/FileUploader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { fetchWithToken } from '@/lib/fetchWithToken';
 
 const formSchema = z.object({
   username: z.string().min(1).max(50),
@@ -62,10 +62,10 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    
+    if (!user) return redirect('/');
     form.reset({
-      username: user?.username,
-      photo: user?.photo,
+      username: user.username,
+      photo: user.photo,
     });
   }, [user, form]);
 
