@@ -13,7 +13,7 @@ const Attendees = ({ eventId, attendees, user }: AttendeesProps) => {
 
   return (
     <div>
-      <div className="px-5 md:pb-5">
+      <div className="px-5 md:px-0">
           <h3 className="text-3xl font-semibold text-main md:text-4xl">Attendees</h3>
           <div className="my-8 flex items-center gap-4 md:mt-8 md:mb-0">
               {attendees && attendees.length === 0 ? (
