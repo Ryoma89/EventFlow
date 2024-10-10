@@ -3,8 +3,8 @@ import Hero from './_components/Hero';
 import Promotion from './_components/Promotion';
 import Categories from './_components/Categories';
 
-import UpcomingEvents from './_components/UpcomingEvents';
 import { ITrendingEvents } from '@/types';
+import UpcomingEvents from './_components/UpcomingEvents';
 import TrendingEvents from './_components/TrendingEvents';
 
 const HomePage = async () => {
@@ -29,12 +29,19 @@ const HomePage = async () => {
     }
   ).then((response) => response.json());
 
+  const today = new Date();
+
+  const filteredTrendingEvents = trendingEvents.filter((event) => {
+    const eventDate = new Date(event.event.endDateTime);
+    return eventDate >= today;
+  });
+
   return (
     <main>
       <Hero />
       <Promotion />
       <Categories />
-      <TrendingEvents trendingEvents={trendingEvents} />
+      <TrendingEvents trendingEvents={filteredTrendingEvents} />
       <UpcomingEvents upcomingEvents={upcomingEvents} />
     </main>
   );

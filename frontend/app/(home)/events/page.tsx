@@ -14,9 +14,16 @@ const EventsPage = async () => {
     }
   ).then((response) => response.json());
 
+  const today = new Date();
+
+  const upcomingEvents = events.filter((event) => {
+    const eventDate = new Date(event.endDateTime);
+    return eventDate >= today;
+  });
+
   return (
     <section className='my-14 mx-auto w-4/5 sm:my-20'>
-      <EventsList events={events} />
+      <EventsList events={upcomingEvents} />
     </section>
   );
 };
