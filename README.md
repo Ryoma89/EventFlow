@@ -52,8 +52,7 @@ EventFlow is an event management application where users can search for events, 
 
 ### Deployment
 
-- **Live Application URL**: https://eventflow-deploy-frontend.onrender.com
-
+- **Live Application URL**: https://event-flow-frontend-wine.vercel.app
 ## 4. Backend
 
 ### Tech Stack
